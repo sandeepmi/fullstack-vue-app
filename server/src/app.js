@@ -9,15 +9,17 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(morgan('combined'))
 
-app.get('/api/getTodos', (req, res) => {
+app.get('/api/getItems', (req, res) => {
   res.send([
     {
+      id: 1,
       title: 'test 1',
-      isDone: false
+      type: 'type 1'
     },
     {
+      id: 2,
       title: 'test 2',
-      isDone: true
+      type: 'type 2'
     }
   ])
 })
