@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Items</h1>
-    <div v-for="item in items" v-bind:key="item.id" class="item">
-      <div>{{item.title}}</div>
-      <div>{{item.type}}</div>
-    </div>
+    <ul class="collection">
+      <li v-for="item in items" v-bind:key="item.id" class="collection-item item">
+        <span>{{item.title}}</span><br>
+        <span>{{item.type}}</span>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -32,11 +34,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .item {
-    background-color: #eeeeee;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-</style>

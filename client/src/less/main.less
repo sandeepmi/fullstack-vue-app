@@ -1,0 +1,30 @@
+@import "materialize-overrides.less";
+
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  
+  main {
+    flex: 1 0 auto;
+  }
+
+  section {
+    margin: 50px 0;
+  }
+    
+  .material-icons {
+    &.medium { font-size: 30px; }
+    &.large { font-size: 35px; }
+  }
+
+  .page-footer {
+    padding-top: 0;
+  }
+}
+
+@import "home.less";

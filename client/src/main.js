@@ -13,3 +13,6 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+require('../node_modules/materialize-css/dist/css/materialize.min.css')
+require('./less/main.less')
