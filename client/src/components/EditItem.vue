@@ -1,7 +1,7 @@
 <template>
-  <div class="card">
-    <div class="card-content">
-      <h2>Edit Item</h2>
+  <Modal @close="close">
+    <h2>Edit Item</h2>
+    <div class="container">
       <div class="row">
         <form class="col s12">
           <div class="row">
@@ -16,24 +16,30 @@
           </div>
           <div class="row">
             <div class="col s12">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                <i class="material-icons right">send</i>
-              </button>
-              <a class="btn waves-effect waves-light" @click="$emit('cancel')">Cancel</a>
+              <button class="btn light-blue darken-1 waves-effect waves-light" type="submit" name="action">Submit</button>
+              <a class="btn light-blue darken-1 waves-effect waves-light" @click="$emit('close')">Cancel</a>
             </div>
           </div>
         </form>
       </div>
     </div>
-  </div>
+  </Modal>
 </template>
 
 <script>
+import Modal from './core/Modal'
+
 export default {
   name: 'EditItem',
   props: ['item'],
-  data () {
-    return {}
+  components: {
+    Modal
+  },
+  methods: {
+    close: function () {
+      this.$emit('close')
+      this.item = null
+    }
   }
 }
 </script>

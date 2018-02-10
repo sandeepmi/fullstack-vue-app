@@ -8,7 +8,6 @@
         <span>{{item.type}}</span>
       </li>
     </ul>
-    <EditItem v-if="isEditMode" v-bind:item="itemInEditMode" @cancel="cancelEditItem" />
   </div>
 </template>
 
@@ -41,13 +40,7 @@ export default {
     },
 
     editItem (item) {
-      this.isEditMode = true
-      this.itemInEditMode = item
-    },
-
-    cancelEditItem () {
-      this.isEditMode = false
-      this.itemInEditMode = null
+      this.$root.$emit('showEditItemModal', item)
     }
   }
 }
