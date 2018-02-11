@@ -14,6 +14,7 @@
 <script>
 import itemsService from '@/services/itemsService.js'
 import EditItem from './EditItem'
+import { showModal } from '../common/utilities'
 
 export default {
   name: 'Items',
@@ -40,7 +41,7 @@ export default {
     },
 
     editItem (item) {
-      this.$root.$emit('showEditItemModal', item)
+      showModal(this.$root, EditItem, { item: item })
     }
   }
 }

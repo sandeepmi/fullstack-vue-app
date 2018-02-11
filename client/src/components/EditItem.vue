@@ -17,7 +17,7 @@
           <div class="row">
             <div class="col s12">
               <button class="btn light-blue darken-1 waves-effect waves-light" type="submit" name="action">Submit</button>
-              <a class="btn light-blue darken-1 waves-effect waves-light" @click="$emit('close')">Cancel</a>
+              <a class="btn light-blue darken-1 waves-effect waves-light" @click="close">Cancel</a>
             </div>
           </div>
         </form>
@@ -28,6 +28,7 @@
 
 <script>
 import Modal from './core/Modal'
+import { closeModal } from '../common/utilities'
 
 export default {
   name: 'EditItem',
@@ -37,8 +38,7 @@ export default {
   },
   methods: {
     close: function () {
-      this.$emit('close')
-      this.item = null
+      closeModal(this.$root, undefined, {})
     }
   }
 }

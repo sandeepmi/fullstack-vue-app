@@ -6,39 +6,31 @@
     </main>
     <Footer />
 
-    <EditItem v-if="showEditItemModal" v-bind:item="editItemData" @close="closeEditItemModal" />
+    <component :is="modalComponent" v-bind="modalComponentProps"></component>
   </div>
 </template>
 
 <script>
 import Nav from './components/Nav'
 import Footer from './components/Footer'
-import EditItem from './components/EditItem'
 
 export default {
   name: 'App',
   components: {
     Nav,
-    Footer,
-    EditItem
+    Footer
   },
   data () {
     return {
-      showEditItemModal: false,
-      editItemData: {}
+      modalComponent: undefined,
+      modalComponentProps: {}
     }
   },
   mounted () {
-    this.$root.$on('showEditItemModal', (item) => {
-      this.showEditItemModal = true
-      this.editItemData = item
+    this.$root.$on('showModal', (componentInfo) => {
+      this.modalComponent = componentInfo.component
+      this.modalComponentProps = componentInfo.props
     })
-  },
-  methods: {
-    closeEditItemModal () {
-      this.showEditItemModal = false
-      this.editItemData = {}
-    }
   }
 }
 </script>
