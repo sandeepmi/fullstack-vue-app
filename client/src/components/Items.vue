@@ -14,13 +14,10 @@
 <script>
 import itemsService from '@/services/itemsService.js'
 import EditItem from './EditItem'
-import { showModal } from '../common/utilities'
+import { showModal } from '../common/modal'
 
 export default {
   name: 'Items',
-  components: {
-    EditItem
-  },
   data () {
     return {
       items: [],

@@ -1,5 +1,5 @@
 <template>
-  <Modal @close="close">
+  <Modal @close="closeModal($root)">
     <h2>Edit Item</h2>
     <div class="container">
       <div class="row">
@@ -17,7 +17,7 @@
           <div class="row">
             <div class="col s12">
               <button class="btn light-blue darken-1 waves-effect waves-light" type="submit" name="action">Submit</button>
-              <a class="btn light-blue darken-1 waves-effect waves-light" @click="close">Cancel</a>
+              <a class="btn light-blue darken-1 waves-effect waves-light" @click="closeModal($root)">Cancel</a>
             </div>
           </div>
         </form>
@@ -28,7 +28,7 @@
 
 <script>
 import Modal from './core/Modal'
-import { closeModal } from '../common/utilities'
+import { closeModal } from '../common/modal'
 
 export default {
   name: 'EditItem',
@@ -37,9 +37,7 @@ export default {
     Modal
   },
   methods: {
-    close: function () {
-      closeModal(this.$root, undefined, {})
-    }
+    closeModal
   }
 }
 </script>

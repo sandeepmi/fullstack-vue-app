@@ -20,7 +20,7 @@
               I am convenient because I require little markup to use effectively.</p>
             </div>
             <div class="card-action">
-              <a href="#">This is a link</a>
+              <a href="#!" @click="showLinkInfo">This is a link</a>
             </div>
           </div>
         </div>
@@ -29,21 +29,21 @@
 
     <section>
       <div class="row">
-        <div class="col s4">
+        <div class="col s12 m4">
           <div class="center">
             <i class="material-icons medium">insert_emoticon</i>
             <h5>Smiley</h5>
             <p class="light center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
         </div>
-        <div class="col s4">
+        <div class="col s12 m4">
           <div class="center">
             <i class="material-icons medium">insert_emoticon</i>
             <h5>Smiley</h5>
             <p class="light center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
         </div>
-        <div class="col s4">
+        <div class="col s12 m4">
           <div class="center">
             <i class="material-icons medium">insert_emoticon</i>
             <h5>Smiley</h5>
@@ -57,10 +57,30 @@
 </template>
 
 <script>
+import { showAlertModal } from '../common/modal'
+
 export default {
   name: 'Home',
-  data () {
-    return {}
+  methods: {
+    showLinkInfo () {
+      const options = {
+        title: 'Link Message',
+        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        actions: [
+          {
+            label: 'Yes',
+            callback: () => {
+              console.log('selected yes')
+            }
+          },
+          {
+            label: 'No',
+            cancel: true
+          }
+        ]
+      }
+      showAlertModal(this.$root, options)
+    }
   }
 }
 </script>

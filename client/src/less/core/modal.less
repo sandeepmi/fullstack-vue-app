@@ -40,6 +40,13 @@
   float: right;
 }
 
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
 /*
  * The following styles are auto-applied to elements with
  * transition="modal" when their visibility is toggled
@@ -63,12 +70,7 @@
   transform: scale(1.1);
 }
 
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
+// responsive styles
 @media only screen and (max-width: 768px) {
   .modal-container {
     width: 90%;

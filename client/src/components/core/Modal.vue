@@ -4,7 +4,7 @@
       <div class="modal-wrapper">
         <div class="modal-container" @click.stop>
           <slot></slot>
-          <a class="modal-close btn-floating light-blue darken-1 right" @click="$emit('close')"><i class="material-icons">close</i></a>
+          <a class="modal-close right" @click="$emit('close')"><i class="material-icons">close</i></a>
         </div>
       </div>
     </div>
