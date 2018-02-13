@@ -1,6 +1,7 @@
 module.exports = (onSuccess) => {
-  const mongoose = require('mongoose')
   const config = require('../config/config.js')
+  const restful = require('node-restful')
+  const mongoose = restful.mongoose
 
   mongoose.connect(config.db.uri, {
     auth: {
