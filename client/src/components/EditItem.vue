@@ -1,5 +1,5 @@
 <template>
-  <Modal @close="closeModal($root)">
+  <Modal @close="close">
     <h2>Edit Item</h2>
     <div class="container">
       <div class="row">
@@ -16,8 +16,8 @@
           </div>
           <div class="row">
             <div class="col s12">
-              <button class="btn light-blue darken-1 waves-effect waves-light" type="submit" name="action">Submit</button>
-              <a class="btn light-blue darken-1 waves-effect waves-light" @click="closeModal($root)">Cancel</a>
+              <button type="button" class="btn light-blue darken-1 waves-effect waves-light" @click="saveItem(item)">Submit</button>
+              <a class="btn light-blue darken-1 waves-effect waves-light" @click="close">Cancel</a>
             </div>
           </div>
         </form>
@@ -29,6 +29,7 @@
 <script>
 import Modal from './core/Modal'
 import { closeModal } from '../common/modal'
+import itemsService from '@/services/itemsService'
 
 export default {
   name: 'EditItem',
@@ -37,7 +38,18 @@ export default {
     Modal
   },
   methods: {
-    closeModal
+    close () {
+      closeModal(this.$root)
+    },
+
+    saveItem (item) {
+      itemsService.updateItem(item)
+        .then(res => {
+          if (res.status === 200) {
+            this.close()
+          }
+        })
+    }
   }
 }
 </script>

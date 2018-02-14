@@ -12,9 +12,10 @@
 </template>
 
 <script>
-import itemsService from '@/services/itemsService.js'
+import itemsService from '@/services/itemsService'
 import EditItem from './EditItem'
 import { showModal } from '../common/modal'
+import { cloneObj } from '../common/utils'
 
 export default {
   name: 'Items',
@@ -38,7 +39,7 @@ export default {
     },
 
     editItem (item) {
-      showModal(this.$root, EditItem, { item: item })
+      showModal(this.$root, EditItem, { item: cloneObj(item) })
     }
   }
 }
