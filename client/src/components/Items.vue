@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Items</h1>
     <ul class="collection">
-      <li v-for="item in items" v-bind:key="item.id" class="collection-item item">
+      <li v-for="item in items" v-bind:key="item._id" class="collection-item item">
         <a class="btn-floating light-blue darken-1 right" @click="editItem(item)"><i class="material-icons">mode_edit</i></a>
         <span>{{item.title}}</span><br>
         <span>{{item.type}}</span>
@@ -16,25 +16,22 @@ import itemsService from '@/services/itemsService'
 import EditItem from './EditItem'
 import { showModal } from '../common/modal'
 import { cloneObj } from '../common/utils'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Items',
-  data () {
-    return {
-      items: [],
-      isEditMode: false,
-      itemInEditMode: null
-    }
-  },
+  computed: mapState({
+    items: state => state.items
+  }),
   mounted () {
-    this.showItems()
+    this.getItems()
   },
   methods: {
-    showItems () {
+    getItems () {
       itemsService.getItems()
         .then(res => res.json())
         .then(data => {
-          this.items = data
+          this.$store.dispatch('setItems', data)
         })
     },
 

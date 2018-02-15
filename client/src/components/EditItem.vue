@@ -46,6 +46,7 @@ export default {
       itemsService.updateItem(item)
         .then(res => {
           if (res.status === 200) {
+            this.$store.dispatch('updateItem', item)
             this.close()
           }
         })
