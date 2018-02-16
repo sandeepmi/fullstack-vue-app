@@ -12,11 +12,10 @@
 </template>
 
 <script>
-import itemsService from '@/services/itemsService'
 import EditItem from './EditItemModal'
 import { showModal } from '../helpers/modal'
 import { cloneObj } from '../helpers/utils'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Items',
@@ -27,13 +26,9 @@ export default {
     this.getItems()
   },
   methods: {
-    getItems () {
-      itemsService.getItems()
-        .then(res => res.json())
-        .then(data => {
-          this.$store.dispatch('setItems', data)
-        })
-    },
+    ...mapActions([
+      'getItems'
+    ]),
 
     editItem (item) {
       showModal(this.$root, EditItem, { item: cloneObj(item) })

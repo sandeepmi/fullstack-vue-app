@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import itemsService from '@/services/itemsService'
 
 Vue.use(Vuex)
 
@@ -17,11 +18,21 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    setItems ({commit}, items) {
-      commit('setItems', items)
+    getItems ({commit}) {
+      itemsService.getItems()
+        .then(res => res.json())
+        .then(items => {
+          commit('setItems', items)
+        })
     },
-    updateItem ({commit}, item) {
-      commit('updateItem', item)
+    updateItem ({commit}, { item, onSuccess }) {
+      return itemsService.updateItem(item)
+        .then(res => {
+          if (res.ok) {
+            commit('updateItem', item)
+            onSuccess()
+          }
+        })
     }
   },
   strict: process.env.NODE_ENV !== 'production'

@@ -29,7 +29,7 @@
 <script>
 import Modal from './core/Modal'
 import { closeModal } from '../helpers/modal'
-import itemsService from '@/services/itemsService'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'EditItem',
@@ -38,18 +38,19 @@ export default {
     Modal
   },
   methods: {
+    ...mapActions([
+      'updateItem'
+    ]),
+
     close () {
       closeModal(this.$root)
     },
 
     saveItem (item) {
-      itemsService.updateItem(item)
-        .then(res => {
-          if (res.status === 200) {
-            this.$store.dispatch('updateItem', item)
-            this.close()
-          }
-        })
+      this.updateItem({
+        item,
+        onSuccess: () => this.close()
+      })
     }
   }
 }
