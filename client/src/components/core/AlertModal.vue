@@ -12,7 +12,7 @@
 
 <script>
 import Modal from './Modal'
-import { closeModal } from '../../common/modal'
+import { closeModal } from '../../helpers/modal'
 
 export default {
   props: ['options'],

@@ -4,7 +4,7 @@
       <div class="modal-wrapper">
         <div class="modal-container" @click.stop>
           <slot></slot>
-          <a class="modal-close right" @click="$emit('close')"><i class="material-icons">close</i></a>
+          <a class="modal-close right" @click="close"><i class="material-icons">close</i></a>
         </div>
       </div>
     </div>
@@ -14,9 +14,6 @@
 <script>
 export default {
   name: 'Modal',
-  data () {
-    return {}
-  },
   mounted: function () {
     document.addEventListener('keydown', (e) => {
       if (e.keyCode === 27) {

@@ -3,20 +3,20 @@
     <h2>Edit Item</h2>
     <div class="container">
       <div class="row">
-        <form class="col s12">
+        <form class="col s12" @submit.prevent="saveItem(item)">
           <div class="row">
             <div class="input-field col s6">
-              <input id="item_title" type="text" v-model="item.title" class="validate">
+              <input id="item_title" type="text" v-model="item.title" @keyup.enter="saveItem(item)" class="validate">
               <label for="item_title" class="active">Title</label>
             </div>
             <div class="input-field col s6">
-              <input id="item_type" type="text" v-model="item.type" class="validate">
+              <input id="item_type" type="text" v-model="item.type" @keyup.enter="saveItem(item)" class="validate">
               <label for="item_type" class="active">Type</label>
             </div>
           </div>
           <div class="row">
             <div class="col s12">
-              <button type="button" class="btn light-blue darken-1 waves-effect waves-light" @click="saveItem(item)">Submit</button>
+              <button class="btn light-blue darken-1 waves-effect waves-light">Submit</button>
               <a class="btn light-blue darken-1 waves-effect waves-light" @click="close">Cancel</a>
             </div>
           </div>
@@ -28,7 +28,7 @@
 
 <script>
 import Modal from './core/Modal'
-import { closeModal } from '../common/modal'
+import { closeModal } from '../helpers/modal'
 import itemsService from '@/services/itemsService'
 
 export default {

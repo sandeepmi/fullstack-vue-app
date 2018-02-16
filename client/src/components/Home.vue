@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { showAlertModal } from '../common/modal'
+import { showAlertModal } from '../helpers/modal'
 
 export default {
   name: 'Home',

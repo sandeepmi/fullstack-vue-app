@@ -13,9 +13,9 @@
 
 <script>
 import itemsService from '@/services/itemsService'
-import EditItem from './EditItem'
-import { showModal } from '../common/modal'
-import { cloneObj } from '../common/utils'
+import EditItem from './EditItemModal'
+import { showModal } from '../helpers/modal'
+import { cloneObj } from '../helpers/utils'
 import { mapState } from 'vuex'
 
 export default {
