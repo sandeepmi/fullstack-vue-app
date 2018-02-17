@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import Modal from './core/Modal'
-import { closeModal } from '../helpers/modal'
+import Modal from '../core/Modal'
+import { closeModal } from '../../helpers/modal'
 import { mapActions } from 'vuex'
 
 export default {

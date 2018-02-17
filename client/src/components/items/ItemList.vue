@@ -13,8 +13,8 @@
 
 <script>
 import EditItem from './EditItemModal'
-import { showModal } from '../helpers/modal'
-import { cloneObj } from '../helpers/utils'
+import { showModal } from '../../helpers/modal'
+import { cloneObj } from '../../helpers/utils'
 import { mapState, mapActions } from 'vuex'
 
 export default {
