@@ -1,10 +1,10 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask" @click="close">
+    <div class="modal-mask" @click="closeModal">
       <div class="modal-wrapper">
         <div class="modal-container" @click.stop>
           <slot></slot>
-          <a class="modal-close right" @click="close"><i class="material-icons">close</i></a>
+          <a class="modal-close right" @click="closeModal"><i class="material-icons">close</i></a>
         </div>
       </div>
     </div>
@@ -12,19 +12,21 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Modal',
   mounted: function () {
     document.addEventListener('keydown', (e) => {
       if (e.keyCode === 27) {
-        this.close()
+        this.closeModal()
       }
     })
   },
   methods: {
-    close: function () {
-      this.$emit('close')
-    }
+    ...mapActions([
+      'closeModal'
+    ])
   }
 }
 </script>

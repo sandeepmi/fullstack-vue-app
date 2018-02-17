@@ -57,11 +57,16 @@
 </template>
 
 <script>
-import { showAlertModal } from '../helpers/modal'
+import AlertModal from './core/AlertModal'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Home',
   methods: {
+    ...mapActions([
+      'showModal'
+    ]),
+
     showLinkInfo () {
       const options = {
         title: 'Link Message',
@@ -79,7 +84,12 @@ export default {
           }
         ]
       }
-      showAlertModal(this.$root, options)
+      this.showModal({
+        component: AlertModal,
+        props: {
+          options
+        }
+      })
     }
   }
 }

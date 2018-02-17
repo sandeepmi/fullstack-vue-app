@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import EditItem from './EditItemModal'
-import { showModal } from '../../helpers/modal'
+import EditItemModal from './EditItemModal'
 import { cloneObj } from '../../helpers/utils'
 import { mapState, mapActions } from 'vuex'
 
@@ -26,12 +25,21 @@ export default {
     this.getItems()
   },
   methods: {
+    ...mapActions([
+      'showModal'
+    ]),
+
     ...mapActions('items', [
       'getItems'
     ]),
 
     editItem (item) {
-      showModal(this.$root, EditItem, { item: cloneObj(item) })
+      this.showModal({
+        component: EditItemModal,
+        props: {
+          item: cloneObj(item)
+        }
+      })
     }
   }
 }

@@ -6,13 +6,14 @@
     </main>
     <Footer />
 
-    <component :is="modalComponent" v-bind="modalComponentProps"></component>
+    <component :is="modal.component" v-bind="modal.props"></component>
   </div>
 </template>
 
 <script>
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
@@ -20,16 +21,9 @@ export default {
     Nav,
     Footer
   },
-  data () {
-    return {
-      modalComponent: undefined,
-      modalComponentProps: {}
-    }
-  },
-  mounted () {
-    this.$root.$on('showModal', (componentInfo) => {
-      this.modalComponent = componentInfo.component
-      this.modalComponentProps = componentInfo.props
+  computed: {
+    ...mapGetters({
+      modal: 'getModal'
     })
   }
 }

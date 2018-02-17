@@ -28,7 +28,6 @@
 
 <script>
 import Modal from '../core/Modal'
-import { closeModal } from '../../helpers/modal'
 import { mapActions } from 'vuex'
 
 export default {
@@ -38,12 +37,16 @@ export default {
     Modal
   },
   methods: {
+    ...mapActions([
+      'closeModal'
+    ]),
+
     ...mapActions('items', [
       'updateItem'
     ]),
 
     close () {
-      closeModal(this.$root)
+      this.closeModal()
     },
 
     saveItem (item) {
