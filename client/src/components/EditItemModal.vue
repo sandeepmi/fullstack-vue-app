@@ -38,7 +38,7 @@ export default {
     Modal
   },
   methods: {
-    ...mapActions([
+    ...mapActions('items', [
       'updateItem'
     ]),
 

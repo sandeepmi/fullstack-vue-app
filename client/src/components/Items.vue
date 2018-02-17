@@ -19,14 +19,14 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Items',
-  computed: mapState({
+  computed: mapState('items', {
     items: state => state.items
   }),
   mounted () {
     this.getItems()
   },
   methods: {
-    ...mapActions([
+    ...mapActions('items', [
       'getItems'
     ]),
 
