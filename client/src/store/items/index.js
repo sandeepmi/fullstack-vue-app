@@ -1,7 +1,9 @@
 import itemsService from '@/services/itemsService'
+import { getErrorMsg } from '@/helpers'
 
 const state = {
-  items: []
+  items: [],
+  listViewStatus: null
 }
 
 const mutations = {
@@ -11,24 +13,32 @@ const mutations = {
   updateItem (state, item) {
     const itemIndex = state.items.findIndex(i => i._id === item._id)
     state.items.splice(itemIndex, 1, item)
+  },
+  setListViewStatus (state, status) {
+    state.listViewStatus = status
   }
 }
 
 const actions = {
   getItems ({commit}) {
-    itemsService.getItems()
-      .then(res => res.json())
+    return itemsService.getItems()
       .then(items => {
-        commit('setItems', items)
+        if (items && items.length > 0) {
+          commit('setItems', items)
+        } else {
+          const noItemsMsg = 'There are no items at this time.'
+          commit('setListViewStatus', noItemsMsg)
+        }
+      })
+      .catch(err => {
+        commit('setListViewStatus', getErrorMsg(err))
       })
   },
   updateItem ({commit}, { item, onSuccess }) {
     return itemsService.updateItem(item)
-      .then(res => {
-        if (res.ok) {
-          commit('updateItem', item)
-          onSuccess()
-        }
+      .then(() => {
+        commit('updateItem', item)
+        onSuccess()
       })
   }
 }
