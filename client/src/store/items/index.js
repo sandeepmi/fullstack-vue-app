@@ -4,7 +4,8 @@ import { getErrorMsg, itemsMsgs } from '@/helpers'
 const state = {
   items: [],
   listViewStatus: null,
-  isLoading: false
+  isLoading: false,
+  isSaving: false
 }
 
 const mutations = {
@@ -20,6 +21,9 @@ const mutations = {
   },
   setLoadingStatus (state, isLoading) {
     state.isLoading = isLoading
+  },
+  setSavingStatus (state, isSaving) {
+    state.isSaving = isSaving
   }
 }
 
@@ -41,20 +45,23 @@ const actions = {
       })
   },
   updateItem ({commit}, { item, onSuccess, onError }) {
+    commit('setSavingStatus', true)
     return itemsService.updateItem(item)
       .then(() => {
         commit('updateItem', item)
+        commit('setSavingStatus', false)
         onSuccess()
       })
-      .catch(onError)
+      .catch(err => {
+        commit('setSavingStatus', false)
+        onError(err)
+      })
   }
 }
 
-const items = {
+export default {
   namespaced: true,
   state,
   mutations,
   actions
 }
-
-export default items

@@ -14,12 +14,13 @@
               <label for="item_type" class="active">Type</label>
             </div>
           </div>
-          <div class="row">
+          <div class="row" v-if="!isSaving">
             <div class="col s12">
               <button class="btn light-blue darken-1 waves-effect waves-light">Submit</button>
               <a class="btn light-blue darken-1 waves-effect waves-light" @click="close">Cancel</a>
             </div>
           </div>
+          <Loading v-else centered="true" />
         </form>
       </div>
     </div>
@@ -28,15 +29,20 @@
 
 <script>
 import Modal from '../core/Modal'
+import Loading from '../core/Loading'
 import { closeModal, itemsMsgs, getErrorMsg } from '@/helpers'
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'EditItem',
   props: ['item'],
   components: {
-    Modal
+    Modal,
+    Loading
   },
+  computed: mapState('items', [
+    'isSaving'
+  ]),
   methods: {
     ...mapActions('items', [
       'updateItem'
