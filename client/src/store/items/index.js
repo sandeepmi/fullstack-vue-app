@@ -3,7 +3,8 @@ import { getErrorMsg, itemsMsgs } from '@/helpers'
 
 const state = {
   items: [],
-  listViewStatus: null
+  listViewStatus: null,
+  isLoading: false
 }
 
 const mutations = {
@@ -16,11 +17,15 @@ const mutations = {
   },
   setListViewStatus (state, status) {
     state.listViewStatus = status
+  },
+  setLoadingStatus (state, isLoading) {
+    state.isLoading = isLoading
   }
 }
 
 const actions = {
   getItems ({commit}) {
+    commit('setLoadingStatus', true)
     return itemsService.getItems()
       .then(items => {
         if (items && items.length > 0) {
@@ -28,9 +33,11 @@ const actions = {
         } else {
           commit('setListViewStatus', itemsMsgs.noItems)
         }
+        commit('setLoadingStatus', false)
       })
       .catch(err => {
         commit('setListViewStatus', getErrorMsg(err))
+        commit('setLoadingStatus', false)
       })
   },
   updateItem ({commit}, { item, onSuccess, onError }) {
