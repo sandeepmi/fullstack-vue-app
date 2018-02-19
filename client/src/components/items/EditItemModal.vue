@@ -6,11 +6,11 @@
         <form class="col s12" @submit.prevent="saveItem(item)">
           <div class="row">
             <div class="input-field col s6">
-              <input id="item_title" type="text" v-model="item.title" @keyup.enter="saveItem(item)" class="validate">
+              <input id="item_title" type="text" v-model="item.title" class="validate">
               <label for="item_title" class="active">Title</label>
             </div>
             <div class="input-field col s6">
-              <input id="item_type" type="text" v-model="item.type" @keyup.enter="saveItem(item)" class="validate">
+              <input id="item_type" type="text" v-model="item.type" class="validate">
               <label for="item_type" class="active">Type</label>
             </div>
           </div>
@@ -28,7 +28,7 @@
 
 <script>
 import Modal from '../core/Modal'
-import { closeModal } from '../../helpers/modal'
+import { closeModal, itemsMsgs, getErrorMsg } from '@/helpers'
 import { mapActions } from 'vuex'
 
 export default {
@@ -42,6 +42,10 @@ export default {
       'updateItem'
     ]),
 
+    ...mapActions('toasts', [
+      'addToast'
+    ]),
+
     close () {
       closeModal(this.$root)
     },
@@ -49,7 +53,20 @@ export default {
     saveItem (item) {
       this.updateItem({
         item,
-        onSuccess: () => this.close()
+        onSuccess: () => {
+          this.close()
+          this.addToast({
+            text: itemsMsgs.editSuccess,
+            type: 'success'
+          })
+        },
+        onError: err => {
+          this.close()
+          this.addToast({
+            text: getErrorMsg(err),
+            type: 'error'
+          })
+        }
       })
     }
   }

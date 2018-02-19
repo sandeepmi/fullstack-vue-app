@@ -7,18 +7,21 @@
     <Footer />
 
     <component :is="modalComponent" v-bind="modalComponentProps"></component>
+    <Toasts />
   </div>
 </template>
 
 <script>
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import Toasts from './components/core/Toasts'
 
 export default {
   name: 'App',
   components: {
     Nav,
-    Footer
+    Footer,
+    Toasts
   },
   data () {
     return {

@@ -1,5 +1,5 @@
 import itemsService from '@/services/itemsService'
-import { getErrorMsg } from '@/helpers'
+import { getErrorMsg, itemsMsgs } from '@/helpers'
 
 const state = {
   items: [],
@@ -26,20 +26,20 @@ const actions = {
         if (items && items.length > 0) {
           commit('setItems', items)
         } else {
-          const noItemsMsg = 'There are no items at this time.'
-          commit('setListViewStatus', noItemsMsg)
+          commit('setListViewStatus', itemsMsgs.noItems)
         }
       })
       .catch(err => {
         commit('setListViewStatus', getErrorMsg(err))
       })
   },
-  updateItem ({commit}, { item, onSuccess }) {
+  updateItem ({commit}, { item, onSuccess, onError }) {
     return itemsService.updateItem(item)
       .then(() => {
         commit('updateItem', item)
         onSuccess()
       })
+      .catch(onError)
   }
 }
 
