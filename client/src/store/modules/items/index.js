@@ -1,5 +1,5 @@
 import itemsService from '@/services/itemsService'
-import { getErrorMsg, itemsMsgs } from '@/helpers'
+import { getErrorMsg, messages } from '@/helpers'
 
 const state = {
   items: [],
@@ -35,7 +35,7 @@ const actions = {
         if (items && items.length > 0) {
           commit('setItems', items)
         } else {
-          commit('setListViewStatus', itemsMsgs.noItems)
+          commit('setListViewStatus', messages.items.noItems)
         }
         commit('setLoadingStatus', false)
       })

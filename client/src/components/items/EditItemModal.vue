@@ -30,7 +30,7 @@
 <script>
 import Modal from '../core/Modal'
 import Loading from '../core/Loading'
-import { closeModal, itemsMsgs, getErrorMsg } from '@/helpers'
+import { closeModal, messages, getErrorMsg } from '@/helpers'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -62,7 +62,7 @@ export default {
         onSuccess: () => {
           this.close()
           this.addToast({
-            text: itemsMsgs.editSuccess,
+            text: messages.items.editSuccess,
             type: 'success'
           })
         },

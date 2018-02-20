@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import items from './items'
-import toasts from './toasts'
+import items from './modules/items'
+import toasts from './modules/toasts'
 
 Vue.use(Vuex)
 
