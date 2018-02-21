@@ -1,4 +1,4 @@
-export default (url, options) => {
+export function fetchWrapper (url, options) {
   url = process.env.API_BASE_URL + url
 
   const request = options
@@ -8,14 +8,56 @@ export default (url, options) => {
   return request.then(handleResponse)
 }
 
+export function fetchJson (url, payload, method) {
+  return fetchWrapper(url, createOptions(payload, method))
+}
+
+export function fetchGet (url, payload) {
+  return fetchJson(url, payload)
+}
+
+export function fetchPost (url, payload) {
+  return fetchJson(url, payload, 'POST')
+}
+
+export function fetchPut (url, payload) {
+  return fetchJson(url, payload, 'PUT')
+}
+
+export function fetchDelete (url, payload) {
+  return fetchJson(url, payload, 'DELETE')
+}
+
+function createOptions (payload, method) {
+  const options = {}
+
+  if (method) {
+    options.method = method
+  }
+
+  if (payload) {
+    if (typeof payload === 'object') {
+      options.body = JSON.stringify(options.body)
+    } else {
+      options.body = payload
+    }
+
+    options.headers = {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return options
+}
+
 function handleResponse (response) {
   let contentType = response.headers.get('content-type')
+
   if (contentType.includes('application/json')) {
     return handleJSONResponse(response)
   } else if (contentType.includes('text/html')) {
     return handleTextResponse(response)
   } else {
-    // Other response types as necessary. I haven't found a need for them yet though.
     throw new Error(`Sorry, content-type ${contentType} not supported`)
   }
 }
@@ -33,6 +75,7 @@ function handleJSONResponse (response) {
       }
     })
 }
+
 function handleTextResponse (response) {
   return response.text()
     .then(text => {
