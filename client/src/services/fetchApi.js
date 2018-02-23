@@ -37,7 +37,7 @@ function createOptions (payload, method) {
 
   if (payload) {
     if (typeof payload === 'object') {
-      options.body = JSON.stringify(options.body)
+      options.body = JSON.stringify(payload)
     } else {
       options.body = payload
     }

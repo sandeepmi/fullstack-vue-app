@@ -1,6 +1,6 @@
 <template>
   <Modal @close="close">
-    <h2>Edit Item</h2>
+    <h2>{{title}}</h2>
     <div class="container">
       <div class="row">
         <form class="col s12" @submit.prevent="saveItem(item)">
@@ -40,12 +40,20 @@ export default {
     Modal,
     Loading
   },
+  data () {
+    return {
+      title: ''
+    }
+  },
   computed: mapState('items', [
     'isSaving'
   ]),
+  mounted () {
+    this.title = this.item._id ? 'Edit Item' : 'Add Item'
+  },
   methods: {
     ...mapActions('items', [
-      'updateItem'
+      'addOrUpdateItem'
     ]),
 
     ...mapActions('toasts', [
@@ -57,7 +65,7 @@ export default {
     },
 
     saveItem (item) {
-      this.updateItem({
+      this.addOrUpdateItem({
         item,
         onSuccess: () => {
           this.close()

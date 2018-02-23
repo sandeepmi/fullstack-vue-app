@@ -1,11 +1,18 @@
 <template>
   <div class="container">
-    <h1>Items</h1>
+    <h1>
+      Items
+      <a class="btn-floating light-blue darken-1" @click="addItem()">
+        <i class="material-icons">add</i>
+      </a>
+    </h1>
     <Loading v-if="isLoading" type="card" />
     <div v-else-if="items.length > 0">
       <ul class="collection">
         <li v-for="item in items" v-bind:key="item._id" class="collection-item item">
-          <a class="btn-floating light-blue darken-1 right" @click="editItem(item)"><i class="material-icons">mode_edit</i></a>
+          <a class="btn-floating light-blue darken-1 right" @click="editItem(item)">
+            <i class="material-icons">mode_edit</i>
+          </a>
           <span>{{item.title}}</span><br>
           <span>{{item.type}}</span>
         </li>
@@ -38,6 +45,14 @@ export default {
     ...mapActions('items', [
       'getItems'
     ]),
+
+    addItem (item) {
+      const newItem = {
+        title: '',
+        type: ''
+      }
+      showModal(this.$root, EditItem, { item: newItem })
+    },
 
     editItem (item) {
       showModal(this.$root, EditItem, { item: cloneObj(item) })

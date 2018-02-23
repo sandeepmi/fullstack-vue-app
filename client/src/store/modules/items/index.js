@@ -12,6 +12,9 @@ const mutations = {
   setItems (state, items) {
     state.items = items
   },
+  addItem (state, item) {
+    state.items.push(item)
+  },
   updateItem (state, item) {
     const itemIndex = state.items.findIndex(i => i._id === item._id)
     state.items.splice(itemIndex, 1, item)
@@ -44,11 +47,17 @@ const actions = {
         commit('setLoadingStatus', false)
       })
   },
-  updateItem ({commit}, { item, onSuccess, onError }) {
+  addOrUpdateItem ({commit}, { item, onSuccess, onError }) {
     commit('setSavingStatus', true)
-    return itemsService.updateItem(item)
-      .then(() => {
-        commit('updateItem', item)
+
+    const isNewItem = !item._id
+    let promise = isNewItem
+      ? itemsService.createItem(item)
+      : itemsService.updateItem(item)
+
+    promise = promise
+      .then(savedItem => {
+        isNewItem ? commit('addItem', item) : commit('updateItem', item)
         commit('setSavingStatus', false)
         onSuccess()
       })
@@ -56,6 +65,8 @@ const actions = {
         commit('setSavingStatus', false)
         onError(err)
       })
+
+    return promise
   }
 }
 
