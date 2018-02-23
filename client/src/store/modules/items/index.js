@@ -8,6 +8,12 @@ const state = {
   isSaving: false
 }
 
+const getters = {
+  itemCount: state => {
+    return state.items.length
+  }
+}
+
 const mutations = {
   setItems (state, items) {
     state.items = items
@@ -18,6 +24,10 @@ const mutations = {
   updateItem (state, item) {
     const itemIndex = state.items.findIndex(i => i._id === item._id)
     state.items.splice(itemIndex, 1, item)
+  },
+  deleteItem (state, item) {
+    const itemIndex = state.items.findIndex(i => i._id === item._id)
+    state.items.splice(itemIndex, 1)
   },
   setListViewStatus (state, status) {
     state.listViewStatus = status
@@ -57,7 +67,7 @@ const actions = {
 
     promise = promise
       .then(savedItem => {
-        isNewItem ? commit('addItem', item) : commit('updateItem', item)
+        isNewItem ? commit('addItem', savedItem) : commit('updateItem', savedItem)
         commit('setSavingStatus', false)
         onSuccess()
       })
@@ -67,12 +77,27 @@ const actions = {
       })
 
     return promise
+  },
+  deleteItem ({commit}, { item, onSuccess, onError }) {
+    item.isDeleting = true
+    commit('updateItem', item)
+    return itemsService.deleteItem(item)
+      .then(savedItem => {
+        commit('deleteItem', item)
+        onSuccess()
+      })
+      .catch(err => {
+        delete item.isDeleting
+        commit('updateItem', item)
+        onError(err)
+      })
   }
 }
 
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }

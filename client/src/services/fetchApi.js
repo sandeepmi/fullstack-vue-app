@@ -53,10 +53,10 @@ function createOptions (payload, method) {
 function handleResponse (response) {
   let contentType = response.headers.get('content-type')
 
-  if (contentType.includes('application/json')) {
-    return handleJSONResponse(response)
-  } else if (contentType.includes('text/html')) {
+  if (!contentType || contentType.includes('text/html')) {
     return handleTextResponse(response)
+  } else if (contentType.includes('application/json')) {
+    return handleJSONResponse(response)
   } else {
     throw new Error(`Sorry, content-type ${contentType} not supported`)
   }

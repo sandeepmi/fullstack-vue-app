@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <h1>
-      Items
-      <a class="btn-floating light-blue darken-1" @click="addItem()">
+      Items({{itemCount}})
+      <a class="btn-floating light-blue darken-1" @click="showAddItemView()">
         <i class="material-icons">add</i>
       </a>
     </h1>
@@ -10,9 +10,17 @@
     <div v-else-if="items.length > 0">
       <ul class="collection">
         <li v-for="item in items" v-bind:key="item._id" class="collection-item item">
-          <a class="btn-floating light-blue darken-1 right" @click="editItem(item)">
-            <i class="material-icons">mode_edit</i>
-          </a>
+          <div class="item-actions right">
+            <div v-if="!item.isDeleting">
+              <a class="btn-floating light-blue darken-1 right ml10" @click="showDeleteConfirmView(item)">
+                <i class="material-icons">delete</i>
+              </a>
+              <a class="btn-floating light-blue darken-1 right" @click="showEditItemView(item)">
+                <i class="material-icons">mode_edit</i>
+              </a>
+            </div>
+            <Loading v-else />
+          </div>
           <span>{{item.title}}</span><br>
           <span>{{item.type}}</span>
         </li>
@@ -25,28 +33,38 @@
 <script>
 import EditItem from './EditItemModal'
 import Loading from '../core/Loading'
-import { cloneObj, showModal } from '@/helpers'
-import { mapState, mapActions } from 'vuex'
+import { cloneObj, showModal, messages, getErrorMsg, showAlertModal, closeModal } from '@/helpers'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Items',
   components: {
     Loading
   },
-  computed: mapState('items', {
-    items: 'items',
-    status: 'listViewStatus',
-    isLoading: 'isLoading'
-  }),
+  computed: {
+    ...mapState('items', {
+      items: 'items',
+      status: 'listViewStatus',
+      isLoading: 'isLoading'
+    }),
+    ...mapGetters('items', [
+      'itemCount'
+    ])
+  },
   mounted () {
     this.getItems()
   },
   methods: {
     ...mapActions('items', [
-      'getItems'
+      'getItems',
+      'deleteItem'
     ]),
 
-    addItem (item) {
+    ...mapActions('toasts', [
+      'addToast'
+    ]),
+
+    showAddItemView (item) {
       const newItem = {
         title: '',
         type: ''
@@ -54,8 +72,45 @@ export default {
       showModal(this.$root, EditItem, { item: newItem })
     },
 
-    editItem (item) {
+    showEditItemView (item) {
       showModal(this.$root, EditItem, { item: cloneObj(item) })
+    },
+
+    showDeleteConfirmView (item) {
+      const confirmCallback = () => {
+        this.deleteItem({
+          item,
+          onSuccess: () => {
+            closeModal(this.$root)
+            this.addToast({
+              text: messages.items.deleteSuccess,
+              type: 'success'
+            })
+          },
+          onError: err => {
+            closeModal(this.$root)
+            this.addToast({
+              text: getErrorMsg(err),
+              type: 'error'
+            })
+          }
+        })
+      }
+
+      const options = {
+        message: 'Are you sure you want to delete?',
+        actions: [
+          {
+            label: 'Yes',
+            callback: confirmCallback
+          },
+          {
+            label: 'No',
+            cancel: true
+          }
+        ]
+      }
+      showAlertModal(this.$root, options)
     }
   }
 }

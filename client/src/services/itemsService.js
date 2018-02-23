@@ -1,4 +1,4 @@
-import { fetchGet, fetchPost, fetchPut } from '@/services/fetchApi.js'
+import { fetchGet, fetchPost, fetchPut, fetchDelete } from '@/services/fetchApi.js'
 
 export default {
   getItems () {
@@ -11,5 +11,9 @@ export default {
 
   updateItem (item) {
     return fetchPut('/items/' + item._id, item)
+  },
+
+  deleteItem (item) {
+    return fetchDelete('/items/' + item._id)
   }
 }
