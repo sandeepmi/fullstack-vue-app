@@ -1,17 +1,19 @@
-import fetch from '@/services/api.js'
+import { fetchGet, fetchPost, fetchPut, fetchDelete } from '@/services/fetchApi.js'
 
 export default {
   getItems () {
-    return fetch('/items')
+    return fetchGet('/items')
+  },
+
+  createItem (item) {
+    return fetchPost('/items', item)
   },
 
   updateItem (item) {
-    return fetch('/items/' + item._id, {
-      method: 'PUT',
-      body: JSON.stringify(item),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    return fetchPut('/items/' + item._id, item)
+  },
+
+  deleteItem (item) {
+    return fetchDelete('/items/' + item._id)
   }
 }

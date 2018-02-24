@@ -22,16 +22,19 @@
   }
 
   &.small {
-    &.centered {
-      min-height: 35px;
-    }
-
     .loading {
       border-width: 3px;
       width: 35px;
       height: 35px;
-      margin-left: -17.5px;
-      margin-top: -17.5px;
+    }
+    
+    &.centered {
+      min-height: 35px;
+
+      .loading {
+        margin-left: -17.5px;
+        margin-top: -17.5px;
+      }
     }
   }
 

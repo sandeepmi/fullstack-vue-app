@@ -8,13 +8,26 @@ const state = {
   isSaving: false
 }
 
+const getters = {
+  itemCount: state => {
+    return state.items.length
+  }
+}
+
 const mutations = {
   setItems (state, items) {
     state.items = items
   },
+  addItem (state, item) {
+    state.items.push(item)
+  },
   updateItem (state, item) {
     const itemIndex = state.items.findIndex(i => i._id === item._id)
     state.items.splice(itemIndex, 1, item)
+  },
+  deleteItem (state, item) {
+    const itemIndex = state.items.findIndex(i => i._id === item._id)
+    state.items.splice(itemIndex, 1)
   },
   setListViewStatus (state, status) {
     state.listViewStatus = status
@@ -44,16 +57,38 @@ const actions = {
         commit('setLoadingStatus', false)
       })
   },
-  updateItem ({commit}, { item, onSuccess, onError }) {
+  addOrUpdateItem ({commit}, { item, onSuccess, onError }) {
     commit('setSavingStatus', true)
-    return itemsService.updateItem(item)
-      .then(() => {
-        commit('updateItem', item)
+
+    const isNewItem = !item._id
+    let promise = isNewItem
+      ? itemsService.createItem(item)
+      : itemsService.updateItem(item)
+
+    promise = promise
+      .then(savedItem => {
+        isNewItem ? commit('addItem', savedItem) : commit('updateItem', savedItem)
         commit('setSavingStatus', false)
         onSuccess()
       })
       .catch(err => {
         commit('setSavingStatus', false)
+        onError(err)
+      })
+
+    return promise
+  },
+  deleteItem ({commit}, { item, onSuccess, onError }) {
+    item.isDeleting = true
+    commit('updateItem', item)
+    return itemsService.deleteItem(item)
+      .then(savedItem => {
+        commit('deleteItem', item)
+        onSuccess()
+      })
+      .catch(err => {
+        delete item.isDeleting
+        commit('updateItem', item)
         onError(err)
       })
   }
@@ -62,6 +97,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }

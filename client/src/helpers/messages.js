@@ -8,7 +8,8 @@ const svcErrorMsgs = {
 const messages = {
   items: {
     noItems: 'There are no items at this time.',
-    editSuccess: 'Item has been saved succesfully.'
+    editSuccess: 'Item has been saved succesfully.',
+    deleteSuccess: 'Item has been deleted succesfully.'
   }
 }
 
