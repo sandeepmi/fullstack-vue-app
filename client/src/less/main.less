@@ -1,34 +1,43 @@
-@import "materialize-overrides.less";
-
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  
-  main {
-    flex: 1 0 auto;
-  }
-
-  section {
-    margin: 50px 0;
-  }
-    
-  .material-icons {
-    &.medium { font-size: 30px; }
-    &.large { font-size: 35px; }
-  }
-
-  .page-footer {
-    padding-top: 0;
-  }
-}
-
-@import "./helpers/spacing.less";
 @import "./core/modal.less";
 @import "./core/toasts.less";
 @import "./core/loading.less";
-@import "home.less";
+@import "./core/forms.less";
+@import "nav.less";
+
+html body {
+  font-family: 'PT Sans', sans-serif;
+  background-color: #f3f3f3;
+}
+
+section {
+  margin: 50px 0;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+.card {
+  border: none;
+  border-radius: 0;
+  border-top: solid 5px #c4373e;
+}
+
+.ss-list-group {
+  border-top: solid 5px #c4373e;
+
+  .list-group-item {
+    border: none;
+    border-bottom: solid 2px #f3f3f3;
+    border-radius: 0;
+  }
+}
+
+.icon-link {
+  cursor: pointer;
+  padding: 10px;
+}

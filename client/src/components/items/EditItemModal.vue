@@ -1,29 +1,21 @@
 <template>
   <Modal @close="close">
     <h2>Edit Item</h2>
-    <div class="container">
-      <div class="row">
-        <form class="col s12" @submit.prevent="saveItem(item)">
-          <div class="row">
-            <div class="input-field col s6">
-              <input id="item_title" type="text" v-model="item.title" class="validate">
-              <label for="item_title" class="active">Title</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="item_type" type="text" v-model="item.type" class="validate">
-              <label for="item_type" class="active">Type</label>
-            </div>
-          </div>
-          <div class="row" v-if="!isSaving">
-            <div class="col s12">
-              <button class="btn light-blue darken-1 waves-effect waves-light">Submit</button>
-              <a class="btn light-blue darken-1 waves-effect waves-light" @click="close">Cancel</a>
-            </div>
-          </div>
-          <Loading v-else centered="true" />
-        </form>
-      </div>
-    </div>
+      <form @submit.prevent="saveItem(item)">
+        <div class="form-group">
+          <label for="item_title" class="sr-only">Title</label>
+          <input id="item_title" type="text" v-model="item.title" placeholder="Title" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="item_type" class="sr-only">Type</label>
+          <input id="item_type" type="text" v-model="item.type" placeholder="Type" class="form-control">
+        </div>
+        <div v-if="!isSaving">
+          <button type="submit" class="ss-btn">Submit</button>
+          <a class="ss-btn ss-btn-secondary" @click="close">Cancel</a>
+        </div>
+        <Loading v-else size="small" centered="true" />
+      </form>
   </Modal>
 </template>
 

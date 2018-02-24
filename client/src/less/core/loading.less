@@ -1,14 +1,46 @@
-.loading {
-  .card {
-    min-height: 200px;
+.loading-wrapper {
+  .loading {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #c4373e;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1.2s linear infinite;
+  }
 
-    .preloader-wrapper {
+  &.centered {
+    position: relative;
+    min-height: 50px;
+
+    .loading {
+      position: absolute;
       left: 50%;
-      margin-left: -20px;
-
-      .spinner-blue-only {
-        border-color: #039be5;
-      }
+      top: 50%;
+      margin-left: -25px;
+      margin-top: -25px;
     }
+  }
+
+  &.small {
+    &.centered {
+      min-height: 35px;
+    }
+
+    .loading {
+      border-width: 3px;
+      width: 35px;
+      height: 35px;
+      margin-left: -17.5px;
+      margin-top: -17.5px;
+    }
+  }
+
+  &.card {
+    min-height: 200px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 }

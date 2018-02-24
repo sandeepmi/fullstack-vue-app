@@ -1,10 +1,8 @@
 <template>
-  <footer class="page-footer light-blue darken-1">
-    <div class="footer-copyright">
-      <div class="container">
-        © {{copyRightYear}} Copyright Text
-        <router-link :to="{ name: 'Items' }" class="grey-text text-lighten-4 right">Items</router-link>
-      </div>
+  <footer class="footer ss-footer">
+    <div class="container">
+      <span class="copyright">© {{copyRightYear}} Copyright Text</span>
+      <span class="float-right">Place sticky footer content here.</span>
     </div>
   </footer>
 </template>

@@ -1,14 +1,22 @@
 <template>
   <header>
-    <nav class="light-blue darken-1">
+    <nav class="navbar navbar-expand-lg ss-navbar">
       <div class="container">
-        <div class="nav-wrapper">
-          <router-link :to="{ name: 'Home' }" class="brand-logo">
-            <i class="material-icons dp48 large">account_balance</i>
-          </router-link>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><router-link :to="{ name: 'Items' }">Items</router-link></li>
-            <li><router-link :to="{ name: 'Home' }">Sample</router-link></li>
+        <router-link :to="{ name: 'Home' }" class="navbar-brand">
+          <i class="material-icons dp48 large">account_balance</i>
+        </router-link>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'Items' }" class="nav-link">Items</router-link>
+            </li>
           </ul>
         </div>
       </div>

@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+require('../node_modules/bootstrap/dist/css/bootstrap.min.css')
+require('./less/main.less')
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -15,6 +18,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-
-require('../node_modules/materialize-css/dist/css/materialize.min.css')
-require('./less/main.less')
