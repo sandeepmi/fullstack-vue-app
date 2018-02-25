@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Nav />
+    <Header />
     <main>
       <router-view/>
     </main>
@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import Nav from './components/Nav'
+import Header from './components/Header'
 import Footer from './components/Footer'
 import Toasts from './components/core/Toasts'
 
 export default {
   name: 'App',
   components: {
-    Nav,
+    Header,
     Footer,
     Toasts
   },
