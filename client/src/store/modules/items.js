@@ -11,6 +11,7 @@ const state = {
 
 const getters = {
   itemCount: state => {
+    if (state.isLoading || state.listViewStatus) return ''
     return state.items.length
   }
 }
@@ -68,7 +69,7 @@ const actions = {
 
     promise = promise
       .then(savedItem => {
-        isNewItem ? commit(types.ADD_ITEM, savedItem) : commit(types.UPDATE_ITEM, savedItem)
+        isNewItem ? commit(types.ADD_ITEM, savedItem) : commit(types.UPDATE_ITEM, item)
         commit(types.SET_SAVING_STATUS, false)
         onSuccess()
       })

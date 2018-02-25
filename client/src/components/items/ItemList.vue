@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 class="my-3">
-      Items ({{itemCount}})
+      Items <span v-if="itemCount">({{itemCount}})</span>
       <a class="ss-btn float-right" @click="showAddItemView()">Add Item</a>
     </h1>
     <Loading v-if="isLoading" type="card" />
@@ -24,7 +24,7 @@
         </li>
       </ul>
     </div>
-    <div class="red-text" v-if="status" v-text="status"></div>
+    <div class="alert alert-danger" v-if="status" v-text="status"></div>
   </div>
 </template>
 
@@ -76,21 +76,17 @@ export default {
 
     showDeleteConfirmView (item) {
       const confirmCallback = () => {
+        closeModal(this.$root)
+
         this.deleteItem({
           item,
           onSuccess: () => {
-            closeModal(this.$root)
-            this.addToast({
-              text: messages.items.deleteSuccess,
-              type: 'success'
-            })
+            const msg = messages.items.deleteSuccess
+            this.addToast({ text: msg, type: 'success' })
           },
           onError: err => {
-            closeModal(this.$root)
-            this.addToast({
-              text: getErrorMsg(err),
-              type: 'error'
-            })
+            const msg = getErrorMsg(err)
+            this.addToast({ text: msg, type: 'error' })
           }
         })
       }

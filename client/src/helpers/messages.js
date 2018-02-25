@@ -2,6 +2,7 @@ const svcErrorMsgs = {
   500: 'Error occurred, please try again later',
   404: 'Site unavailable, please try again later',
   401: 'Unauthorized',
+  'network': 'Network error, please try again later',
   'default': 'Unexpected error occurred, please try again later'
 }
 
@@ -16,8 +17,15 @@ const messages = {
 export { messages }
 
 export function getErrorMsg (svcResponse) {
+  // no error
   if (svcResponse.ok) return null
 
+  // network error
+  if (svcResponse.toString().includes('TypeError:')) {
+    return svcErrorMsgs.network
+  }
+
+  // http error with status code
   const msg = svcErrorMsgs[svcResponse.status]
 
   return msg || svcErrorMsgs.default
