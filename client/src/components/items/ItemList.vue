@@ -2,9 +2,7 @@
   <div class="container">
     <h1 class="my-3">
       Items ({{itemCount}})
-      <a class="icon-link" @click="showAddItemView()">
-        <i class="material-icons">add</i>
-      </a>
+      <a class="ss-btn float-right" @click="showAddItemView()">Add Item</a>
     </h1>
     <Loading v-if="isLoading" type="card" />
     <div v-else-if="items.length > 0">
