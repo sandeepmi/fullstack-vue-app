@@ -1,5 +1,6 @@
 import itemsService from '@/services/itemsService'
 import { getErrorMsg, messages } from '@/helpers'
+import * as types from '../mutation-types'
 
 const state = {
   items: [],
@@ -15,50 +16,50 @@ const getters = {
 }
 
 const mutations = {
-  setItems (state, items) {
+  [types.SET_ITEMS] (state, items) {
     state.items = items
   },
-  addItem (state, item) {
+  [types.ADD_ITEM] (state, item) {
     state.items.push(item)
   },
-  updateItem (state, item) {
+  [types.UPDATE_ITEM] (state, item) {
     const itemIndex = state.items.findIndex(i => i._id === item._id)
     state.items.splice(itemIndex, 1, item)
   },
-  deleteItem (state, item) {
+  [types.DELETE_ITEM] (state, item) {
     const itemIndex = state.items.findIndex(i => i._id === item._id)
     state.items.splice(itemIndex, 1)
   },
-  setListViewStatus (state, status) {
+  [types.SET_LIST_VIEW_STATUS] (state, status) {
     state.listViewStatus = status
   },
-  setLoadingStatus (state, isLoading) {
+  [types.SET_LOADING_STATUS] (state, isLoading) {
     state.isLoading = isLoading
   },
-  setSavingStatus (state, isSaving) {
+  [types.SET_SAVING_STATUS] (state, isSaving) {
     state.isSaving = isSaving
   }
 }
 
 const actions = {
-  getItems ({commit}) {
-    commit('setLoadingStatus', true)
+  getItems ({ commit }) {
+    commit(types.SET_LOADING_STATUS, true)
     return itemsService.getItems()
       .then(items => {
         if (items && items.length > 0) {
-          commit('setItems', items)
+          commit(types.SET_ITEMS, items)
         } else {
-          commit('setListViewStatus', messages.items.noItems)
+          commit(types.SET_LIST_VIEW_STATUS, messages.items.noItems)
         }
-        commit('setLoadingStatus', false)
+        commit(types.SET_LOADING_STATUS, false)
       })
       .catch(err => {
-        commit('setListViewStatus', getErrorMsg(err))
-        commit('setLoadingStatus', false)
+        commit(types.SET_LIST_VIEW_STATUS, getErrorMsg(err))
+        commit(types.SET_LOADING_STATUS, false)
       })
   },
-  addOrUpdateItem ({commit}, { item, onSuccess, onError }) {
-    commit('setSavingStatus', true)
+  addOrUpdateItem ({ commit }, { item, onSuccess, onError }) {
+    commit(types.SET_SAVING_STATUS, true)
 
     const isNewItem = !item._id
     let promise = isNewItem
@@ -67,28 +68,29 @@ const actions = {
 
     promise = promise
       .then(savedItem => {
-        isNewItem ? commit('addItem', savedItem) : commit('updateItem', savedItem)
-        commit('setSavingStatus', false)
+        isNewItem ? commit(types.ADD_ITEM, savedItem) : commit(types.UPDATE_ITEM, savedItem)
+        commit(types.SET_SAVING_STATUS, false)
         onSuccess()
       })
       .catch(err => {
-        commit('setSavingStatus', false)
+        commit(types.SET_SAVING_STATUS, false)
         onError(err)
       })
 
     return promise
   },
-  deleteItem ({commit}, { item, onSuccess, onError }) {
+  deleteItem ({ commit }, { item, onSuccess, onError }) {
     item.isDeleting = true
-    commit('updateItem', item)
+    commit(types.UPDATE_ITEM, item)
+
     return itemsService.deleteItem(item)
-      .then(savedItem => {
-        commit('deleteItem', item)
+      .then(() => {
+        commit(types.DELETE_ITEM, item)
         onSuccess()
       })
       .catch(err => {
         delete item.isDeleting
-        commit('updateItem', item)
+        commit(types.UPDATE_ITEM, item)
         onError(err)
       })
   }

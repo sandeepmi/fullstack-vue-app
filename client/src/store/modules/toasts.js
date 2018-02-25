@@ -1,3 +1,5 @@
+import * as types from '../mutation-types'
+
 let id = 0
 
 const state = {
@@ -5,10 +7,10 @@ const state = {
 }
 
 const mutations = {
-  addToast (state, toast) {
+  [types.ADD_TOAST] (state, toast) {
     state.toasts.push(toast)
   },
-  removeToast (state, toast) {
+  [types.REMOVE_TOAST] (state, toast) {
     state.toasts = state.toasts.filter(t => t.id !== toast.id)
   }
 }
@@ -19,14 +21,14 @@ const actions = {
     toast.dismissAfter = toast.dismissAfter || 5000
     toast.type = toast.type || 'info'
 
-    commit('addToast', toast)
+    commit(types.ADD_TOAST, toast)
 
     setTimeout(() => {
-      commit('removeToast', toast)
+      commit(types.REMOVE_TOAST, toast)
     }, toast.dismissAfter)
   },
   removeToast ({commit}, toast) {
-    commit('removeToast', toast)
+    commit(types.REMOVE_TOAST, toast)
   }
 }
 
