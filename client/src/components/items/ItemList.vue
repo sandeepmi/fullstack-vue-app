@@ -19,8 +19,8 @@
             </div>
             <Loading v-else size="small" />
           </div>
-          <span>{{item.title}}</span><br>
-          <span>{{item.type}}</span>
+          <h5 class="mb-0 text-truncate">{{item.title}}</h5>
+          <div class="text-muted">{{item.type}}</div>
         </li>
       </ul>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="container page-home">
-    <section>
+    <section class="mt-3">
       <div class="row">
         <div class="col-md">
           <h1>Home</h1>

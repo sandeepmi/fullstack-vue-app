@@ -2,7 +2,7 @@
   <footer class="footer ss-footer">
     <div class="container">
       <span class="copyright">© {{copyRightYear}} Copyright Text</span>
-      <span class="float-right">Place sticky footer content here.</span>
+      <span class="float-right">Place footer content here.</span>
     </div>
   </footer>
 </template>
