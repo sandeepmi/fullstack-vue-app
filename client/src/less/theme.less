@@ -1,0 +1,76 @@
+@base-color: #c4373e;
+@base-bg-text-color: rgba(255,255,255,.8);
+@light-gray: #f3f3f3;
+@dark-gray: #686565;
+@dark-gray-bg-text-color: #eeeeee;
+@white: #ffffff;
+
+.ss-border {
+  border: none;
+  border-radius: 0;
+  border-top: solid 5px @base-color;
+}
+
+.ss-form-control-border {
+  border: none;
+  border-radius: 0;
+  border-left: solid 3px @base-color;
+}
+
+.ss-btn {
+  display: inline-block;
+  width: 120px;
+  height: 36px;
+  padding: 0px 5px;
+  text-align: center;
+  vertical-align: middle;
+  color: @base-bg-text-color !important;
+  font-size: 15px;
+  line-height: 38px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: @base-color none repeat scroll 0% 0% / auto padding-box border-box;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out 0s;
+  perspective-origin: 60px 18px;
+  transform-origin: 60px 18px;
+
+  &.btn-secondary {
+    background-color: @dark-gray;
+    color: darken(@white, 10%) !important;
+
+    &:hover {
+      background-color: darken(@dark-gray, 10%);
+    }
+  }
+
+  &:hover {
+    background-color: darken(@base-color, 10%);
+    color: @white !important;
+  }
+}
+
+button, .btn {
+  .ss-btn
+}
+
+.card {
+  .ss-border
+}
+
+.list-group {
+  .list-group-item {
+    border: none;
+    border-bottom: solid 2px @light-gray;
+    border-radius: 0;
+  }
+
+  .ss-border
+}

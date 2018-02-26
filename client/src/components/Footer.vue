@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer ss-footer">
+  <footer class="footer">
     <div class="container">
       <span class="copyright">© {{copyRightYear}} Copyright Text</span>
       <span class="float-right">Place footer content here.</span>

@@ -1,7 +1,9 @@
-.ss-navbar {
+@import "theme.less";
+
+.navbar {
   min-height: 60px;
   padding: 0;
-  background-color: #c4373e;
+  background-color: @base-color;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
 
   .navbar-brand {
@@ -15,17 +17,21 @@
 
   .nav-link {
     text-transform: uppercase;
+    font-size: 1.1rem;
+    line-height: 1.1rem;
   }
 }
 
-.ss-navbar, .ss-footer {
-  color: #f1c8cd;
+.navbar, .footer {
+  color: @base-bg-text-color;
 
-  a {
-    color: #f1c8cd;
+  .navbar-nav {
+    a.nav-link {
+      color: @base-bg-text-color;
 
-    &:hover, &.router-link-exact-active {
-      color: #ffffff !important;
+      &:hover, &.router-link-exact-active {
+        color: @white !important;
+      }
     }
   }
 }
@@ -45,7 +51,7 @@ body {
   width: 100%;
   height: 45px; /* Set the fixed height of the footer here */
   line-height: 45px; /* Vertically center the text there */
-  background-color: #c4373e;
+  background-color: @base-color;
 }
 
 /* overwrite bootstrap default

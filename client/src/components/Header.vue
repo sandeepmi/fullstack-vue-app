@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-md navbar-dark ss-navbar">
+    <nav class="navbar navbar-expand-md navbar-dark">
       <div class="container">
         <router-link :to="{ name: 'Home' }" class="navbar-brand">
           <i class="material-icons dp48 large">account_balance</i>

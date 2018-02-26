@@ -1,53 +1,15 @@
+@import "../theme.less";
+
 .form-control {
-  border: none;
-  border-radius: 0;
-  border-left: solid 3px #c4373e;
   height: 45px;
-  background-color: #f8f6f6;
+  background-color: @light-gray;
 
   &:focus {
     box-shadow: none;
-    background-color: #e6e1e1;
-    border-color: #c4373e;
-  }
-}
+    background-color: darken(@light-gray, 3%);
 
-.ss-btn {
-  display: inline-block;
-  width: 120px;
-  height: 36px;
-  padding: 0px 5px;
-  text-align: center;
-  vertical-align: middle;
-  color: #f1c8cd !important;
-  font-size: 15px;
-  line-height: 36px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  background: #c4373e none repeat scroll 0% 0% / auto padding-box border-box;
-  border: none;
-  border-radius: 2px;
-  outline: none;
-  overflow: hidden;
-  cursor: pointer;
-  user-select: none;
-  box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px;
-  box-sizing: border-box;
-  transition: all 0.3s ease-out 0s;
-  perspective-origin: 60px 18px;
-  transform-origin: 60px 18px;
-
-  &.ss-btn-secondary {
-    background-color: #686565;
-    color: #eeeeee !important;
-
-    &:hover {
-      background-color: #181717;
-    }
+    .ss-form-control-border
   }
 
-  &:hover {
-    background-color: #97040b;
-    color: #ffffff !important;
-  }
+  .ss-form-control-border
 }

@@ -2,11 +2,11 @@
   <div class="container">
     <h1 class="my-3">
       Items <span v-if="itemCount">({{itemCount}})</span>
-      <a class="ss-btn float-right" @click="showAddItemView()">Add Item</a>
+      <a class="btn float-right" @click="showAddItemView()">Add Item</a>
     </h1>
     <Loading v-if="isLoading" type="card" />
-    <div v-else-if="items.length > 0">
-      <ul class="list-group ss-list-group">
+    <div v-else-if="itemCount > 0">
+      <ul class="list-group">
         <li v-for="item in items" v-bind:key="item._id" class="list-group-item item">
           <div class="item-actions float-right mt-1">
             <div v-if="!item.isDeleting">

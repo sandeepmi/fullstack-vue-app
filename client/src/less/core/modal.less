@@ -1,3 +1,5 @@
+@import "../theme.less";
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -18,25 +20,22 @@
 .modal-container {
   width: 600px;
   margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
+  padding: 20px 25px;
+  background-color: @white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   position: relative;
-  border-top: solid 5px #c4373e;
-}
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
+  @media (max-width: 767.98px) {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .ss-border
 }
 
 .modal-body {
   margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
 }
 
 .modal-close {
@@ -67,11 +66,4 @@
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-}
-
-// responsive styles
-@media only screen and (max-width: 768px) {
-  .modal-container {
-    width: 90%;
-  }
 }

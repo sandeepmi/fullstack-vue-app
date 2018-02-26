@@ -11,8 +11,8 @@
           <input id="item_type" type="text" v-model="item.type" placeholder="Type" class="form-control">
         </div>
         <div v-if="!isSaving">
-          <button type="submit" class="ss-btn">Submit</button>
-          <a class="ss-btn ss-btn-secondary" @click="close">Cancel</a>
+          <button type="submit">Submit</button>
+          <a class="btn btn-secondary" @click="close">Cancel</a>
         </div>
         <Loading v-else size="small" centered="true" />
       </form>

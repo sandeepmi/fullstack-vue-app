@@ -1,3 +1,4 @@
+@import "theme.less";
 @import "./core/modal.less";
 @import "./core/toasts.less";
 @import "./core/loading.less";
@@ -6,7 +7,7 @@
 
 html body {
   font-family: 'PT Sans', sans-serif;
-  background-color: #f3f3f3;
+  background-color: @light-gray;
 }
 
 section {
@@ -21,23 +22,16 @@ h2 {
   font-size: 1.5rem;
 }
 
-.card {
-  border: none;
-  border-radius: 0;
-  border-top: solid 5px #c4373e;
-}
-
-.ss-list-group {
-  border-top: solid 5px #c4373e;
-
-  .list-group-item {
-    border: none;
-    border-bottom: solid 2px #f3f3f3;
-    border-radius: 0;
-  }
-}
-
-.icon-link {
+#app main a {
   cursor: pointer;
-  padding: 10px;
+  color: lighten(@base-color, 10%);
+
+  &:hover {
+    color: @base-color;
+  }
+
+  &.icon-link {
+    padding: 10px;
+    color: @dark-gray;
+  }
 }
