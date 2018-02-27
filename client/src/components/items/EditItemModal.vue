@@ -4,7 +4,7 @@
       <form @submit.prevent="saveItem(item)">
         <div class="form-group">
           <label for="item_title" class="sr-only">Title</label>
-          <input id="item_title" type="text" v-model="item.title" placeholder="Title" class="form-control">
+          <input id="item_title" type="text" v-model="item.title" ref="inputTitle" placeholder="Title" class="form-control">
         </div>
         <div class="form-group">
           <label for="item_type" class="sr-only">Type</label>
@@ -41,7 +41,11 @@ export default {
     'isSaving'
   ]),
   mounted () {
+    // set modal title
     this.title = this.item._id ? 'Edit Item' : 'Add Item'
+
+    // set default focus
+    this.$refs.inputTitle.focus()
   },
   methods: {
     ...mapActions('items', [
