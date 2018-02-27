@@ -4,7 +4,7 @@
     <p class="mt0">{{options.message}}</p>
     <div v-if="options.actions">
       <span v-for="action in options.actions" v-bind:key="action.label" class="mr-2">
-        <button @click="action.cancel ? close() : action.callback()">{{action.label}}</button>
+        <button class="btn" @click="action.cancel ? close() : action.callback()">{{action.label}}</button>
       </span>
     </div>
   </Modal>

@@ -1,42 +1,37 @@
 @import "theme.less";
 
+/* Header
+-------------------------------------------------- */
 .navbar {
-  min-height: 60px;
+  min-height: 55px;
   padding: 0;
   background-color: @base-color;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
 
   .navbar-brand {
     padding: 0;
-    margin: 10px 0 0;
+    margin: 0;
+    top: 9px;
+    position: relative;
 
     i {
       font-size: 45px;
+      line-height: 30px;
     }
   }
 
   .nav-link {
     text-transform: uppercase;
-    font-size: 1.1rem;
-    line-height: 1.1rem;
+    font-size: 1rem;
+    line-height: 1rem;
   }
-}
-
-.navbar, .footer {
-  color: @base-bg-text-color;
 
   .navbar-nav {
-    a.nav-link {
-      color: @base-bg-text-color;
-
-      &:hover, &.router-link-exact-active {
-        color: @white !important;
-      }
-    }
+    margin-right: -0.5rem;
   }
 }
 
-/* Sticky footer styles
+/* Footer - Sticky footer
 -------------------------------------------------- */
 html {
   position: relative;
@@ -52,6 +47,23 @@ body {
   height: 45px; /* Set the fixed height of the footer here */
   line-height: 45px; /* Vertically center the text there */
   background-color: @base-color;
+  font-size: 0.9rem;
+}
+
+/* Header & Footer - Common styles
+-------------------------------------------------- */
+.navbar, .footer {
+  color: @base-bg-text-color;
+
+  .navbar-nav {
+    a.nav-link {
+      color: @base-bg-text-color;
+
+      &:hover, &.router-link-exact-active {
+        color: @white !important;
+      }
+    }
+  }
 }
 
 /* overwrite bootstrap default

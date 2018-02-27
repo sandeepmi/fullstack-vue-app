@@ -14,6 +14,8 @@ section {
   margin: 50px 0;
 }
 
+/* Headers
+-------------------------------------------------- */
 h1 {
   font-size: 2rem;
 }
@@ -22,6 +24,12 @@ h2 {
   font-size: 1.5rem;
 }
 
+.h5, h5 {
+  font-size: 1.1rem;
+}
+
+/* Anchor tags
+-------------------------------------------------- */
 #app main a {
   cursor: pointer;
   color: lighten(@base-color, 10%);
@@ -34,4 +42,36 @@ h2 {
     padding: 10px;
     color: @dark-gray;
   }
+}
+
+/* Buttons
+-------------------------------------------------- */
+.btn {
+  .ss-btn
+}
+
+.btn-secondary {
+  background-color: @dark-gray;
+
+  &:hover {
+    background-color: darken(@dark-gray, 10%);
+  }
+}
+
+/* Cards
+-------------------------------------------------- */
+.card {
+  .ss-border
+}
+
+/* Lists
+-------------------------------------------------- */
+.list-group {
+  .list-group-item {
+    border: none;
+    border-bottom: solid 2px @light-gray;
+    border-radius: 0;
+  }
+
+  .ss-border
 }

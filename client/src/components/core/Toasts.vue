@@ -1,6 +1,6 @@
 <template>
   <transition-group name="toast" tag="div" class="toasts-container">
-    <div v-for="toast in toasts" v-bind:key="toast.id" :class="['vue-toast', 'toast-' + toast.type]">
+    <div v-for="toast in toasts" v-bind:key="toast.id" :class="['toast', 'toast-' + toast.type]">
       {{toast.text}}
       <a class="toast-close right" @click="removeToast(toast)"><i class="material-icons">close</i></a>
     </div>

@@ -27,7 +27,7 @@
   text-align: center;
   vertical-align: middle;
   color: @base-bg-text-color !important;
-  font-size: 15px;
+  font-size: 0.9rem;
   line-height: 38px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -44,35 +44,8 @@
   perspective-origin: 60px 18px;
   transform-origin: 60px 18px;
 
-  &.btn-secondary {
-    background-color: @dark-gray;
-    color: darken(@white, 10%) !important;
-
-    &:hover {
-      background-color: darken(@dark-gray, 10%);
-    }
-  }
-
   &:hover {
     background-color: darken(@base-color, 10%);
     color: @white !important;
   }
-}
-
-button, .btn {
-  .ss-btn
-}
-
-.card {
-  .ss-border
-}
-
-.list-group {
-  .list-group-item {
-    border: none;
-    border-bottom: solid 2px @light-gray;
-    border-radius: 0;
-  }
-
-  .ss-border
 }
