@@ -29,20 +29,32 @@
 
     <section>
       <div class="row">
-        <div class="col-md text-center">
-          <i class="material-icons medium">insert_emoticon</i>
-          <h5>Smiley</h5>
-          <p class="light center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="col-md">
+          <div class="card">
+            <div class="card-body text-center">
+              <i class="material-icons medium">insert_emoticon</i>
+              <h5>Smiley</h5>
+              <p class="light center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+          </div>
         </div>
-        <div class="col-md text-center">
-          <i class="material-icons medium">insert_emoticon</i>
-          <h5>Smiley</h5>
-          <p class="light center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="col-md">
+          <div class="card">
+            <div class="card-body text-center">
+              <i class="material-icons medium">insert_emoticon</i>
+              <h5>Smiley</h5>
+              <p class="light center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+          </div>
         </div>
-        <div class="col-md text-center">
-          <i class="material-icons medium">insert_emoticon</i>
-          <h5>Smiley</h5>
-          <p class="light center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="col-md">
+          <div class="card">
+            <div class="card-body text-center">
+              <i class="material-icons medium">insert_emoticon</i>
+              <h5>Smiley</h5>
+              <p class="light center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -59,7 +71,7 @@ export default {
     showLinkInfo () {
       const options = {
         title: 'Link Message',
-        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         actions: [
           {
             label: 'Yes',
