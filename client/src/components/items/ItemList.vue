@@ -100,7 +100,8 @@ export default {
           },
           {
             label: 'No',
-            cancel: true
+            cancel: true,
+            cssClass: 'btn-secondary'
           }
         ]
       }
