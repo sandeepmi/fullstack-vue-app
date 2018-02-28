@@ -1,10 +1,10 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask" @click="close">
+    <div class="modal-mask" @click="closeIfActionNotRequired">
       <div class="modal-wrapper">
         <div class="modal-container" :style="modalStyle" @click.stop>
           <slot></slot>
-          <a class="modal-close right" @click="close"><i class="material-icons">close</i></a>
+          <a v-if="!options.forceAction" class="modal-close right" @click="close"><i class="material-icons">close</i></a>
         </div>
       </div>
     </div>
@@ -34,13 +34,19 @@ export default {
   mounted: function () {
     document.addEventListener('keydown', (e) => {
       if (e.keyCode === 27) {
-        this.close()
+        this.closeIfActionNotRequired()
       }
     })
   },
   methods: {
     close: function () {
       this.$emit('close')
+    },
+    closeIfActionNotRequired: function () {
+      const { forceAction } = this.options || {}
+      if (forceAction) return
+
+      this.close()
     }
   }
 }

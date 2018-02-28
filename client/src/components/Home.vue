@@ -84,7 +84,8 @@ export default {
             cancel: true
           }
         ],
-        width: '500px'
+        width: '500px',
+        forceAction: true
       }
       showAlertModal(this.$root, options)
     }
