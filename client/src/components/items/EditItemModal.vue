@@ -1,5 +1,5 @@
 <template>
-  <Modal @close="close">
+  <Modal :options="options" @close="close">
     <h2>{{title}}</h2>
       <form @submit.prevent="saveItem(item)">
         <div class="form-group">
@@ -34,7 +34,10 @@ export default {
   },
   data () {
     return {
-      title: ''
+      title: '',
+      options: {
+        width: '400px'
+      }
     }
   },
   computed: mapState('items', [

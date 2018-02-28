@@ -1,5 +1,5 @@
 <template>
-  <Modal @close="close">
+  <Modal :options="options" @close="close">
     <h2 v-if="options.title">{{options.title}}</h2>
     <p class="mt0">{{options.message}}</p>
     <div v-if="options.actions">
@@ -18,6 +18,10 @@ export default {
   props: ['options'],
   components: {
     Modal
+  },
+  created () {
+    // set default width
+    this.options.width = this.options.width || '350px'
   },
   methods: {
     close () {

@@ -83,7 +83,8 @@ export default {
             label: 'No',
             cancel: true
           }
-        ]
+        ],
+        width: '500px'
       }
       showAlertModal(this.$root, options)
     }
