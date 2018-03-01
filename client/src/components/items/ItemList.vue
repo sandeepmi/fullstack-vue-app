@@ -4,27 +4,29 @@
       Items <span v-if="itemCount">({{itemCount}})</span>
       <a class="btn float-right" @click="showAddItemView()">Add Item</a>
     </h1>
-    <Loading v-if="isLoading" type="card" />
-    <div v-else-if="itemCount > 0">
-      <ul class="list-group">
-        <li v-for="item in items" v-bind:key="item._id" class="list-group-item item">
-          <div class="item-actions float-right mt-1">
-            <div v-if="!item.isDeleting">
-              <a class="float-right icon-link pt-2" @click="showDeleteConfirmView(item)">
-                <i class="material-icons">delete</i>
-              </a>
-              <a class="float-right icon-link pt-2" @click="showEditItemView(item)">
-                <i class="material-icons">mode_edit</i>
-              </a>
+    <transition name="fade" mode="out-in">
+      <Loading v-if="isLoading" type="card" />
+      <div v-else-if="itemCount > 0">
+        <ul class="list-group">
+          <li v-for="item in items" v-bind:key="item._id" class="list-group-item item">
+            <div class="item-actions float-right mt-1">
+              <div v-if="!item.isDeleting">
+                <a class="float-right icon-link pt-2" @click="showDeleteConfirmView(item)">
+                  <i class="material-icons">delete</i>
+                </a>
+                <a class="float-right icon-link pt-2" @click="showEditItemView(item)">
+                  <i class="material-icons">mode_edit</i>
+                </a>
+              </div>
+              <Loading v-else size="small" />
             </div>
-            <Loading v-else size="small" />
-          </div>
-          <h5 class="mb-0 text-truncate">{{item.title}}</h5>
-          <div class="text-muted">{{item.type}}</div>
-        </li>
-      </ul>
-    </div>
-    <div class="alert alert-danger" v-if="status" v-text="status"></div>
+            <h5 class="mb-0 text-truncate">{{item.title}}</h5>
+            <div class="text-muted">{{item.type}}</div>
+          </li>
+        </ul>
+      </div>
+      <div class="alert alert-danger" v-if="status" v-text="status"></div>
+    </transition>
   </div>
 </template>
 

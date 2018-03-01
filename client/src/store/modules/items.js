@@ -1,5 +1,5 @@
 import itemsService from '@/services/itemsService'
-import { getErrorMsg, messages } from '@/helpers'
+import { getErrorMsg, messages, delay, cancelDelayedAction } from '@/helpers'
 import * as types from '../mutation-types'
 
 const state = {
@@ -44,19 +44,23 @@ const mutations = {
 
 const actions = {
   getItems ({ commit }) {
-    commit(types.SET_LOADING_STATUS, true)
+    // delay show loading
+    const delayId = delay(() => commit(types.SET_LOADING_STATUS, true))
+
     return itemsService.getItems()
       .then(items => {
+        cancelDelayedAction(delayId)
+        commit(types.SET_LOADING_STATUS, false)
+
         if (items && items.length > 0) {
           commit(types.SET_ITEMS, items)
         } else {
           commit(types.SET_LIST_VIEW_STATUS, messages.items.noItems)
         }
-        commit(types.SET_LOADING_STATUS, false)
       })
       .catch(err => {
-        commit(types.SET_LIST_VIEW_STATUS, getErrorMsg(err))
         commit(types.SET_LOADING_STATUS, false)
+        commit(types.SET_LIST_VIEW_STATUS, getErrorMsg(err))
       })
   },
   addOrUpdateItem ({ commit }, { item, onSuccess, onError }) {
