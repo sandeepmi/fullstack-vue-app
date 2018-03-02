@@ -60,10 +60,6 @@ export default {
       'deleteItem'
     ]),
 
-    ...mapActions('toasts', [
-      'addToast'
-    ]),
-
     showAddItemView (item) {
       const newItem = {
         title: '',

@@ -55,10 +55,6 @@ export default {
       'addOrUpdateItem'
     ]),
 
-    ...mapActions('toasts', [
-      'addToast'
-    ]),
-
     close () {
       closeModal(this.$root)
     },

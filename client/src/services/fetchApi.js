@@ -1,3 +1,6 @@
+require('es6-promise').polyfill()
+require('isomorphic-fetch')
+
 export function fetchWrapper (url, options) {
   url = process.env.API_BASE_URL + url
 
