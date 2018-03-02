@@ -22,7 +22,7 @@
 <script>
 import Modal from '../core/Modal'
 import Loading from '../core/Loading'
-import { closeModal, messages, getErrorMsg } from '@/helpers'
+import { closeModal, messages, showToast } from '@/helpers'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -64,23 +64,11 @@ export default {
     },
 
     saveItem (item) {
-      this.addOrUpdateItem({
-        item,
-        onSuccess: () => {
+      this.addOrUpdateItem(item)
+        .then(error => {
           this.close()
-          this.addToast({
-            text: messages.items.editSuccess,
-            type: 'success'
-          })
-        },
-        onError: err => {
-          this.close()
-          this.addToast({
-            text: getErrorMsg(err),
-            type: 'error'
-          })
-        }
-      })
+          showToast(error, messages.items.editSuccess)
+        })
     }
   }
 }

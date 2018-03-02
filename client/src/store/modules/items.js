@@ -1,5 +1,5 @@
 import itemsService from '@/services/itemsService'
-import { getErrorMsg, messages, delay, cancelDelayedAction } from '@/helpers'
+import { getErrorMsg, messages, delay, cancelDelayedAction, promiseResult } from '@/helpers'
 import * as types from '../mutation-types'
 
 const state = {
@@ -43,61 +43,55 @@ const mutations = {
 }
 
 const actions = {
-  getItems ({ commit }) {
-    // delay show loading
+  async getItems ({ commit }) {
+    // show loading with delay
     const delayId = delay(() => commit(types.SET_LOADING_STATUS, true))
 
-    return itemsService.getItems()
-      .then(items => {
-        cancelDelayedAction(delayId)
-        commit(types.SET_LOADING_STATUS, false)
+    const [error, items] = await promiseResult(itemsService.getItems())
 
-        if (items && items.length > 0) {
-          commit(types.SET_ITEMS, items)
-        } else {
-          commit(types.SET_LIST_VIEW_STATUS, messages.items.noItems)
-        }
-      })
-      .catch(err => {
-        commit(types.SET_LOADING_STATUS, false)
-        commit(types.SET_LIST_VIEW_STATUS, getErrorMsg(err))
-      })
+    if (!error) {
+      if (items && items.length > 0) {
+        commit(types.SET_ITEMS, items)
+      } else {
+        commit(types.SET_LIST_VIEW_STATUS, messages.items.noItems)
+      }
+    } else {
+      commit(types.SET_LIST_VIEW_STATUS, getErrorMsg(error))
+    }
+
+    // hide loading
+    cancelDelayedAction(delayId)
+    commit(types.SET_LOADING_STATUS, false)
   },
-  addOrUpdateItem ({ commit }, { item, onSuccess, onError }) {
+  async addOrUpdateItem ({ commit }, item) {
     commit(types.SET_SAVING_STATUS, true)
 
     const isNewItem = !item._id
-    let promise = isNewItem
-      ? itemsService.createItem(item)
-      : itemsService.updateItem(item)
+    const [error, savedItem] = isNewItem
+      ? await promiseResult(itemsService.createItem(item))
+      : await promiseResult(itemsService.updateItem(item))
 
-    promise = promise
-      .then(savedItem => {
-        isNewItem ? commit(types.ADD_ITEM, savedItem) : commit(types.UPDATE_ITEM, item)
-        commit(types.SET_SAVING_STATUS, false)
-        onSuccess()
-      })
-      .catch(err => {
-        commit(types.SET_SAVING_STATUS, false)
-        onError(err)
-      })
+    if (!error) {
+      isNewItem ? commit(types.ADD_ITEM, savedItem) : commit(types.UPDATE_ITEM, item)
+    }
 
-    return promise
+    commit(types.SET_SAVING_STATUS, false)
+
+    return error
   },
-  deleteItem ({ commit }, { item, onSuccess, onError }) {
+  async deleteItem ({ commit }, item) {
     item.isDeleting = true
     commit(types.UPDATE_ITEM, item)
 
-    return itemsService.deleteItem(item)
-      .then(() => {
-        commit(types.DELETE_ITEM, item)
-        onSuccess()
-      })
-      .catch(err => {
-        delete item.isDeleting
-        commit(types.UPDATE_ITEM, item)
-        onError(err)
-      })
+    const [error] = await promiseResult(itemsService.deleteItem(item))
+    if (!error) {
+      commit(types.DELETE_ITEM, item)
+    } else {
+      delete item.isDeleting
+      commit(types.UPDATE_ITEM, item)
+    }
+
+    return error
   }
 }
 

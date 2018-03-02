@@ -1,3 +1,6 @@
+import { getErrorMsg } from '@/helpers'
+import store from '../store'
+
 export function cloneObj (obj) {
   return JSON.parse(JSON.stringify(obj))
 }
@@ -19,4 +22,19 @@ export function randomInt (min, max) {
   console.log('random number', randomNum)
 
   return randomNum
+}
+
+export function promiseResult (promise) {
+  return promise.then(data => {
+    return [null, data]
+  })
+    .catch(err => [err])
+}
+
+export function showToast (error, successMsg) {
+  const toast = error
+    ? { type: 'error', text: getErrorMsg(error) }
+    : { type: 'success', text: successMsg }
+
+  store.dispatch('toasts/addToast', toast)
 }

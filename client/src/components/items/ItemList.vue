@@ -33,7 +33,7 @@
 <script>
 import EditItem from './EditItemModal'
 import Loading from '../core/Loading'
-import { cloneObj, showModal, messages, getErrorMsg, showAlertModal, closeModal } from '@/helpers'
+import { cloneObj, showModal, messages, showToast, showAlertModal, closeModal } from '@/helpers'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -80,17 +80,10 @@ export default {
       const confirmCallback = () => {
         closeModal(this.$root)
 
-        this.deleteItem({
-          item,
-          onSuccess: () => {
-            const msg = messages.items.deleteSuccess
-            this.addToast({ text: msg, type: 'success' })
-          },
-          onError: err => {
-            const msg = getErrorMsg(err)
-            this.addToast({ text: msg, type: 'error' })
-          }
-        })
+        this.deleteItem(item)
+          .then(error => {
+            showToast(error, messages.items.deleteSuccess)
+          })
       }
 
       const options = {
