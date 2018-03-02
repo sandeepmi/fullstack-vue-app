@@ -1,7 +1,8 @@
 .toasts-container {
-  position: absolute;
-  bottom: 47px;
+  position: fixed;
+  bottom: 0;
   right: 0;
+  z-index: 5;
 
   .toast {
     padding: 10px;
@@ -23,8 +24,10 @@
 
     .toast-close {
       position: absolute;
-      top: 2px;
-      right: 3px;
+      top: 0;
+      right: 0;
+      padding: 3px;
+      line-height: 10px;
 
       i {
         font-size: 13px;
@@ -36,20 +39,14 @@
 
   // transition styles
   .toast-enter-active, .toast-leave-active {
-    transition: all 1s;
+    transition: all 0.5s ease;
   }
   .toast-enter {
-    opacity: 0;
     transform: translateY(30px);
+    opacity: 0;
   }
   .toast-leave-to {
-    opacity: 0;
     transform: translateY(-30px);
-  }
-  .toast-move {
-    transition: transform 1s;
-  }
-  .toast-leave-active {
-    position: absolute;
+    opacity: 0;
   }
 }
