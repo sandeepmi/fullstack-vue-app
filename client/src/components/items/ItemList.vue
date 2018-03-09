@@ -34,7 +34,8 @@
 import EditItem from './EditItemModal'
 import Loading from '../core/Loading'
 import { cloneObj, showModal, messages, showToast, showAlertModal, closeModal } from '@/helpers'
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('items')
 
 export default {
   name: 'Items',
@@ -42,12 +43,12 @@ export default {
     Loading
   },
   computed: {
-    ...mapState('items', {
+    ...mapState({
       items: 'items',
       status: 'listViewStatus',
       isLoading: 'isLoading'
     }),
-    ...mapGetters('items', [
+    ...mapGetters([
       'itemCount'
     ])
   },
@@ -55,7 +56,7 @@ export default {
     this.getItems()
   },
   methods: {
-    ...mapActions('items', [
+    ...mapActions([
       'getItems',
       'deleteItem'
     ]),

@@ -10,10 +10,11 @@ export default {
   props: ['type', 'centered', 'size'],
   computed: {
     cssClasses () {
+      const isCard = (this.type === 'card')
       return [
         {
-          'card centered': this.type === 'card',
-          'centered': this.centered
+          'card': isCard,
+          'centered': this.centered || isCard
         },
         this.size
       ]

@@ -8,19 +8,16 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('toasts')
 
 export default {
   name: 'Toasts',
-  computed: mapState('toasts', {
-    toasts: state => {
-      return state.toasts
-    }
-  }),
-  methods: {
-    ...mapActions('toasts', [
-      'removeToast'
-    ])
-  }
+  computed: mapState([
+    'toasts'
+  ]),
+  methods: mapActions([
+    'removeToast'
+  ])
 }
 </script>

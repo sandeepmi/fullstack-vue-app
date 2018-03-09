@@ -23,7 +23,8 @@
 import Modal from '../core/Modal'
 import Loading from '../core/Loading'
 import { closeModal, messages, showToast } from '@/helpers'
-import { mapState, mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('items')
 
 export default {
   name: 'EditItem',
@@ -40,7 +41,7 @@ export default {
       }
     }
   },
-  computed: mapState('items', [
+  computed: mapState([
     'isSaving'
   ]),
   mounted () {
@@ -51,7 +52,7 @@ export default {
     this.$refs.inputTitle.focus()
   },
   methods: {
-    ...mapActions('items', [
+    ...mapActions([
       'addOrUpdateItem'
     ]),
 
