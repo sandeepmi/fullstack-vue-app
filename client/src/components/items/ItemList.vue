@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 class="my-3">
-      Items <span v-if="itemCount">({{itemCount}})</span>
+      Items <span v-if="itemCount" class="item-count">({{itemCount}})</span>
       <a class="btn float-right" @click="showAddItemView()">Add Item</a>
     </h1>
     <transition name="fade" mode="out-in">
@@ -11,10 +11,10 @@
           <li v-for="item in items" v-bind:key="item._id" class="list-group-item item">
             <div class="item-actions float-right mt-1">
               <div v-if="!item.isDeleting">
-                <a class="float-right icon-link pt-2" @click="showDeleteConfirmView(item)">
+                <a class="item-delete float-right icon-link pt-2" @click="showDeleteConfirmView(item)">
                   <i class="material-icons">delete</i>
                 </a>
-                <a class="float-right icon-link pt-2" @click="showEditItemView(item)">
+                <a class="item-edit float-right icon-link pt-2" @click="showEditItemView(item)">
                   <i class="material-icons">mode_edit</i>
                 </a>
               </div>
@@ -33,7 +33,7 @@
 <script>
 import EditItem from './EditItemModal'
 import Loading from '../core/Loading'
-import { cloneObj, showModal, messages, showToast, showAlertModal, closeModal } from '@/helpers'
+import { showModal, showAlertModal, closeModal, cloneObj, messages, showToast } from '@/helpers'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('items')
 

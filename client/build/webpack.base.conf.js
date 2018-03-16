@@ -90,3 +90,9 @@ module.exports = {
     child_process: 'empty'
   }
 }
+
+// test specific setups
+if (process.env.NODE_ENV === 'testing') {
+  module.exports.externals = [require('webpack-node-externals')()]
+  module.exports.devtool = 'inline-cheap-module-source-map'
+}

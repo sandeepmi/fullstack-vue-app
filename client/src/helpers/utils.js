@@ -1,4 +1,4 @@
-import { getErrorMsg } from '@/helpers'
+import { getErrorMsg } from './messages'
 import store from '../store'
 
 export function cloneObj (obj) {
