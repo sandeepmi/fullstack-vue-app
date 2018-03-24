@@ -4,10 +4,14 @@ let Item = require('./models/Item')
 module.exports = (app, passport) => {
   app.post('/login',
     passport.authenticate('local', {
-      successRedirect: '/',
       failureRedirect: '/login#401',
       failureFlash: true
-    })
+    }),
+    function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      res.redirect(req.session.redirectUrl || '/')
+    }
   )
 
   app.get('/items', isLoggedIn, function (req, res) {
@@ -47,6 +51,8 @@ function isLoggedIn(req, res, next) {
   // if user is authenticated in the session, carry on
   if (req.isAuthenticated())
       return next()
+
+  req.session.redirectUrl = req.url
 
   // if they aren't redirect them to the login page
   res.redirect('/login')
