@@ -4,7 +4,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const path = require('path')
 const passport = require('passport')
-const session = require("express-session")
+const session = require('express-session')
 const flash = require('connect-flash')
 
 const config = require('../config/config.js')
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 require('./passport.js')(passport)
 
 // passport setup
-app.use(session({ secret: "vueapp-secret" }))
+app.use(session({ secret: 'vueapp-secret' }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())

@@ -3,18 +3,16 @@ const bcrypt = require('bcryptjs')
 
 // define the schema for our user model
 const userSchema = mongoose.Schema({
-  email: String,
-  password: String
+  username: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
 })
-
-// methods ======================
-// generating a hash
-userSchema.methods.generateHash = function (password) {
-  const salt = bcrypt.genSaltSync(10)
-  const hash = bcrypt.hashSync(password, salt)
-
-  return hash
-}
 
 // checking if password is valid
 userSchema.methods.validPassword = function (password) {

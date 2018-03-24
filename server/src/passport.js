@@ -3,21 +3,21 @@ const BasicStrategy = require('passport-http').BasicStrategy
 const User = require('./models/User')
 
 module.exports = function (passport) {
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
     console.log('serialize', user.id)
     done(null, user.id)
   })
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
       console.log('deserialize', user.id)
       done(err, user)
     })
   })
 
   passport.use('local', new LocalStrategy(
-    function(username, password, done) {
-      User.findOne({ username: username }, function(err, user) {
+    function (username, password, done) {
+      User.findOne({ username: username }, function (err, user) {
         console.log('valid?')
         if (err) { return done(err) }
         if (!user) {
@@ -28,13 +28,13 @@ module.exports = function (passport) {
           console.log('invalid password')
           return done(null, false, { message: 'Incorrect password.' })
         }
-        return done(null, user);
+        return done(null, user)
       })
     }
   ))
 
   passport.use('basic', new BasicStrategy(
-    function(username, password, done) {
+    function (username, password, done) {
       User.findOne({ username: username }, function (err, user) {
         if (err) return done(err)
         if (!user) return done(null, false)

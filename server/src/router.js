@@ -7,7 +7,7 @@ module.exports = (app, passport) => {
       failureRedirect: '/login#401',
       failureFlash: true
     }),
-    function(req, res) {
+    function (req, res) {
       // If this function gets called, authentication was successful.
       // `req.user` contains the authenticated user.
       res.redirect(req.session.redirectUrl || '/')
@@ -15,17 +15,18 @@ module.exports = (app, passport) => {
   )
 
   app.get('/items', isLoggedIn, function (req, res) {
+    console.log('session', req.session)
     res.sendFile(path.join(__dirname, '../public/index.html'))
   })
 
-  app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
+  app.get('/logout', function (req, res) {
+    req.logout()
+    res.redirect('/login')
   })
 
   app.post('/api/login',
     passport.authenticate('basic', { session: true }),
-    function(req, res) {
+    function (req, res) {
       res.json(req)
     }
   )
@@ -47,10 +48,9 @@ module.exports = (app, passport) => {
 }
 
 // route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
+function isLoggedIn (req, res, next) {
   // if user is authenticated in the session, carry on
-  if (req.isAuthenticated())
-      return next()
+  if (req.isAuthenticated()) return next()
 
   req.session.redirectUrl = req.url
 
