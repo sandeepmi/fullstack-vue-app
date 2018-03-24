@@ -7,8 +7,10 @@
 
 html body {
   font-family: 'PT Sans', sans-serif;
+  color: @white;
+  background: url('../assets/interior-bg1.jpg') fixed center top;
+  background-size: auto 100%;
   background-color: @light-gray;
-  color: @black;
 }
 
 section {
@@ -62,10 +64,16 @@ h2 {
 /* Cards
 -------------------------------------------------- */
 .card {
+  color: @black;
+
   .card-body {
     > *:last-child {
       margin-bottom: 0;
     }
+  }
+
+  &.card-transparent {
+    background: rgba(255, 255, 255, 0.8);
   }
 
   .ss-border
@@ -74,6 +82,8 @@ h2 {
 /* Lists
 -------------------------------------------------- */
 .list-group {
+  color: @black;
+
   .list-group-item {
     border: none;
     border-bottom: solid 2px @light-gray;
