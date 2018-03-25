@@ -9,6 +9,6 @@ module.exports = (onSuccess) => {
       password: config.db.password
     }
   })
-    .then(onSuccess)
+    .then(() => onSuccess(mongoose.connection))
     .catch(err => console.error('db connection error: ' + err))
 }
