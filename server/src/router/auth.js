@@ -1,17 +1,17 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
-var config = require('../config')
+const config = require('../config')
 
-// Create API group routes
-var authRoutes = express.Router()
+// Create auth group routes
+const authRoutes = express.Router()
 
 // Register new users
 authRoutes.post('/register', function (req, res) {
   if (!req.body.email || !req.body.password) {
     res.json({ success: false, message: 'Please enter email and password.' })
   } else {
-    var newUser = new User({
+    const newUser = new User({
       email: req.body.email,
       password: req.body.password
     })
@@ -19,7 +19,15 @@ authRoutes.post('/register', function (req, res) {
     // Attempt to save the user
     newUser.save(function (err) {
       if (err) {
-        return res.json({ success: false, message: 'That email address already exists.' })
+        let errMsg
+        let code
+        if (err.code === 11000) {
+          errMsg = 'That email address already exists.'
+          code = 101
+        } else {
+          errMsg = 'Unknown error'
+        }
+        return res.json({ success: false, message: errMsg, code })
       }
       res.json({ success: true, message: 'Successfully created new user.' })
     })
@@ -38,8 +46,9 @@ authRoutes.post('/authenticate', function (req, res) {
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
           // Create token if the password matched and no error was thrown
-          var token = jwt.sign({data: user}, config.secret, {
-            expiresIn: 10080 // in seconds
+          const payload = { userId: user._id }
+          const token = jwt.sign(payload, config.secret, {
+            expiresIn: '1d'
           })
           res.json({ success: true, token: 'JWT ' + token })
         } else {
