@@ -1,5 +1,5 @@
 module.exports = (onSuccess) => {
-  const config = require('../config/config.js')
+  const config = require('./config')
   const restful = require('node-restful')
   const mongoose = restful.mongoose
 
