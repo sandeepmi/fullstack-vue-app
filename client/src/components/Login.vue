@@ -2,10 +2,10 @@
   <div class="card login-wrapper my-5 mx-auto">
     <div class="card-body text-center">
       <h2>Login</h2>
-      <form action="/login" method="post">
+      <form @submit.prevent="onLoginSubmit">
         <div class="form-group">
-          <label for="item_title" class="sr-only">Username</label>
-          <input type="text" name="username" v-model="username" placeholder="Username" class="form-control">
+          <label for="item_title" class="sr-only">Email</label>
+          <input type="text" name="email" v-model="email" placeholder="Email" class="form-control">
         </div>
         <div class="form-group">
           <label for="item_title" class="sr-only">Password</label>
@@ -14,35 +14,46 @@
         <div>
           <button type="submit" class="btn">Log In</button>
         </div>
-        <div v-if="message" class="text-danger mt-2">{{message}}</div>
+        <transition name="fade">
+          <div v-if="message" class="text-danger mt-2">{{message}}</div>
+        </transition>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import authService from '@/services/authService'
+import { login } from '@/services/authService'
+import { setAuthToken } from '@/helpers'
 
 export default {
   name: 'Login',
   data () {
     return {
-      username: '',
+      email: '',
       password: '',
       message: ''
     }
   },
-  mounted () {
-    if (window.location.hash === '#401') {
-      this.message = 'Incorrect username or password'
-      window.location.hash = ''
-    }
-  },
   methods: {
-    login () {
-      authService.login(this.username, this.password)
+    onLoginSubmit () {
+      this.message = ''
+
+      login(this.email, this.password)
         .then((response) => {
           console.log('response', response)
+          if (response && response.success && response.token) {
+            setAuthToken(response.token)
+
+            // redirect to target
+            const redirectPath = this.$route.query.redirect || '/my-account'
+            this.$router.push(redirectPath)
+          } else {
+            this.message = 'Incorrect email or password'
+          }
+        })
+        .catch(() => {
+          this.message = 'Error occurred, please try again later'
         })
     }
   }

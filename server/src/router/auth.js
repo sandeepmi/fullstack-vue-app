@@ -19,15 +19,11 @@ authRoutes.post('/register', function (req, res) {
     // Attempt to save the user
     newUser.save(function (err) {
       if (err) {
-        let errMsg
-        let code
         if (err.code === 11000) {
-          errMsg = 'That email address already exists.'
-          code = 101
+          res.json({ success: false, message: 'That email address already exists.', code: 101 })
         } else {
-          errMsg = 'Unknown error'
+          res.status(500).send('Unexpected error')
         }
-        return res.json({ success: false, message: errMsg, code })
       }
       res.json({ success: true, message: 'Successfully created new user.' })
     })
@@ -37,10 +33,16 @@ authRoutes.post('/register', function (req, res) {
 // Authenticate the user and get a JSON Web Token to include in the header of future requests.
 authRoutes.post('/authenticate', function (req, res) {
   User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) throw err
+    if (err) {
+      res.status(500).send('Unexpected error')
+    }
 
     if (!user) {
-      res.send({ success: false, message: 'Authentication failed. User not found.' })
+      res.send({
+        success: false,
+        message: 'Authentication failed. User not found.',
+        code: 101
+      })
     } else {
       // Check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -50,9 +52,16 @@ authRoutes.post('/authenticate', function (req, res) {
           const token = jwt.sign(payload, config.secret, {
             expiresIn: '1d'
           })
-          res.json({ success: true, token: 'JWT ' + token })
+          res.json({
+            success: true,
+            token: 'JWT ' + token
+          })
         } else {
-          res.send({ success: false, message: 'Authentication failed. Passwords did not match.' })
+          res.send({
+            success: false,
+            message: 'Authentication failed. Passwords did not match.',
+            code: 102
+          })
         }
       })
     }

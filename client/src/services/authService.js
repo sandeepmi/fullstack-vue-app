@@ -1,7 +1,9 @@
 import { fetchPost } from '@/services/fetchApi.js'
 
-export default {
-  login (username, password) {
-    return fetchPost('/login', { username, password })
-  }
+export function login (email, password) {
+  return fetchPost('/auth/authenticate', { email, password })
+}
+
+export function register (email, password) {
+  return fetchPost('/auth/register', { email, password })
 }
