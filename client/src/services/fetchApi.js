@@ -1,8 +1,18 @@
+import { getAuthToken } from '../helpers'
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 
+const protectedApiRegex = /user/
+
 export function fetchWrapper (url, options) {
   url = process.env.API_BASE_URL + url
+
+  // protected api calls
+  if (protectedApiRegex.test(url)) {
+    options = options || {}
+    options.headers = options.headers || {}
+    options.headers['Authorization'] = 'bearer ' + getAuthToken()
+  }
 
   const request = options
     ? fetch(url, options)

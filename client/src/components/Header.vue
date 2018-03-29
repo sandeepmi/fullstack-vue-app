@@ -17,6 +17,15 @@
             <li class="nav-item">
               <router-link :to="{ name: 'Items' }" class="nav-link">Items</router-link>
             </li>
+            <li class="nav-item" v-if="!isLoggedIn">
+              <router-link :to="{ name: 'Login' }" class="nav-link">Login</router-link>
+            </li>
+            <li class="nav-item" v-if="isLoggedIn">
+              <router-link :to="{ name: 'MyAccount' }" class="nav-link">My Account</router-link>
+            </li>
+            <li class="nav-item" v-if="isLoggedIn">
+              <router-link :to="{ name: 'Logout' }" class="nav-link">Logout</router-link>
+            </li>
           </ul>
         </div>
       </div>
@@ -25,11 +34,14 @@
 </template>
 
 <script>
+import { isLoggedIn } from '@/helpers'
+
 export default {
   name: 'Header',
   data () {
     return {
-      isMobileNavExpanded: false
+      isMobileNavExpanded: false,
+      isLoggedIn: isLoggedIn()
     }
   },
   methods: {

@@ -41,7 +41,6 @@ export default {
 
       login(this.email, this.password)
         .then((response) => {
-          console.log('response', response)
           if (response && response.success && response.token) {
             setAuthToken(response.token)
 
