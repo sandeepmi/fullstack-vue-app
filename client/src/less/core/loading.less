@@ -8,6 +8,14 @@
     width: 50px;
     height: 50px;
     animation: spin 1.2s linear infinite;
+
+    .btn & {
+      border-width: 2px;
+      border-color: @white;
+      border-top-color: transparent;
+      width: 25px;
+      height: 25px;
+    }
   }
 
   &.centered {
@@ -20,6 +28,15 @@
       top: 50%;
       margin-left: -25px;
       margin-top: -25px;
+
+      .btn & {
+        margin-left: -12.5px;
+        margin-top: -12.5px;
+      }
+    }
+
+    .btn & {
+      min-height: 0;
     }
   }
 

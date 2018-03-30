@@ -12,7 +12,7 @@
           <input type="password" name="password" v-model="password" placeholder="Password" class="form-control">
         </div>
         <div>
-          <button type="submit" class="btn">Log In</button>
+          <Button type="submit" :loading="isLoading">Log In</Button>
         </div>
         <transition name="fade">
           <div v-if="message" class="text-danger mt-2">{{message}}</div>
@@ -25,19 +25,25 @@
 <script>
 import { login } from '@/services/authService'
 import { setAuthToken, getErrorMsg } from '@/helpers'
+import Button from './core/Button'
 
 export default {
   name: 'Login',
+  components: {
+    Button
+  },
   data () {
     return {
       email: '',
       password: '',
-      message: ''
+      message: '',
+      isLoading: false
     }
   },
   methods: {
     onLoginSubmit () {
       this.message = ''
+      this.isLoading = true
 
       login(this.email, this.password)
         .then((response) => {
@@ -54,6 +60,9 @@ export default {
         })
         .catch(err => {
           this.message = getErrorMsg(err)
+        })
+        .finally(() => {
+          this.isLoading = false
         })
     }
   }

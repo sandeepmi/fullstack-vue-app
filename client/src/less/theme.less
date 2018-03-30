@@ -51,8 +51,12 @@
   perspective-origin: 60px 18px;
   transform-origin: 60px 18px;
 
-  &:hover {
+  &:hover:enabled {
     background-color: darken(@base-color, 10%);
     color: @white !important;
+  }
+
+  &:disabled {
+    cursor: default !important;
   }
 }
