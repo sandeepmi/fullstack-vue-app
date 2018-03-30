@@ -2,6 +2,7 @@ const svcErrorMsgs = {
   500: 'Error occurred, please try again later',
   404: 'Site unavailable, please try again later',
   401: 'Unauthorized',
+  400: 'Required data is missing',
   'network': 'Network error, please try again later',
   'default': 'Unexpected error occurred, please try again later'
 }

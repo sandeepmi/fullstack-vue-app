@@ -5,7 +5,7 @@
       <form @submit.prevent="onLoginSubmit">
         <div class="form-group">
           <label for="item_title" class="sr-only">Email</label>
-          <input type="text" name="email" v-model="email" placeholder="Email" class="form-control">
+          <input type="text" name="email" v-model="email" placeholder="Email" class="form-control" ref="inputEmail">
         </div>
         <div class="form-group">
           <label for="item_title" class="sr-only">Password</label>
@@ -39,6 +39,10 @@ export default {
       message: '',
       isLoading: false
     }
+  },
+  mounted () {
+    // set focus on email field
+    this.$refs.inputEmail.focus()
   },
   methods: {
     onLoginSubmit () {
