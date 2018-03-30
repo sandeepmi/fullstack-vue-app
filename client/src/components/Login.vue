@@ -24,7 +24,7 @@
 
 <script>
 import { login } from '@/services/authService'
-import { setAuthToken } from '@/helpers'
+import { setAuthToken, getErrorMsg } from '@/helpers'
 
 export default {
   name: 'Login',
@@ -43,6 +43,7 @@ export default {
         .then((response) => {
           if (response && response.success && response.token) {
             setAuthToken(response.token)
+            this.$store.dispatch('user/setUserStatus')
 
             // redirect to target
             const redirectPath = this.$route.query.redirect || '/my-account'
@@ -51,8 +52,8 @@ export default {
             this.message = 'Incorrect email or password'
           }
         })
-        .catch(() => {
-          this.message = 'Error occurred, please try again later'
+        .catch(err => {
+          this.message = getErrorMsg(err)
         })
     }
   }

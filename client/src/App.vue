@@ -30,6 +30,10 @@ export default {
     }
   },
   mounted () {
+    // check user logged in status
+    this.$store.dispatch('user/setUserStatus')
+
+    // show modal event
     this.$root.$on('showModal', (componentInfo) => {
       this.modalComponent = componentInfo.component
       this.modalComponentProps = componentInfo.props

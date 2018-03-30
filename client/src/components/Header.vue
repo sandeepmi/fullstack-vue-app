@@ -34,15 +34,19 @@
 </template>
 
 <script>
-import { isLoggedIn } from '@/helpers'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Header',
   data () {
     return {
-      isMobileNavExpanded: false,
-      isLoggedIn: isLoggedIn()
+      isMobileNavExpanded: false
     }
+  },
+  computed: {
+    ...mapState('user', [
+      'isLoggedIn'
+    ])
   },
   methods: {
     toggleMobileNav () {

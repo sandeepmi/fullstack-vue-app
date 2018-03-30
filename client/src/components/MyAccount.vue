@@ -1,14 +1,16 @@
 <template>
   <div class="container">
     <h1 class="my-3">My Account</h1>
-    <Loading v-if="isLoading" type="card" />
-    <div v-else-if="message" class="text-danger my-2">{{message}}</div>
-    <div v-else-if="user" class="card">
-      <div class="card-body">
-        <p>ID: {{user.id}}</p>
-        <p>Email: {{user.email}}</p>
+    <transition name="fade" mode="out-in">
+      <Loading v-if="isLoading" type="card" />
+      <div v-else-if="message" class="text-danger my-2">{{message}}</div>
+      <div v-else-if="user" class="card">
+        <div class="card-body">
+          <p>ID: {{user.id}}</p>
+          <p>Email: {{user.email}}</p>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 

@@ -1,3 +1,6 @@
+// user store
+export const SET_LOGGED_IN_STATUS = 'SET_LOGGED_IN_STATUS'
+
 // items store
 export const SET_ITEMS = 'SET_ITEMS'
 export const ADD_ITEM = 'ADD_ITEM'
