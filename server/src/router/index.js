@@ -14,7 +14,18 @@ module.exports = (app, passport) => {
   app.use('/api/user', passport.authenticate('jwt', { session: false }), userRoutes)
 
   // client app routes
+  app.get([
+    '/',
+    '/items',
+    '/login',
+    '/logout',
+    '/my-account'
+  ], function (req, res) {
+    res.sendFile(path.join(__dirname, '../../public/index.html'))
+  })
+
+  // client app 404/not found routes
   app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../public/index.html'))
+    res.status(404).sendFile(path.join(__dirname, '../../public/index.html'))
   })
 }

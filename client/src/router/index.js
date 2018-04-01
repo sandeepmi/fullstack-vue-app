@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import ItemList from '@/components/items/ItemList'
 import Login from '@/components/Login'
 import MyAccount from '@/components/MyAccount'
+import PageNotFound from '@/components/PageNotFound'
 import { requireAuth, logout } from '@/helpers'
 
 Vue.use(Router)
@@ -36,6 +37,10 @@ export default new Router({
       name: 'MyAccount',
       component: MyAccount,
       beforeEnter: requireAuth
+    },
+    {
+      path: '*',
+      component: PageNotFound
     }
   ]
 })
