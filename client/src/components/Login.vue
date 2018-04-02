@@ -5,11 +5,13 @@
       <form @submit.prevent="onLoginSubmit">
         <div class="form-group">
           <label for="item_title" class="sr-only">Email</label>
-          <input type="text" name="email" v-model="email" placeholder="Email" class="form-control" ref="inputEmail">
+          <input type="text" name="email" v-model="email" placeholder="Email" class="form-control" ref="inputEmail" :class="{ error: val.email.error }" @blur="validateField($data, 'email')">
+          <div class="text-left text-danger">{{val.email.error}}</div>
         </div>
         <div class="form-group">
           <label for="item_title" class="sr-only">Password</label>
-          <input type="password" name="password" v-model="password" placeholder="Password" class="form-control">
+          <input type="password" name="password" v-model="password" placeholder="Password" class="form-control" :class="{ error: val.password.error }" @blur="validateField($data, 'password')">
+          <div class="text-left text-danger">{{val.password.error}}</div>
         </div>
         <div>
           <Button type="submit" :loading="isLoading">Log In</Button>
@@ -24,7 +26,7 @@
 
 <script>
 import { login } from '@/services/authService'
-import { setAuthToken, getErrorMsg } from '@/helpers'
+import { setAuthToken, getErrorMsg, validateField, validateForm } from '@/helpers'
 import Button from './core/Button'
 
 export default {
@@ -37,7 +39,17 @@ export default {
       email: '',
       password: '',
       message: '',
-      isLoading: false
+      isLoading: false,
+      val: {
+        email: {
+          rules: ['required', 'email'],
+          error: ''
+        },
+        password: {
+          rules: ['required'],
+          error: ''
+        }
+      }
     }
   },
   mounted () {
@@ -46,6 +58,9 @@ export default {
   },
   methods: {
     onLoginSubmit () {
+      const isFormValid = validateForm(this.$data)
+      if (!isFormValid) return
+
       this.message = ''
       this.isLoading = true
 
@@ -68,7 +83,8 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-    }
+    },
+    validateField
   }
 }
 </script>
