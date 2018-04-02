@@ -11,6 +11,7 @@
         <transition name="fade">
           <div v-if="message" class="text-danger mt-2">{{message}}</div>
         </transition>
+        <div class="mt-3">New user? <router-link :to="{ name: 'Register' }">Sign up</router-link></div>
       </form>
     </div>
   </div>
@@ -19,8 +20,8 @@
 <script>
 import { login } from '@/services/authService'
 import { setAuthToken, getErrorMsg, validateField, validateForm } from '@/helpers'
-import Button from './core/Button'
-import InputGroup from './core/InputGroup'
+import Button from '../core/Button'
+import InputGroup from '../core/InputGroup'
 
 export default {
   name: 'Login',
@@ -55,8 +56,8 @@ export default {
       this.isLoading = true
 
       login(this.email, this.password)
-        .then((response) => {
-          if (response && response.success && response.token) {
+        .then(response => {
+          if (response.success && response.token) {
             setAuthToken(response.token)
             this.$store.dispatch('user/setUserStatus')
 

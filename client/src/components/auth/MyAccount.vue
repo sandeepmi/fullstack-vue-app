@@ -6,8 +6,9 @@
       <div v-else-if="message" class="text-danger my-2">{{message}}</div>
       <div v-else-if="user" class="card">
         <div class="card-body">
-          <p>ID: {{user.id}}</p>
-          <p>Email: {{user.email}}</p>
+          <InputGroup label="Email:" name="email" v-model="user.email" :plainText="true" />
+          <InputGroup label="First Name:" name="firstName" v-model="user.firstName" :plainText="true" />
+          <InputGroup label="Last Name:" name="lastName" v-model="user.lastName" :plainText="true" />
         </div>
       </div>
     </transition>
@@ -16,13 +17,15 @@
 
 <script>
 import { getUserProfile } from '@/services/userService'
-import { getErrorMsg, delay, cancelDelayedAction } from '../helpers'
-import Loading from './core/Loading'
+import { getErrorMsg, delay, cancelDelayedAction } from '@/helpers'
+import Loading from '../core/Loading'
+import InputGroup from '../core/InputGroup'
 
 export default {
   name: 'MyAccount',
   components: {
-    Loading
+    Loading,
+    InputGroup
   },
   data () {
     return {

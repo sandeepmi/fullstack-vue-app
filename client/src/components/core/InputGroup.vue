@@ -1,15 +1,15 @@
 <template>
-  <FormGroup :label="label" :name="name" :srOnly="srOnly" :error="error">
+  <FormGroup :label="label" :name="name" :srOnly="srOnlyComputed" :error="error">
     <input
       v-bind="$attrs"
       :value="value"
       :type="type"
       :name="name"
       :placeholder="label"
-      :class="{ error: !!error }"
+      :class="cssClass"
+      :readonly="plainText"
       v-on="inputListeners"
-      ref="input"
-      class="form-control" />
+      ref="input" />
   </FormGroup>
 </template>
 
@@ -30,13 +30,29 @@ export default {
     },
     value: String,
     error: String,
-    setFocus: Boolean
+    setFocus: Boolean,
+    plainText: Boolean
   },
   components: {
     FormGroup
   },
   computed: {
-    inputListeners: function () {
+    cssClass () {
+      return {
+        error: !!this.error,
+        'form-control': !this.plainText,
+        'form-control-plaintext': this.plainText
+      }
+    },
+    srOnlyComputed () {
+      // show label for plain text input fields
+      if (this.plainText) {
+        return false
+      } else {
+        return this.srOnly
+      }
+    },
+    inputListeners () {
       var vm = this
 
       return Object.assign({},
