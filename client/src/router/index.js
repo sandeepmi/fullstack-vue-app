@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import ItemList from '@/components/items/ItemList'
+import Register from '@/components/auth/Register'
 import Login from '@/components/Login'
 import MyAccount from '@/components/MyAccount'
 import PageNotFound from '@/components/PageNotFound'
@@ -21,6 +22,11 @@ export default new Router({
       path: '/items',
       name: 'Items',
       component: ItemList
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/login',

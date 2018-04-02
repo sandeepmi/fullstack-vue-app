@@ -8,12 +8,11 @@ const authRoutes = express.Router()
 
 // Register new users
 authRoutes.post('/register', function (req, res) {
-  const email = req.body.email
-  const password = req.body.password
+  const { email, password, firstName, lastName } = req.body
 
   // validations
-  if (!email || !password) {
-    return res.status(400).json({ success: false, message: 'Please enter email and password.' })
+  if (!email || !password || !firstName || !lastName) {
+    return res.status(400).json({ success: false, message: 'Please provide all required fields' })
   }
 
   // check if email already registered
@@ -21,18 +20,22 @@ authRoutes.post('/register', function (req, res) {
     if (err) return res.status(500)
 
     if (existingUser) {
-      return res.send({ success: false, message: 'That email address is already in use.' })
+      return res.send({ success: false, message: 'That email address is already registered' })
     }
 
     // create account
     const newUser = new User({
-      email: email,
-      password: password
+      email,
+      password,
+      profile: {
+        firstName,
+        lastName
+      }
     })
 
     // save the user to database
     newUser.save(function (err) {
-      if (err) return res.status(500)
+      if (err) return res.status(500).json({ success: false, message: 'Error occurred' })
 
       res.json({ success: true, message: 'Successfully created new user.' })
     })
@@ -42,8 +45,7 @@ authRoutes.post('/register', function (req, res) {
 // Authenticate user
 // return a JWT Token for future requests
 authRoutes.post('/authenticate', function (req, res) {
-  const email = req.body.email
-  const password = req.body.password
+  const { email, password } = req.body
 
   // validations
   if (!email || !password) {
