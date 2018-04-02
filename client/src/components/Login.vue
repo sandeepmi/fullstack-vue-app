@@ -2,17 +2,9 @@
   <div class="card login-wrapper my-5 mx-auto">
     <div class="card-body text-center">
       <h2>Login</h2>
-      <form @submit.prevent="onLoginSubmit">
-        <div class="form-group">
-          <label for="item_title" class="sr-only">Email</label>
-          <input type="text" name="email" v-model="email" placeholder="Email" class="form-control" ref="inputEmail" :class="{ error: val.email.error }" @blur="validateField($data, 'email')">
-          <div class="text-left text-danger">{{val.email.error}}</div>
-        </div>
-        <div class="form-group">
-          <label for="item_title" class="sr-only">Password</label>
-          <input type="password" name="password" v-model="password" placeholder="Password" class="form-control" :class="{ error: val.password.error }" @blur="validateField($data, 'password')">
-          <div class="text-left text-danger">{{val.password.error}}</div>
-        </div>
+      <form @submit.prevent="onLogin">
+        <InputGroup label="Email" name="email" v-model="email" :error="val.email.error" @blur="validateField($data, 'email')" :setFocus="true" />
+        <InputGroup type="password" label="Password" name="password" v-model="password" :error="val.password.error" @blur="validateField($data, 'password')" />
         <div>
           <Button type="submit" :loading="isLoading">Log In</Button>
         </div>
@@ -28,11 +20,13 @@
 import { login } from '@/services/authService'
 import { setAuthToken, getErrorMsg, validateField, validateForm } from '@/helpers'
 import Button from './core/Button'
+import InputGroup from './core/InputGroup'
 
 export default {
   name: 'Login',
   components: {
-    Button
+    Button,
+    InputGroup
   },
   data () {
     return {
@@ -52,12 +46,8 @@ export default {
       }
     }
   },
-  mounted () {
-    // set focus on email field
-    this.$refs.inputEmail.focus()
-  },
   methods: {
-    onLoginSubmit () {
+    onLogin () {
       const isFormValid = validateForm(this.$data)
       if (!isFormValid) return
 
