@@ -10,7 +10,7 @@
         </button>
 
         <div class="collapse navbar-collapse" :class="{show: isMobileNavExpanded}" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto" @click="toggleMobileNav">
+          <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link>
             </li>
@@ -20,11 +20,16 @@
             <li class="nav-item" v-if="!isLoggedIn">
               <router-link :to="{ name: 'Login' }" class="nav-link">Login</router-link>
             </li>
-            <li class="nav-item" v-if="isLoggedIn">
-              <router-link :to="{ name: 'MyAccount' }" class="nav-link">My Account</router-link>
-            </li>
-            <li class="nav-item" v-if="isLoggedIn">
-              <router-link :to="{ name: 'Logout' }" class="nav-link">Logout</router-link>
+            <li class="nav-item dropdown nav-item-account" v-else>
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">account_circle</i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-header py-0">{{displayName}}</a>
+                <div class="dropdown-divider d-none d-md-block"></div>
+                <router-link :to="{ name: 'MyAccount' }" class="dropdown-item">My Account</router-link>
+                <router-link :to="{ name: 'Logout' }" class="dropdown-item">Logout</router-link>
+              </div>
             </li>
           </ul>
         </div>
@@ -45,7 +50,8 @@ export default {
   },
   computed: {
     ...mapState('user', [
-      'isLoggedIn'
+      'isLoggedIn',
+      'displayName'
     ])
   },
   methods: {

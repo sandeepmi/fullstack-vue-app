@@ -3,7 +3,7 @@ const AUTH_TOKEN_KEY = 'auth_token'
 
 export function logout (to, from, next) {
   clearAuthToken()
-  store.dispatch('user/setUserStatus')
+  store.dispatch('user/updateUserStatus')
 
   next({
     path: '/login'

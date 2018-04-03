@@ -1,5 +1,6 @@
 // user store
 export const SET_LOGGED_IN_STATUS = 'SET_LOGGED_IN_STATUS'
+export const SET_DISPLAY_NAME = 'SET_DISPLAY_NAME'
 
 // items store
 export const SET_ITEMS = 'SET_ITEMS'

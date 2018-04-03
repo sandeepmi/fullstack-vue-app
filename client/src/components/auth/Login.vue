@@ -59,7 +59,7 @@ export default {
         .then(response => {
           if (response.success && response.token) {
             setAuthToken(response.token)
-            this.$store.dispatch('user/setUserStatus')
+            this.$store.dispatch('user/updateUserStatus')
 
             // redirect to target
             const redirectPath = this.$route.query.redirect || '/my-account'

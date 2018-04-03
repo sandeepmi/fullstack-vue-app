@@ -30,8 +30,8 @@ export default {
     }
   },
   mounted () {
-    // check user logged in status
-    this.$store.dispatch('user/setUserStatus')
+    // get logged in user's info
+    this.$store.dispatch('user/getUserInfo')
 
     // show modal event
     this.$root.$on('showModal', (componentInfo) => {
