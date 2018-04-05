@@ -37,24 +37,26 @@
     .dropdown-menu {
       margin-top: 0;
       border-top: 0 !important;
+      background-color: @white;
+      color: @black;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 0 0 2px 2px;
+      box-shadow: 0 2px 2px rgba(0,0,0,.2);
 
       @media (max-width: 767.98px) {
         position: relative;
-        background-color: @base-color;
         box-shadow: none;
-
-        .dropdown-header, .dropdown-item {
-          color: @white !important;
-        }
       }
 
       .dropdown-item {
-        &:hover, &.router-link-exact-active {
-          color: @base-color !important;
+        color: @black;
+
+        &.router-link-exact-active {
+          color: @base-color;
         }
       }
-
-      .ss-border
     }
 
     &.dropdown:hover {
@@ -72,10 +74,6 @@
         &::after {
           display: none;
         }
-      }
-
-      .dropdown-menu {
-        right: 7px;
       }
     }
   }
@@ -118,11 +116,22 @@ body {
   color: @base-bg-text-color;
 
   .navbar-nav {
-    a.nav-link {
+    .nav-item {
       color: @base-bg-text-color;
 
-      &:hover, &.router-link-exact-active {
-        color: @white !important;
+      a.nav-link {
+        color: @base-bg-text-color;
+
+        &.router-link-exact-active {
+          color: @white;
+        }
+      }
+
+      &:hover {
+        a.nav-link {
+          background-color: @white;
+          color: @base-color;
+        }
       }
     }
   }
