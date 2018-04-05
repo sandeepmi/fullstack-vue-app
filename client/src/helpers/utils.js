@@ -38,3 +38,8 @@ export function showToast (error, successMsg) {
 
   store.dispatch('toasts/addToast', toast)
 }
+
+export function isMobile () {
+  const width = (window.innerWidth > 0) ? window.innerWidth : screen.width
+  return width <= 768
+}

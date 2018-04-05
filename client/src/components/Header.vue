@@ -10,7 +10,7 @@
         </button>
 
         <div class="collapse navbar-collapse" :class="{show: isMobileNavExpanded}" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav ml-auto" @click="onNavClick">
             <li class="nav-item">
               <router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link>
             </li>
@@ -40,6 +40,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { isMobile } from '@/helpers'
 
 export default {
   name: 'Header',
@@ -57,6 +58,11 @@ export default {
   methods: {
     toggleMobileNav () {
       this.isMobileNavExpanded = !this.isMobileNavExpanded
+    },
+    onNavClick (e) {
+      if (isMobile() && e.target.localName === 'a') {
+        this.toggleMobileNav()
+      }
     }
   }
 }
