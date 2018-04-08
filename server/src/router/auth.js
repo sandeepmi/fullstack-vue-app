@@ -66,10 +66,15 @@ authRoutes.post('/authenticate', function (req, res) {
         return res.send({ success: false, code: 102, message: 'Authentication failed. Passwords did not match.' })
       }
 
-      // return JWT token
-      const token = generateJwtToken({ userId: user._id })
+      // update last logged in date
+      user.lastLoggedInDate = new Date(Date.now()).toISOString()
+      user.save(function (err) {
+        if (err) return res.status(500)
 
-      res.json({ success: true, token: 'JWT ' + token })
+        // return JWT token
+        const token = generateJwtToken({ userId: user._id })
+        res.json({ success: true, token: 'JWT ' + token })
+      })
     })
   })
 })
