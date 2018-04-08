@@ -12,6 +12,9 @@ const messages = {
     noItems: 'There are no items at this time.',
     editSuccess: 'Item has been saved succesfully.',
     deleteSuccess: 'Item has been deleted succesfully.'
+  },
+  profile: {
+    updateSuccess: 'Profile has been updated successfully'
   }
 }
 

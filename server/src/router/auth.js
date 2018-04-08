@@ -17,7 +17,7 @@ authRoutes.post('/register', function (req, res) {
 
   // check if email already registered
   User.findOne({ email: email }, function (err, existingUser) {
-    if (err) return res.status(500)
+    if (err) return res.status(500).json({})
 
     if (existingUser) {
       return res.send({ success: false, message: 'That email address is already registered' })
@@ -54,7 +54,7 @@ authRoutes.post('/authenticate', function (req, res) {
 
   // find user
   User.findOne({ email: email }, function (err, user) {
-    if (err) return res.status(500)
+    if (err) return res.status(500).json({})
 
     if (!user) {
       return res.send({ success: false, code: 101, message: 'Authentication failed. User not found.' })
@@ -69,7 +69,7 @@ authRoutes.post('/authenticate', function (req, res) {
       // update last logged in date
       user.lastLoggedInDate = new Date(Date.now()).toISOString()
       user.save(function (err) {
-        if (err) return res.status(500)
+        if (err) return res.status(500).json({})
 
         // return JWT token
         const token = generateJwtToken({ userId: user._id })

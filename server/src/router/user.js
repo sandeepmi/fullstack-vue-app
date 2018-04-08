@@ -22,7 +22,7 @@ userRoutes.post('/profile', function (req, res) {
 
   // find user
   User.findById(req.user._id, function (err, user) {
-    if (err) return res.status(500)
+    if (err) return res.status(500).json({})
 
     // set profile data
     user.email = email
@@ -31,7 +31,7 @@ userRoutes.post('/profile', function (req, res) {
 
     // save profile
     user.save(function (err) {
-      if (err) return res.status(500)
+      if (err) return res.status(500).json({})
 
       res.json({ success: true, message: 'Successfully updated user profile' })
     })
