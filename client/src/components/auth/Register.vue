@@ -13,6 +13,7 @@
         <transition name="fade">
           <div v-if="message" class="text-danger mt-2">{{message}}</div>
         </transition>
+        <div class="mt-3">Already a user? <router-link :to="{ name: 'Login' }">Login</router-link></div>
       </form>
     </div>
   </div>

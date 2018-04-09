@@ -5,19 +5,19 @@
       <div class="card-body">
         <transition name="fade" mode="out-in">
           <Loading v-if="isLoading" :centered="true" class="tall" />
-          <div v-else-if="user">
-            <a v-if="!isEditMode" class="item-edit float-right icon-link pt-2" @click="editProfile">
-              <i class="material-icons">mode_edit</i>
+          <form v-else-if="userProfile" @submit.prevent="saveProfile" class="form-with-label">
+            <h2 class="d-inline-block">Profile</h2>
+            <a v-if="!isEditMode" class="item-edit icon-link" @click="editProfile">
+                <i class="material-icons">mode_edit</i>
             </a>
-            <h2>Profile</h2>
-            <InputGroup label="Email:" name="email" v-model="editUser.email" :srOnly="false" :plainText="!isEditMode"/>
-            <InputGroup label="First Name:" name="firstName" v-model="editUser.firstName" :srOnly="false" :plainText="!isEditMode" />
-            <InputGroup label="Last Name:" name="lastName" v-model="editUser.lastName" :srOnly="false" :plainText="!isEditMode" class="my-0" />
-            <div v-if="isEditMode" class="mt-3">
-              <Button :loading="isSaving" :onClick="saveProfile">Update</Button>
-              <Button v-if="!isSaving" :onClick="cancelEditProfile" class="btn-secondary">Cancel</Button>
+            <InputGroup label="Email:" name="email" v-model="editUserProfile.email" :srOnly="false" :plainText="!isEditMode"/>
+            <InputGroup label="First Name:" name="firstName" v-model="editUserProfile.firstName" :srOnly="false" :plainText="!isEditMode" />
+            <InputGroup label="Last Name:" name="lastName" v-model="editUserProfile.lastName" :srOnly="false" :plainText="!isEditMode" class="mb-0" />
+            <div v-if="isEditMode" class="form-btn-group">
+              <Button :loading="isSaving">Update</Button>
+              <a v-if="!isSaving" @click="cancelEditProfile" class="btn btn-secondary">Cancel</a>
             </div>
-          </div>
+          </form>
         </transition>
         <div v-if="message" class="text-danger my-2">{{message}}</div>
       </div>
@@ -41,8 +41,8 @@ export default {
   },
   data () {
     return {
-      user: null,
-      editUser: null,
+      userProfile: null,
+      editUserProfile: null,
       isLoading: false,
       isSaving: false,
       message: '',
@@ -50,39 +50,42 @@ export default {
     }
   },
   mounted () {
-    const loadingId = delay(() => { this.isLoading = true })
-
-    getUserProfile()
-      .then(user => {
-        this.user = user
-        this.editUser = cloneObj(this.user)
-      })
-      .catch(err => {
-        this.message = getErrorMsg(err)
-      })
-      .finally(() => {
-        cancelDelayedAction(loadingId)
-        this.isLoading = false
-      })
+    this.showProfile()
   },
   methods: {
+    showProfile () {
+      const loadingId = delay(() => { this.isLoading = true })
+
+      getUserProfile()
+        .then(userProfile => {
+          this.userProfile = userProfile
+          this.editUserProfile = cloneObj(this.userProfile)
+        })
+        .catch(err => {
+          this.message = getErrorMsg(err)
+        })
+        .finally(() => {
+          cancelDelayedAction(loadingId)
+          this.isLoading = false
+        })
+    },
     editProfile () {
       this.isEditMode = true
     },
     cancelEditProfile () {
       this.isEditMode = false
-      this.editUser = cloneObj(this.user)
+      this.editUserProfile = cloneObj(this.userProfile)
     },
     saveProfile () {
       this.isSaving = true
-      const { email, firstName, lastName } = this.editUser
 
-      updateUserProfile({ email, firstName, lastName })
+      updateUserProfile(this.editUserProfile)
         .then(response => {
           if (response.success) {
             this.$store.dispatch('toasts/addToast', { text: messages.profile.updateSuccess, type: 'success' })
             this.isEditMode = false
-            this.user = cloneObj(this.editUser)
+            this.userProfile = cloneObj(this.editUserProfile)
+            this.$store.dispatch('user/updateDisplayName', this.editUserProfile)
           } else {
             this.message = 'Failed to update profile'
           }
@@ -97,10 +100,3 @@ export default {
   }
 }
 </script>
-
-<style>
-input.form-control {
-  width: 250px;
-  display: inline-block;
-}
-</style>

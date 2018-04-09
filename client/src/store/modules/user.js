@@ -27,12 +27,20 @@ const actions = {
     if (isUserLoggedIn) {
       getUserProfile()
         .then(userProfile => {
-          const { firstName, lastName } = userProfile
-          const displayName = `${firstName} ${lastName}`
-          commit(types.SET_DISPLAY_NAME, displayName)
+          commit(types.SET_DISPLAY_NAME, getDisplayName(userProfile))
         })
     }
+  },
+  updateDisplayName ({commit}, userProfile) {
+    commit(types.SET_DISPLAY_NAME, getDisplayName(userProfile))
   }
+}
+
+function getDisplayName (userProfile) {
+  const { firstName, lastName } = userProfile
+  const displayName = `${firstName} ${lastName}`
+
+  return displayName
 }
 
 export default {
