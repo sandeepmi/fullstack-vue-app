@@ -2,7 +2,7 @@ import { getAuthToken } from '../helpers'
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 
-const protectedApiRegex = /user/
+const protectedApiRegex = /(user|changePassword)/
 
 export function fetchWrapper (url, options) {
   url = process.env.API_BASE_URL + url

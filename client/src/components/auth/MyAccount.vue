@@ -87,7 +87,7 @@ export default {
             this.userProfile = cloneObj(this.editUserProfile)
             this.$store.dispatch('user/updateDisplayName', this.editUserProfile)
           } else {
-            this.message = 'Failed to update profile'
+            this.message = messages.profile.updateFail
           }
         })
         .catch(err => {

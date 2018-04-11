@@ -2,7 +2,7 @@
   <div class="form-group">
     <label :for="name" :class="cssClass">{{label}}</label>
     <slot></slot>
-    <div v-if="error" class="text-left text-danger">{{error}}</div>
+    <div v-if="error" class="form-group-error">{{error}}</div>
   </div>
 </template>
 

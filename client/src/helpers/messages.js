@@ -14,7 +14,12 @@ const messages = {
     deleteSuccess: 'Item has been deleted succesfully.'
   },
   profile: {
-    updateSuccess: 'Profile has been updated successfully'
+    updateSuccess: 'Profile has been updated successfully',
+    updateFail: 'Failed to update profile'
+  },
+  password: {
+    changeSuccess: 'Password has been updated successfully',
+    changeFail: 'Failed to change password'
   }
 }
 

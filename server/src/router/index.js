@@ -1,6 +1,7 @@
 const path = require('path')
 const itemRoutes = require('./items')
 const authRoutes = require('./auth')
+const authProtectedRoutes = require('./authProtected')
 const userRoutes = require('./user')
 
 module.exports = (app, passport) => {
@@ -9,6 +10,9 @@ module.exports = (app, passport) => {
 
   // auth routes
   app.use('/api/auth', authRoutes)
+
+  // auth protected routes
+  app.use('/api/auth', passport.authenticate('jwt', { session: false }), authProtectedRoutes)
 
   // user routes
   app.use('/api/user', passport.authenticate('jwt', { session: false }), userRoutes)

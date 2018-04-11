@@ -5,6 +5,7 @@ import ItemList from '@/components/items/ItemList'
 import Register from '@/components/auth/Register'
 import Login from '@/components/auth/Login'
 import MyAccount from '@/components/auth/MyAccount'
+import ChangePassword from '@/components/auth/ChangePassword'
 import PageNotFound from '@/components/PageNotFound'
 import { requireAuth, logout } from '@/helpers'
 
@@ -42,6 +43,12 @@ export default new Router({
       path: '/my-account',
       name: 'MyAccount',
       component: MyAccount,
+      beforeEnter: requireAuth
+    },
+    {
+      path: '/my-account/change-password',
+      name: 'ChangePassword',
+      component: ChangePassword,
       beforeEnter: requireAuth
     },
     {

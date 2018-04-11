@@ -11,7 +11,7 @@
     .ss-form-control-border
   }
 
-  .form-with-label & {
+  .form-with-label &, .form-fixed-width & {
     width: 250px;
     display: inline-block;
   }
@@ -39,5 +39,14 @@ label {
 
   button {
     margin-right: 7px;
+  }
+}
+
+.form-group-error {
+  text-align: left;
+  color: @error;
+
+  .form-fixed-width & {
+    display: inline-block;
   }
 }

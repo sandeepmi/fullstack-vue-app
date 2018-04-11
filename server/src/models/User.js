@@ -33,7 +33,7 @@ const UserSchema = new Schema({
   }
 })
 
-// Saves the user's password hashed (plain text password storage is not good)
+// encrypt password
 UserSchema.pre('save', function (next) {
   const user = this
   const SALT_FACTOR = 10
