@@ -30,6 +30,9 @@ const UserSchema = new Schema({
   },
   lastLoggedInDate: {
     type: Date
+  },
+  lastPasswordChangeDate: {
+    type: Date
   }
 })
 

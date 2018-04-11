@@ -10,6 +10,7 @@
             <a v-if="!isEditMode" class="item-edit icon-link" @click="editProfile">
                 <i class="material-icons">mode_edit</i>
             </a>
+            <router-link :to="{ name: 'ChangePassword' }" class="float-right">Change Password</router-link>
             <InputGroup label="Email:" name="email" v-model="editUserProfile.email" :srOnly="false" :plainText="!isEditMode"/>
             <InputGroup label="First Name:" name="firstName" v-model="editUserProfile.firstName" :srOnly="false" :plainText="!isEditMode" />
             <InputGroup label="Last Name:" name="lastName" v-model="editUserProfile.lastName" :srOnly="false" :plainText="!isEditMode" class="mb-0" />

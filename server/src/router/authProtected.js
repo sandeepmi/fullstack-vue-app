@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require('../models/User')
+const { dateNow } = require('../helpers/utils')
 
 // Create auth group routes
 const authRoutes = express.Router()
@@ -25,6 +26,7 @@ authRoutes.post('/changePassword', function (req, res) {
 
       // change password and save to database
       user.password = newPassword
+      user.lastPasswordChangeDate = dateNow()
       user.save(function (err) {
         if (err) return res.status(500).json({})
 

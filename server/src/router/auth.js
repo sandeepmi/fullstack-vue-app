@@ -2,6 +2,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const config = require('../config')
+const { dateNow } = require('../helpers/utils')
 
 // Create auth group routes
 const authRoutes = express.Router()
@@ -67,7 +68,7 @@ authRoutes.post('/authenticate', function (req, res) {
       }
 
       // update last logged in date
-      user.lastLoggedInDate = new Date(Date.now()).toISOString()
+      user.lastLoggedInDate = dateNow()
       user.save(function (err) {
         if (err) return res.status(500).json({})
 

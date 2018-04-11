@@ -5,13 +5,15 @@
       <div class="card-body">
         <h2 class="mb-3">Change Password</h2>
         <form @submit.prevent="onSubmit" class="form-fixed-width">
-          <InputGroup label="Password" name="password" v-model="password" :error="val.password.error" @blur="validateField($data, 'password')" />
-          <InputGroup label="New Password" name="newPassword" v-model="newPassword" :error="val.newPassword.error" @blur="validateField($data, 'newPassword')" />
-          <InputGroup label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :error="val.confirmNewPassword.error" @blur="validateField($data, 'confirmNewPassword')" />
+          <InputGroup type="password" label="Password" name="password" v-model="password" :error="val.password.error" @blur="validateField($data, 'password')" />
+          <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" :error="val.newPassword.error" @blur="validateField($data, 'newPassword')" />
+          <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :error="val.confirmNewPassword.error" @blur="validateField($data, 'confirmNewPassword')" />
           <div class="form-btn-group">
             <Button :loading="isSaving">Submit</Button>
           </div>
-          <div v-if="message" class="text-danger my-2">{{message}}</div>
+          <transition name="fade">
+            <div v-if="message" class="text-danger my-2">{{message}}</div>
+          </transition>
         </form>
       </div>
     </div>
@@ -58,14 +60,22 @@ export default {
       const isFormValid = validateForm(this.$data)
       if (!isFormValid) return
 
+      this.message = ''
       this.isSaving = true
 
       changePassword(this.password, this.newPassword)
         .then(response => {
+          const msgs = messages.password
+
           if (response.success) {
-            this.$store.dispatch('toasts/addToast', { text: messages.password.changeSuccess, type: 'success' })
+            this.$store.dispatch('toasts/addToast', { text: msgs.changeSuccess, type: 'success' })
+            this.$router.push({ name: 'MyAccount' })
           } else {
-            this.message = messages.password.changeFail
+            if (response.code === 101) {
+              this.message = msgs.incorrectPassword
+            } else {
+              this.message = msgs.changeFail
+            }
           }
         })
         .catch(err => {

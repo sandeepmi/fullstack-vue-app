@@ -19,7 +19,8 @@ const messages = {
   },
   password: {
     changeSuccess: 'Password has been updated successfully',
-    changeFail: 'Failed to change password'
+    changeFail: 'Failed to change password',
+    incorrectPassword: 'Incorrect password'
   }
 }
 
