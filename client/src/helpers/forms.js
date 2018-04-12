@@ -1,6 +1,7 @@
 export function validateField ($data, fieldName) {
-  const rules = $data.val[fieldName].rules
-  const value = $data[fieldName]
+  const val = $data.val[fieldName]
+  const rules = val.rules
+  const value = val.parent ? $data[val.parent][fieldName] : $data[fieldName]
   let error = ''
 
   // process rules
