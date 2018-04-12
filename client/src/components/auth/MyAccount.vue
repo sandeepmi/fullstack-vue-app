@@ -2,6 +2,7 @@
   <div class="container">
     <h1 class="my-3">My Account</h1>
     <div class="card">
+      <AccountNav />
       <div class="card-body">
         <transition name="fade" mode="out-in">
           <Loading v-if="isLoading" :centered="true" class="tall" />
@@ -32,13 +33,15 @@ import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj, validateFi
 import Loading from '../core/Loading'
 import InputGroup from '../core/InputGroup'
 import Button from '../core/Button'
+import AccountNav from './AccountNav'
 
 export default {
   name: 'MyAccount',
   components: {
     Loading,
     InputGroup,
-    Button
+    Button,
+    AccountNav
   },
   data () {
     return {

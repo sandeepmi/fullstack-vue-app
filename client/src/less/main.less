@@ -92,3 +92,20 @@ h2 {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
+/* Tabs
+-------------------------------------------------- */
+.nav-tabs {
+  background-color: @light-gray;
+  border: none;
+
+  a.nav-link {
+    background-color: @light-gray;
+    color: @black !important;
+    border: none;
+
+    &:hover, &.router-link-exact-active.router-link-active {
+      background-color: @white;
+    }
+  }
+}
