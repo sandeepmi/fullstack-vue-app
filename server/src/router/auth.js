@@ -2,7 +2,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const config = require('../config')
-const { dateNow } = require('../helpers/utils')
+const { dateNow, isEmail } = require('../helpers/utils')
 
 // Create auth group routes
 const authRoutes = express.Router()
@@ -12,8 +12,14 @@ authRoutes.post('/register', function (req, res) {
   const { email, password, firstName, lastName } = req.body
 
   // validations
+  // required fields
   if (!email || !password || !firstName || !lastName) {
     return res.status(400).json({ success: false, message: 'Please provide all required fields' })
+  }
+
+  // email validation
+  if (!isEmail(email)) {
+    return res.status(400).json({ success: false, message: 'Please provide a valid email' })
   }
 
   // check if email already registered
