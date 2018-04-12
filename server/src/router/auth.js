@@ -73,14 +73,20 @@ authRoutes.post('/authenticate', function (req, res) {
         if (err) return res.status(500).json({})
 
         // return JWT token
-        const token = generateJwtToken({ userId: user._id })
+        const token = generateJwtToken(req, user)
         res.json({ success: true, token: 'JWT ' + token })
       })
     })
   })
 })
 
-function generateJwtToken (payload) {
+function generateJwtToken (req, user) {
+  const payload = {
+    userId: user._id,
+    ip: req.ip,
+    agent: req.headers['user-agent']
+  }
+
   return jwt.sign(payload, config.secret, {
     expiresIn: '1d'
   })

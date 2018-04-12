@@ -6,14 +6,23 @@ const config = require('./config')
 module.exports = function(passport) {
   const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: config.secret
+    secretOrKey: config.secret,
+    passReqToCallback: true
   }
 
-  passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
-    User.findById(jwt_payload.userId, function (err, user) {
+  passport.use(new JwtStrategy(opts, function (req, jwtPayload, done) {
+    User.findById(jwtPayload.userId, function (err, user) {
       if (err) return done(err, false)
 
-      done(null, user || false)
+      // verify user, ip address and user agent
+      if (user
+        && jwtPayload.ip === req.ip
+        && jwtPayload.agent === req.headers['user-agent']
+      ) {
+        done(null, user)
+      } else {
+        done(null, false)
+      }
     })
   }))
 }
