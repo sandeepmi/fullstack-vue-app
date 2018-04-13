@@ -20,8 +20,7 @@
 <script>
 import { login } from '@/services/authService'
 import { setAuthToken, getErrorMsg, validateForm } from '@/helpers'
-import Button from '../core/Button'
-import InputGroup from '../core/InputGroup'
+import { Button, InputGroup } from '../core'
 
 export default {
   name: 'Login',

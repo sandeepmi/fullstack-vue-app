@@ -22,8 +22,7 @@
 <script>
 import { register } from '@/services/authService'
 import { getErrorMsg, validateForm } from '@/helpers'
-import Button from '../core/Button'
-import InputGroup from '../core/InputGroup'
+import { InputGroup, Button } from '../core'
 
 export default {
   name: 'Register',

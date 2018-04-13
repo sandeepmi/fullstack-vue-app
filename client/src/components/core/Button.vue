@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Loading from '../core/Loading'
+import Loading from './Loading'
 
 export default {
   props: {

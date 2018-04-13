@@ -104,8 +104,13 @@ h2 {
     color: @black !important;
     border: none;
 
-    &:hover, &.router-link-exact-active.router-link-active {
+    &:hover {
+      font-weight: bold;
+    }
+
+    &.router-link-exact-active.router-link-active {
       background-color: @white;
+      font-weight: normal;
     }
   }
 }

@@ -29,9 +29,7 @@
 <script>
 import { getUserProfile, updateUserProfile } from '@/services/userService'
 import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj, validateForm } from '@/helpers'
-import Loading from '../core/Loading'
-import InputGroup from '../core/InputGroup'
-import Button from '../core/Button'
+import { Loading, InputGroup, Button } from '../core'
 import AccountNav from './AccountNav'
 
 export default {

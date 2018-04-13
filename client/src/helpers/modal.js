@@ -1,4 +1,4 @@
-import AlertModal from '../components/core/AlertModal'
+import { AlertModal } from '../components/core'
 
 export function showModal ($root, component, props) {
   $root.$emit('showModal', {

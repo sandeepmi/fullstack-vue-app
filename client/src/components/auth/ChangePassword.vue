@@ -8,7 +8,7 @@
         <form @submit.prevent="onSubmit" class="form-fixed-width">
           <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
           <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" :isRequired="true" />
-          <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :isRequired="true" />
+          <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :isRequired="true" :isMatch="true" :matchValue="newPassword" />
           <div class="form-btn-group">
             <Button :loading="isSaving">Submit</Button>
           </div>
@@ -24,8 +24,7 @@
 <script>
 import { changePassword } from '@/services/authService'
 import { getErrorMsg, messages, validateForm } from '@/helpers'
-import InputGroup from '../core/InputGroup'
-import Button from '../core/Button'
+import { InputGroup, Button } from '../core'
 import AccountNav from './AccountNav'
 
 export default {

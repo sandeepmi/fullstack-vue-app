@@ -20,8 +20,7 @@
 </template>
 
 <script>
-import Modal from '../core/Modal'
-import Loading from '../core/Loading'
+import { Modal, Loading } from '../core'
 import { closeModal, messages, showToast } from '@/helpers'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapActions } = createNamespacedHelpers('items')

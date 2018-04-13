@@ -14,7 +14,7 @@
 <script>
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Toasts from './components/core/Toasts'
+import { Toasts } from './components/core'
 
 export default {
   name: 'App',

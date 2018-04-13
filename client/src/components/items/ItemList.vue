@@ -32,7 +32,7 @@
 
 <script>
 import EditItem from './EditItemModal'
-import Loading from '../core/Loading'
+import { Loading } from '../core'
 import { showModal, showAlertModal, closeModal, cloneObj, messages, showToast } from '@/helpers'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('items')
