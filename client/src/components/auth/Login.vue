@@ -3,8 +3,8 @@
     <div class="card-body text-center">
       <h2>Login</h2>
       <form @submit.prevent="onLogin">
-        <InputGroup label="Email" name="email" v-model="email" :error="val.email.error" @blur="validateField($data, 'email')" :setFocus="true" />
-        <InputGroup type="password" label="Password" name="password" v-model="password" :error="val.password.error" @blur="validateField($data, 'password')" />
+        <InputGroup label="Email" name="email" v-model="email" :isRequired="true" :isEmail="true" />
+        <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
         <div>
           <Button type="submit" :loading="isLoading">Log In</Button>
         </div>
@@ -19,7 +19,7 @@
 
 <script>
 import { login } from '@/services/authService'
-import { setAuthToken, getErrorMsg, validateField, validateForm } from '@/helpers'
+import { setAuthToken, getErrorMsg, validateForm } from '@/helpers'
 import Button from '../core/Button'
 import InputGroup from '../core/InputGroup'
 
@@ -34,22 +34,12 @@ export default {
       email: '',
       password: '',
       message: '',
-      isLoading: false,
-      val: {
-        email: {
-          rules: ['required', 'email'],
-          error: ''
-        },
-        password: {
-          rules: ['required'],
-          error: ''
-        }
-      }
+      isLoading: false
     }
   },
   methods: {
     onLogin () {
-      const isFormValid = validateForm(this.$data)
+      const isFormValid = validateForm(this)
       if (!isFormValid) return
 
       this.message = ''
@@ -74,8 +64,7 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-    },
-    validateField
+    }
   }
 }
 </script>

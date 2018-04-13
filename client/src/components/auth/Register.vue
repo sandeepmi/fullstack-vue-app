@@ -3,10 +3,10 @@
     <div class="card-body text-center">
       <h2>Register</h2>
       <form @submit.prevent="onRegister">
-        <InputGroup label="First Name" name="firstName" v-model="firstName" :error="val.firstName.error" @blur="validateField($data, 'firstName')" :setFocus="true" />
-        <InputGroup label="Last Name" name="lastName" v-model="lastName" :error="val.lastName.error" @blur="validateField($data, 'lastName')" />
-        <InputGroup label="Email" name="email" v-model="email" :error="val.email.error" @blur="validateField($data, 'email')" />
-        <InputGroup type="password" label="Password" name="password" v-model="password" :error="val.password.error" @blur="validateField($data, 'password')" />
+        <InputGroup label="First Name" name="firstName" v-model="firstName" :isRequired="true" />
+        <InputGroup label="Last Name" name="lastName" v-model="lastName" :isRequired="true" />
+        <InputGroup label="Email" name="email" v-model="email" :isRequired="true" :isEmail="true" />
+        <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
         <div>
           <Button type="submit" :loading="isLoading">Sign up</Button>
         </div>
@@ -21,7 +21,7 @@
 
 <script>
 import { register } from '@/services/authService'
-import { getErrorMsg, validateField, validateForm } from '@/helpers'
+import { getErrorMsg, validateForm } from '@/helpers'
 import Button from '../core/Button'
 import InputGroup from '../core/InputGroup'
 
@@ -38,30 +38,12 @@ export default {
       email: '',
       password: '',
       message: '',
-      isLoading: false,
-      val: {
-        firstName: {
-          rules: ['required'],
-          error: ''
-        },
-        lastName: {
-          rules: ['required'],
-          error: ''
-        },
-        email: {
-          rules: ['required', 'email'],
-          error: ''
-        },
-        password: {
-          rules: ['required'],
-          error: ''
-        }
-      }
+      isLoading: false
     }
   },
   methods: {
     onRegister () {
-      const isFormValid = validateForm(this.$data)
+      const isFormValid = validateForm(this)
       if (!isFormValid) return
 
       this.message = ''
@@ -83,8 +65,7 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-    },
-    validateField
+    }
   }
 }
 </script>

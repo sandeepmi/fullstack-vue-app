@@ -9,12 +9,14 @@
       :class="cssClass"
       :readonly="plainText"
       v-on="inputListeners"
+      @blur="validateAsync"
       ref="input" />
   </FormGroup>
 </template>
 
 <script>
 import FormGroup from './FormGroup'
+import { isEmail, delay } from '@/helpers'
 
 export default {
   props: {
@@ -29,12 +31,20 @@ export default {
       default: 'text'
     },
     value: String,
-    error: String,
     setFocus: Boolean,
-    plainText: Boolean
+    plainText: Boolean,
+    isRequired: Boolean,
+    isEmail: Boolean,
+    isMatch: Boolean,
+    matchValue: String
   },
   components: {
     FormGroup
+  },
+  data () {
+    return {
+      error: ''
+    }
   },
   computed: {
     cssClass () {
@@ -70,6 +80,33 @@ export default {
     // set focus
     if (this.setFocus) {
       this.$refs.input.focus()
+    }
+  },
+  methods: {
+    validate () {
+      // validate required
+      if (this.isRequired && !this.value) {
+        this.error = 'Required field'
+        return false
+      }
+
+      // validate email
+      if (this.isEmail && !isEmail(this.value)) {
+        this.error = 'Invalid email'
+        return false
+      }
+
+      // validate match
+      if (this.isMatch && this.value !== this.matchValue) {
+        this.error = 'Not a match'
+        return false
+      }
+
+      this.error = ''
+      return true
+    },
+    validateAsync () {
+      delay(this.validate, 0)
     }
   }
 }

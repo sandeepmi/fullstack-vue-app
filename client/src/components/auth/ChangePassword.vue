@@ -6,9 +6,9 @@
       <div class="card-body">
         <h2 class="mb-3">Change Password</h2>
         <form @submit.prevent="onSubmit" class="form-fixed-width">
-          <InputGroup type="password" label="Password" name="password" v-model="password" :error="val.password.error" @blur="validateField($data, 'password')" />
-          <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" :error="val.newPassword.error" @blur="validateField($data, 'newPassword')" />
-          <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :error="val.confirmNewPassword.error" @blur="validateField($data, 'confirmNewPassword')" />
+          <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
+          <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" :isRequired="true" />
+          <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :isRequired="true" />
           <div class="form-btn-group">
             <Button :loading="isSaving">Submit</Button>
           </div>
@@ -23,7 +23,7 @@
 
 <script>
 import { changePassword } from '@/services/authService'
-import { getErrorMsg, messages, validateField, validateForm } from '@/helpers'
+import { getErrorMsg, messages, validateForm } from '@/helpers'
 import InputGroup from '../core/InputGroup'
 import Button from '../core/Button'
 import AccountNav from './AccountNav'
@@ -41,26 +41,12 @@ export default {
       newPassword: '',
       confirmNewPassword: '',
       isSaving: false,
-      message: '',
-      val: {
-        password: {
-          rules: ['required'],
-          error: ''
-        },
-        newPassword: {
-          rules: ['required'],
-          error: ''
-        },
-        confirmNewPassword: {
-          rules: ['required', { name: 'match', fieldName: 'newPassword', message: 'Password did not match' }],
-          error: ''
-        }
-      }
+      message: ''
     }
   },
   methods: {
     onSubmit () {
-      const isFormValid = validateForm(this.$data)
+      const isFormValid = validateForm(this)
       if (!isFormValid) return
 
       this.message = ''
@@ -87,8 +73,7 @@ export default {
         .finally(() => {
           this.isSaving = false
         })
-    },
-    validateField
+    }
   }
 }
 </script>

@@ -11,10 +11,9 @@
             <a v-if="!isEditMode" class="item-edit icon-link" @click="editProfile">
                 <i class="material-icons">mode_edit</i>
             </a>
-            <router-link :to="{ name: 'ChangePassword' }" class="float-right">Change Password</router-link>
-            <InputGroup label="Email:" name="email" v-model="editUserProfile.email" :srOnly="false" :plainText="!isEditMode" :error="val.email.error" @blur="validateField($data, 'email')" />
-            <InputGroup label="First Name:" name="firstName" v-model="editUserProfile.firstName" :srOnly="false" :plainText="!isEditMode" :error="val.firstName.error" @blur="validateField($data, 'firstName')" />
-            <InputGroup label="Last Name:" name="lastName" v-model="editUserProfile.lastName" :srOnly="false" :plainText="!isEditMode" class="mb-0" :error="val.lastName.error" @blur="validateField($data, 'lastName')" />
+            <InputGroup label="Email:" name="email" v-model="editUserProfile.email" :srOnly="false" :plainText="!isEditMode" :isRequired="true" :isEmail="true" />
+            <InputGroup label="First Name:" name="firstName" v-model="editUserProfile.firstName" :srOnly="false" :plainText="!isEditMode" :isRequired="true" />
+            <InputGroup label="Last Name:" name="lastName" v-model="editUserProfile.lastName" :srOnly="false" :plainText="!isEditMode" class="mb-0" :isRequired="true" />
             <div v-if="isEditMode" class="form-btn-group">
               <Button :loading="isSaving">Update</Button>
               <a v-if="!isSaving" @click="cancelEditProfile" class="btn btn-secondary">Cancel</a>
@@ -29,7 +28,7 @@
 
 <script>
 import { getUserProfile, updateUserProfile } from '@/services/userService'
-import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj, validateField, validateForm } from '@/helpers'
+import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj, validateForm } from '@/helpers'
 import Loading from '../core/Loading'
 import InputGroup from '../core/InputGroup'
 import Button from '../core/Button'
@@ -50,24 +49,7 @@ export default {
       isLoading: false,
       isSaving: false,
       message: '',
-      isEditMode: false,
-      val: {
-        firstName: {
-          rules: ['required'],
-          error: '',
-          parent: 'editUserProfile'
-        },
-        lastName: {
-          rules: ['required'],
-          error: '',
-          parent: 'editUserProfile'
-        },
-        email: {
-          rules: ['required', 'email'],
-          error: '',
-          parent: 'editUserProfile'
-        }
-      }
+      isEditMode: false
     }
   },
   mounted () {
@@ -98,7 +80,7 @@ export default {
       this.editUserProfile = cloneObj(this.userProfile)
     },
     saveProfile () {
-      const isFormValid = validateForm(this.$data)
+      const isFormValid = validateForm(this)
       if (!isFormValid) return
 
       this.isSaving = true
@@ -120,8 +102,7 @@ export default {
         .finally(() => {
           this.isSaving = false
         })
-    },
-    validateField
+    }
   }
 }
 </script>
