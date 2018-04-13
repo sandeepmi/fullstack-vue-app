@@ -2,7 +2,7 @@
   <div class="card login-wrapper my-5 mx-auto">
     <div class="card-body text-center">
       <h2>Register</h2>
-      <form @submit.prevent="onRegister">
+      <Form :onSubmit="onRegister">
         <InputGroup label="First Name" name="firstName" v-model="firstName" :isRequired="true" />
         <InputGroup label="Last Name" name="lastName" v-model="lastName" :isRequired="true" />
         <InputGroup label="Email" name="email" v-model="email" :isRequired="true" :isEmail="true" />
@@ -14,21 +14,22 @@
           <div v-if="message" class="text-danger mt-2">{{message}}</div>
         </transition>
         <div class="mt-3">Already a user? <router-link :to="{ name: 'Login' }">Login</router-link></div>
-      </form>
+      </Form>
     </div>
   </div>
 </template>
 
 <script>
 import { register } from '@/services/authService'
-import { getErrorMsg, validateForm } from '@/helpers'
-import { InputGroup, Button } from '../core'
+import { getErrorMsg } from '@/helpers'
+import { InputGroup, Button, Form } from '../core'
 
 export default {
   name: 'Register',
   components: {
     Button,
-    InputGroup
+    InputGroup,
+    Form
   },
   data () {
     return {
@@ -42,9 +43,6 @@ export default {
   },
   methods: {
     onRegister () {
-      const isFormValid = validateForm(this)
-      if (!isFormValid) return
-
       this.message = ''
       this.isLoading = true
 

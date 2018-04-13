@@ -5,7 +5,7 @@
       <AccountNav />
       <div class="card-body">
         <h2 class="mb-3">Change Password</h2>
-        <form @submit.prevent="onSubmit" class="form-fixed-width">
+        <Form :onSubmit="onSubmit" class="form-fixed-width">
           <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
           <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" :isRequired="true" />
           <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :isRequired="true" :isMatch="true" :matchValue="newPassword" />
@@ -15,7 +15,7 @@
           <transition name="fade">
             <div v-if="message" class="text-danger my-2">{{message}}</div>
           </transition>
-        </form>
+        </Form>
       </div>
     </div>
   </div>
@@ -23,8 +23,8 @@
 
 <script>
 import { changePassword } from '@/services/authService'
-import { getErrorMsg, messages, validateForm } from '@/helpers'
-import { InputGroup, Button } from '../core'
+import { getErrorMsg, messages } from '@/helpers'
+import { InputGroup, Button, Form } from '../core'
 import AccountNav from './AccountNav'
 
 export default {
@@ -32,6 +32,7 @@ export default {
   components: {
     InputGroup,
     Button,
+    Form,
     AccountNav
   },
   data () {
@@ -45,9 +46,6 @@ export default {
   },
   methods: {
     onSubmit () {
-      const isFormValid = validateForm(this)
-      if (!isFormValid) return
-
       this.message = ''
       this.isSaving = true
 

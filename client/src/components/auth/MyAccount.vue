@@ -6,7 +6,7 @@
       <div class="card-body">
         <transition name="fade" mode="out-in">
           <Loading v-if="isLoading" :centered="true" class="tall" />
-          <form v-else-if="userProfile" @submit.prevent="saveProfile" class="form-with-label form-fixed-width">
+          <Form v-else-if="userProfile" :onSubmit="saveProfile" class="form-with-label form-fixed-width">
             <h2 class="d-inline-block">Profile</h2>
             <a v-if="!isEditMode" class="item-edit icon-link" @click="editProfile">
                 <i class="material-icons">mode_edit</i>
@@ -18,7 +18,7 @@
               <Button :loading="isSaving">Update</Button>
               <a v-if="!isSaving" @click="cancelEditProfile" class="btn btn-secondary">Cancel</a>
             </div>
-          </form>
+          </Form>
         </transition>
         <div v-if="message" class="text-danger my-2">{{message}}</div>
       </div>
@@ -28,8 +28,8 @@
 
 <script>
 import { getUserProfile, updateUserProfile } from '@/services/userService'
-import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj, validateForm } from '@/helpers'
-import { Loading, InputGroup, Button } from '../core'
+import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj } from '@/helpers'
+import { Loading, InputGroup, Button, Form } from '../core'
 import AccountNav from './AccountNav'
 
 export default {
@@ -38,6 +38,7 @@ export default {
     Loading,
     InputGroup,
     Button,
+    Form,
     AccountNav
   },
   data () {
@@ -78,9 +79,6 @@ export default {
       this.editUserProfile = cloneObj(this.userProfile)
     },
     saveProfile () {
-      const isFormValid = validateForm(this)
-      if (!isFormValid) return
-
       this.isSaving = true
 
       updateUserProfile(this.editUserProfile)
