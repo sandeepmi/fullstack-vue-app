@@ -14,7 +14,7 @@
           <button type="submit" class="btn">Submit</button>
           <a class="btn btn-secondary" @click="close">Cancel</a>
         </div>
-        <Loading v-else size="small" centered="true" />
+        <Loading v-else size="small" centered />
       </form>
   </Modal>
 </template>

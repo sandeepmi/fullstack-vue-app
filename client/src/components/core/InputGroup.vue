@@ -33,9 +33,8 @@ export default {
     value: String,
     setFocus: Boolean,
     plainText: Boolean,
-    isRequired: Boolean,
-    isEmail: Boolean,
-    isMatch: Boolean,
+    required: Boolean,
+    email: Boolean,
     matchValue: String
   },
   components: {
@@ -85,19 +84,19 @@ export default {
   methods: {
     validate () {
       // validate required
-      if (this.isRequired && !this.value) {
+      if (this.required && !this.value) {
         this.error = 'Required field'
         return false
       }
 
       // validate email
-      if (this.isEmail && !isEmail(this.value)) {
+      if (this.email && !isEmail(this.value)) {
         this.error = 'Invalid email'
         return false
       }
 
       // validate match
-      if (this.isMatch && this.value !== this.matchValue) {
+      if (this.matchValue && this.value !== this.matchValue) {
         this.error = 'Not a match'
         return false
       }

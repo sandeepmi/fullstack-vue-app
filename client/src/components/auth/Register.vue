@@ -3,13 +3,11 @@
     <div class="card-body text-center">
       <h2>Register</h2>
       <Form :onSubmit="onRegister">
-        <InputGroup label="First Name" name="firstName" v-model="firstName" :isRequired="true" />
-        <InputGroup label="Last Name" name="lastName" v-model="lastName" :isRequired="true" />
-        <InputGroup label="Email" name="email" v-model="email" :isRequired="true" :isEmail="true" />
-        <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
-        <div>
-          <Button type="submit" :loading="isLoading">Sign up</Button>
-        </div>
+        <InputGroup label="First Name" name="firstName" v-model="firstName" required />
+        <InputGroup label="Last Name" name="lastName" v-model="lastName" required />
+        <InputGroup label="Email" name="email" v-model="email" required email />
+        <InputGroup type="password" label="Password" name="password" v-model="password" required />
+        <Button type="submit" :loading="isLoading">Sign up</Button>
         <transition name="fade">
           <div v-if="message" class="text-danger mt-2">{{message}}</div>
         </transition>

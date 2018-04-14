@@ -1,12 +1,10 @@
 <template>
   <Form :onSubmit="onSubmit" class="form-fixed-width">
     <h2 class="mb-3">Change Password</h2>
-    <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
-    <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" :isRequired="true" />
-    <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :isRequired="true" :isMatch="true" :matchValue="newPassword" />
-    <div class="form-btn-group">
-      <Button :loading="isSaving">Submit</Button>
-    </div>
+    <InputGroup type="password" label="Password" name="password" v-model="password" required />
+    <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" required />
+    <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" required :matchValue="newPassword" />
+    <Button :loading="isSaving">Submit</Button>
     <transition name="fade">
       <div v-if="message" class="text-danger my-2">{{message}}</div>
     </transition>

@@ -1,15 +1,15 @@
 <template>
   <div class="profile-wrapper">
     <transition name="fade" mode="out-in">
-      <Loading v-if="isLoading" :centered="true" class="tall" />
+      <Loading v-if="isLoading" centered class="tall" />
       <Form v-else-if="userProfile" :onSubmit="saveProfile" class="form-with-label form-fixed-width">
         <h2 class="d-inline-block">Profile</h2>
         <a v-if="!isEditMode" class="item-edit icon-link" @click="editProfile">
             <i class="material-icons">mode_edit</i>
         </a>
-        <InputGroup label="Email:" name="email" v-model="editUserProfile.email" :srOnly="false" :plainText="!isEditMode" :isRequired="true" :isEmail="true" />
-        <InputGroup label="First Name:" name="firstName" v-model="editUserProfile.firstName" :srOnly="false" :plainText="!isEditMode" :isRequired="true" />
-        <InputGroup label="Last Name:" name="lastName" v-model="editUserProfile.lastName" :srOnly="false" :plainText="!isEditMode" class="mb-0" :isRequired="true" />
+        <InputGroup label="Email:" name="email" v-model="editUserProfile.email" :srOnly="false" :plainText="!isEditMode" required email />
+        <InputGroup label="First Name:" name="firstName" v-model="editUserProfile.firstName" :srOnly="false" :plainText="!isEditMode" required />
+        <InputGroup label="Last Name:" name="lastName" v-model="editUserProfile.lastName" :srOnly="false" :plainText="!isEditMode" class="mb-0" required />
         <div v-if="isEditMode" class="form-btn-group">
           <Button :loading="isSaving">Update</Button>
           <a v-if="!isSaving" @click="cancelEditProfile" class="btn btn-secondary">Cancel</a>

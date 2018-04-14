@@ -3,11 +3,9 @@
     <div class="card-body text-center">
       <h2>Login</h2>
       <Form :onSubmit="onLogin">
-        <InputGroup label="Email" name="email" v-model="email" :isRequired="true" :isEmail="true" />
-        <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
-        <div>
-          <Button type="submit" :loading="isLoading">Log In</Button>
-        </div>
+        <InputGroup label="Email" name="email" v-model="email" required email />
+        <InputGroup type="password" label="Password" name="password" v-model="password" required />
+        <Button type="submit" :loading="isLoading">Log In</Button>
         <transition name="fade">
           <div v-if="message" class="text-danger mt-2">{{message}}</div>
         </transition>
