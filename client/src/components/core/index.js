@@ -10,4 +10,4 @@ export { default as AlertModal } from './AlertModal'
 
 export { default as Loading } from './Loading'
 export { default as Toasts } from './Toasts'
-export { default as Message } from './Message'
+export { default as Alert } from './Alert'

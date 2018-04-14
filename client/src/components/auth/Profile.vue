@@ -12,16 +12,16 @@
           <Button :loading="isSaving">Update</Button>
           <a v-if="!isSaving" @click="cancelEditProfile" class="btn btn-secondary">Cancel</a>
         </div>
-        <Message :text="message" />
       </Form>
     </transition>
+    <Alert :text="message" />
   </div>
 </template>
 
 <script>
 import { getUserProfile, updateUserProfile } from '@/services/userService'
 import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj } from '@/helpers'
-import { Loading, Form, InputGroup, Button, Message } from '../core'
+import { Loading, Form, InputGroup, Button, Alert } from '../core'
 
 export default {
   name: 'MyAccount',
@@ -30,7 +30,7 @@ export default {
     Form,
     InputGroup,
     Button,
-    Message
+    Alert
   },
   data () {
     return {

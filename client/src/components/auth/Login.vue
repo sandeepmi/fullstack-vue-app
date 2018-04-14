@@ -5,8 +5,8 @@
       <Form :onSubmit="onLogin">
         <InputGroup label="Email" name="email" v-model="email" required email />
         <InputGroup type="password" label="Password" name="password" v-model="password" required />
+        <Alert :text="message" />
         <Button type="submit" :loading="isLoading">Log In</Button>
-        <Message :text="message" />
       </Form>
       <div class="mt-3">New user? <router-link :to="{ name: 'Register' }">Sign up</router-link></div>
     </div>
@@ -16,7 +16,7 @@
 <script>
 import { login } from '@/services/authService'
 import { setAuthToken, getErrorMsg } from '@/helpers'
-import { Button, InputGroup, Form, Message } from '../core'
+import { Button, InputGroup, Form, Alert } from '../core'
 
 export default {
   name: 'Login',
@@ -24,7 +24,7 @@ export default {
     Button,
     InputGroup,
     Form,
-    Message
+    Alert
   },
   data () {
     return {

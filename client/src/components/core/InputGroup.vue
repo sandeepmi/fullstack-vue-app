@@ -85,7 +85,7 @@ export default {
     validate () {
       // validate required
       if (this.required && !this.value) {
-        this.error = 'Required field'
+        this.error = 'Required'
         return false
       }
 

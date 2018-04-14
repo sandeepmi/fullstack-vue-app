@@ -1,17 +1,17 @@
 <template>
   <transition name="fade">
-    <div v-if="text" class="my-2" :class="cssClass">{{text}}</div>
+    <div v-if="text" class="alert" :class="cssClass">{{text}}</div>
   </transition>
 </template>
 
 <script>
 export default {
-  name: 'Message',
+  name: 'Alert',
   props: {
     text: String,
     cssClass: {
       type: String,
-      default: 'text-danger'
+      default: 'alert-danger'
     }
   }
 }

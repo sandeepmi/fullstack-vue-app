@@ -7,6 +7,7 @@
 @black: #555555;
 @success: #28a745;
 @error: #dc3545;
+@error-bg: #f8d7da;
 
 .ss-shadow {
   box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 1px 3px -2px rgba(0,0,0,.12);
@@ -26,8 +27,7 @@
   border-left: solid 3px @base-color;
 
   &.error {
-    border: solid 1px @error;
-    border-left: solid 3px @error;
+    background-color: @error-bg;
   }
 }
 

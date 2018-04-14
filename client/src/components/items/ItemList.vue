@@ -25,14 +25,14 @@
           </li>
         </ul>
       </div>
-      <div class="alert alert-danger" v-if="status" v-text="status"></div>
     </transition>
+    <Alert :text="status" />
   </div>
 </template>
 
 <script>
 import EditItem from './EditItemModal'
-import { Loading } from '../core'
+import { Loading, Alert } from '../core'
 import { showModal, showAlertModal, closeModal, cloneObj, messages, showToast } from '@/helpers'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('items')
@@ -40,7 +40,8 @@ const { mapState, mapGetters, mapActions } = createNamespacedHelpers('items')
 export default {
   name: 'Items',
   components: {
-    Loading
+    Loading,
+    Alert
   },
   computed: {
     ...mapState({

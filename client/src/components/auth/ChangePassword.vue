@@ -5,14 +5,14 @@
     <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" required />
     <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" required :matchValue="newPassword" />
     <Button :loading="isSaving">Submit</Button>
-    <Message :text="message" />
+    <Alert :text="message" />
   </Form>
 </template>
 
 <script>
 import { changePassword } from '@/services/authService'
 import { getErrorMsg, messages } from '@/helpers'
-import { InputGroup, Button, Form, Message } from '../core'
+import { InputGroup, Button, Form, Alert } from '../core'
 
 export default {
   name: 'ChangePassword',
@@ -20,7 +20,7 @@ export default {
     Form,
     InputGroup,
     Button,
-    Message
+    Alert
   },
   data () {
     return {
