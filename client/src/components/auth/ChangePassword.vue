@@ -1,39 +1,29 @@
 <template>
-  <div class="container">
-    <h1 class="my-3">My Account</h1>
-    <div class="card">
-      <AccountNav />
-      <div class="card-body">
-        <h2 class="mb-3">Change Password</h2>
-        <Form :onSubmit="onSubmit" class="form-fixed-width">
-          <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
-          <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" :isRequired="true" />
-          <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :isRequired="true" :isMatch="true" :matchValue="newPassword" />
-          <div class="form-btn-group">
-            <Button :loading="isSaving">Submit</Button>
-          </div>
-          <transition name="fade">
-            <div v-if="message" class="text-danger my-2">{{message}}</div>
-          </transition>
-        </Form>
-      </div>
+  <Form :onSubmit="onSubmit" class="form-fixed-width">
+    <h2 class="mb-3">Change Password</h2>
+    <InputGroup type="password" label="Password" name="password" v-model="password" :isRequired="true" />
+    <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" :isRequired="true" />
+    <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" :isRequired="true" :isMatch="true" :matchValue="newPassword" />
+    <div class="form-btn-group">
+      <Button :loading="isSaving">Submit</Button>
     </div>
-  </div>
+    <transition name="fade">
+      <div v-if="message" class="text-danger my-2">{{message}}</div>
+    </transition>
+  </Form>
 </template>
 
 <script>
 import { changePassword } from '@/services/authService'
 import { getErrorMsg, messages } from '@/helpers'
 import { InputGroup, Button, Form } from '../core'
-import AccountNav from './AccountNav'
 
 export default {
   name: 'ChangePassword',
   components: {
-    InputGroup,
-    Button,
     Form,
-    AccountNav
+    InputGroup,
+    Button
   },
   data () {
     return {

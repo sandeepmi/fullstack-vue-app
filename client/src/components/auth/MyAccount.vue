@@ -1,104 +1,22 @@
 <template>
   <div class="container">
     <h1 class="my-3">My Account</h1>
-    <div class="card">
+    <div class="card min-height">
       <AccountNav />
       <div class="card-body">
-        <transition name="fade" mode="out-in">
-          <Loading v-if="isLoading" :centered="true" class="tall" />
-          <Form v-else-if="userProfile" :onSubmit="saveProfile" class="form-with-label form-fixed-width">
-            <h2 class="d-inline-block">Profile</h2>
-            <a v-if="!isEditMode" class="item-edit icon-link" @click="editProfile">
-                <i class="material-icons">mode_edit</i>
-            </a>
-            <InputGroup label="Email:" name="email" v-model="editUserProfile.email" :srOnly="false" :plainText="!isEditMode" :isRequired="true" :isEmail="true" />
-            <InputGroup label="First Name:" name="firstName" v-model="editUserProfile.firstName" :srOnly="false" :plainText="!isEditMode" :isRequired="true" />
-            <InputGroup label="Last Name:" name="lastName" v-model="editUserProfile.lastName" :srOnly="false" :plainText="!isEditMode" class="mb-0" :isRequired="true" />
-            <div v-if="isEditMode" class="form-btn-group">
-              <Button :loading="isSaving">Update</Button>
-              <a v-if="!isSaving" @click="cancelEditProfile" class="btn btn-secondary">Cancel</a>
-            </div>
-          </Form>
-        </transition>
-        <div v-if="message" class="text-danger my-2">{{message}}</div>
+        <router-view></router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getUserProfile, updateUserProfile } from '@/services/userService'
-import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj } from '@/helpers'
-import { Loading, InputGroup, Button, Form } from '../core'
 import AccountNav from './AccountNav'
 
 export default {
   name: 'MyAccount',
   components: {
-    Loading,
-    InputGroup,
-    Button,
-    Form,
     AccountNav
-  },
-  data () {
-    return {
-      userProfile: null,
-      editUserProfile: null,
-      isLoading: false,
-      isSaving: false,
-      message: '',
-      isEditMode: false
-    }
-  },
-  mounted () {
-    this.showProfile()
-  },
-  methods: {
-    showProfile () {
-      const loadingId = delay(() => { this.isLoading = true })
-
-      getUserProfile()
-        .then(userProfile => {
-          this.userProfile = userProfile
-          this.editUserProfile = cloneObj(this.userProfile)
-        })
-        .catch(err => {
-          this.message = getErrorMsg(err)
-        })
-        .finally(() => {
-          cancelDelayedAction(loadingId)
-          this.isLoading = false
-        })
-    },
-    editProfile () {
-      this.isEditMode = true
-    },
-    cancelEditProfile () {
-      this.isEditMode = false
-      this.editUserProfile = cloneObj(this.userProfile)
-    },
-    saveProfile () {
-      this.isSaving = true
-
-      updateUserProfile(this.editUserProfile)
-        .then(response => {
-          if (response.success) {
-            this.$store.dispatch('toasts/addToast', { text: messages.profile.updateSuccess, type: 'success' })
-            this.isEditMode = false
-            this.userProfile = cloneObj(this.editUserProfile)
-            this.$store.dispatch('user/updateDisplayName', this.editUserProfile)
-          } else {
-            this.message = messages.profile.updateFail
-          }
-        })
-        .catch(err => {
-          this.message = getErrorMsg(err)
-        })
-        .finally(() => {
-          this.isSaving = false
-        })
-    }
   }
 }
 </script>
