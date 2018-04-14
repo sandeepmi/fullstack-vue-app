@@ -8,11 +8,9 @@
         <InputGroup label="Email" name="email" v-model="email" required email />
         <InputGroup type="password" label="Password" name="password" v-model="password" required />
         <Button type="submit" :loading="isLoading">Sign up</Button>
-        <transition name="fade">
-          <div v-if="message" class="text-danger mt-2">{{message}}</div>
-        </transition>
-        <div class="mt-3">Already a user? <router-link :to="{ name: 'Login' }">Login</router-link></div>
+        <Message :text="message" />
       </Form>
+      <div class="mt-3">Already a user? <router-link :to="{ name: 'Login' }">Login</router-link></div>
     </div>
   </div>
 </template>
@@ -20,14 +18,15 @@
 <script>
 import { register } from '@/services/authService'
 import { getErrorMsg } from '@/helpers'
-import { InputGroup, Button, Form } from '../core'
+import { InputGroup, Button, Form, Message } from '../core'
 
 export default {
   name: 'Register',
   components: {
     Button,
     InputGroup,
-    Form
+    Form,
+    Message
   },
   data () {
     return {

@@ -6,11 +6,9 @@
         <InputGroup label="Email" name="email" v-model="email" required email />
         <InputGroup type="password" label="Password" name="password" v-model="password" required />
         <Button type="submit" :loading="isLoading">Log In</Button>
-        <transition name="fade">
-          <div v-if="message" class="text-danger mt-2">{{message}}</div>
-        </transition>
-        <div class="mt-3">New user? <router-link :to="{ name: 'Register' }">Sign up</router-link></div>
+        <Message :text="message" />
       </Form>
+      <div class="mt-3">New user? <router-link :to="{ name: 'Register' }">Sign up</router-link></div>
     </div>
   </div>
 </template>
@@ -18,14 +16,15 @@
 <script>
 import { login } from '@/services/authService'
 import { setAuthToken, getErrorMsg } from '@/helpers'
-import { Button, InputGroup, Form } from '../core'
+import { Button, InputGroup, Form, Message } from '../core'
 
 export default {
   name: 'Login',
   components: {
     Button,
     InputGroup,
-    Form
+    Form,
+    Message
   },
   data () {
     return {
@@ -47,7 +46,7 @@ export default {
             this.$store.dispatch('user/getUserInfo')
 
             // redirect to target
-            const redirectPath = this.$route.query.redirect || '/my-account'
+            const redirectPath = this.$route.query.redirect || '/account'
             this.$router.push(redirectPath)
           } else {
             this.message = 'Incorrect email or password'

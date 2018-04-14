@@ -7,7 +7,11 @@
 <script>
 export default {
   name: 'Loading',
-  props: ['type', 'centered', 'size'],
+  props: {
+    type: String,
+    centered: Boolean,
+    size: String
+  },
   computed: {
     cssClasses () {
       const isCard = (this.type === 'card')

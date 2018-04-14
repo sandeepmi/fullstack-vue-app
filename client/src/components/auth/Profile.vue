@@ -4,9 +4,7 @@
       <Loading v-if="isLoading" centered class="tall" />
       <Form v-else-if="userProfile" :onSubmit="saveProfile" class="form-with-label form-fixed-width">
         <h2 class="d-inline-block">Profile</h2>
-        <a v-if="!isEditMode" class="item-edit icon-link" @click="editProfile">
-            <i class="material-icons">mode_edit</i>
-        </a>
+        <a v-if="!isEditMode" class="item-edit icon-link" @click="editProfile"><i class="material-icons">mode_edit</i></a>
         <InputGroup label="Email:" name="email" v-model="editUserProfile.email" :srOnly="false" :plainText="!isEditMode" required email />
         <InputGroup label="First Name:" name="firstName" v-model="editUserProfile.firstName" :srOnly="false" :plainText="!isEditMode" required />
         <InputGroup label="Last Name:" name="lastName" v-model="editUserProfile.lastName" :srOnly="false" :plainText="!isEditMode" class="mb-0" required />
@@ -14,16 +12,16 @@
           <Button :loading="isSaving">Update</Button>
           <a v-if="!isSaving" @click="cancelEditProfile" class="btn btn-secondary">Cancel</a>
         </div>
+        <Message :text="message" />
       </Form>
     </transition>
-    <div v-if="message" class="text-danger my-2">{{message}}</div>
   </div>
 </template>
 
 <script>
 import { getUserProfile, updateUserProfile } from '@/services/userService'
 import { getErrorMsg, delay, cancelDelayedAction, messages, cloneObj } from '@/helpers'
-import { Loading, Form, InputGroup, Button } from '../core'
+import { Loading, Form, InputGroup, Button, Message } from '../core'
 
 export default {
   name: 'MyAccount',
@@ -31,7 +29,8 @@ export default {
     Loading,
     Form,
     InputGroup,
-    Button
+    Button,
+    Message
   },
   data () {
     return {
@@ -71,6 +70,7 @@ export default {
       this.editUserProfile = cloneObj(this.userProfile)
     },
     saveProfile () {
+      this.message = ''
       this.isSaving = true
 
       updateUserProfile(this.editUserProfile)

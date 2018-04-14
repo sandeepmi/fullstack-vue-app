@@ -5,23 +5,22 @@
     <InputGroup type="password" label="New Password" name="newPassword" v-model="newPassword" required />
     <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" required :matchValue="newPassword" />
     <Button :loading="isSaving">Submit</Button>
-    <transition name="fade">
-      <div v-if="message" class="text-danger my-2">{{message}}</div>
-    </transition>
+    <Message :text="message" />
   </Form>
 </template>
 
 <script>
 import { changePassword } from '@/services/authService'
 import { getErrorMsg, messages } from '@/helpers'
-import { InputGroup, Button, Form } from '../core'
+import { InputGroup, Button, Form, Message } from '../core'
 
 export default {
   name: 'ChangePassword',
   components: {
     Form,
     InputGroup,
-    Button
+    Button,
+    Message
   },
   data () {
     return {
