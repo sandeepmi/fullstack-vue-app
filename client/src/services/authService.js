@@ -11,3 +11,7 @@ export function register (email, password, firstName, lastName) {
 export function changePassword (password, newPassword) {
   return fetchPost('/auth/changePassword', { password, newPassword })
 }
+
+export function forgotPassword (email) {
+  return fetchPost('/auth/forgotPassword', { email })
+}

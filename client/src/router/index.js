@@ -7,6 +7,7 @@ import Login from '@/components/auth/Login'
 import MyAccount from '@/components/auth/MyAccount'
 import Profile from '@/components/auth/Profile'
 import ChangePassword from '@/components/auth/ChangePassword'
+import ForgotPassword from '@/components/auth/ForgotPassword'
 import PageNotFound from '@/components/PageNotFound'
 import { requireAuth, logout } from '@/helpers'
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/account/forgot-password',
+      name: 'ForgotPassword',
+      component: ForgotPassword
     },
     {
       path: '/logout',

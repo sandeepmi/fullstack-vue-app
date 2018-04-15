@@ -8,7 +8,10 @@
         <Alert :text="message" />
         <Button type="submit" :loading="isLoading">Log In</Button>
       </Form>
-      <div class="mt-3">New user? <router-link :to="{ name: 'Register' }">Sign up</router-link></div>
+      <div class="mt-3">
+        New user? <router-link :to="{ name: 'Register' }">Sign up</router-link> |
+        <router-link :to="{ name: 'ForgotPassword' }">Forgot Password?</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -16,14 +19,14 @@
 <script>
 import { login } from '@/services/authService'
 import { setAuthToken, getErrorMsg } from '@/helpers'
-import { Button, InputGroup, Form, Alert } from '../core'
+import { Form, InputGroup, Button, Alert } from '../core'
 
 export default {
   name: 'Login',
   components: {
-    Button,
-    InputGroup,
     Form,
+    InputGroup,
+    Button,
     Alert
   },
   data () {
