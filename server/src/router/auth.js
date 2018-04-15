@@ -1,7 +1,9 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
+const crypto = require('crypto')
 const User = require('../models/User')
 const config = require('../config')
+const mailer = require('../mailer')
 const { dateNow, isEmail } = require('../helpers/utils')
 
 // Create auth group routes
@@ -83,6 +85,58 @@ authRoutes.post('/authenticate', function (req, res) {
         res.json({ success: true, token: 'JWT ' + token })
       })
     })
+  })
+})
+
+// Forgot password
+authRoutes.post('/forgotPassword', function (req, res) {
+  const { email } = req.body
+
+  // validations
+  if (!email) {
+    return res.status(400).json({ success: false, message: 'Please provide an email' })
+  }
+
+  // find user
+  User.findOne({ email: email }, function (err, user) {
+    if (err) return res.status(500).json({})
+
+    const successMsg = 'User will recieve an email if the provided email was registered'
+    if (user) {
+      // generate token
+      crypto.randomBytes(20, function (err, buffer) {
+        if (err) return res.status(500).json({})
+
+        var token = buffer.toString('hex')
+
+        // save reset password info
+        user.resetPasswordToken = token
+        user.resetPasswordDate = dateNow()
+        user.save(function (err) {
+          if (err) return res.status(500).json({})
+
+          // send forgot password email
+          var emailOptions = {
+            to: user.email,
+            from: `Node App <site@nodeapp.com>`,
+            template: 'forgot-password',
+            subject: 'Forgot Password Help',
+            context: {
+              url: 'http://localhost:8080/reset-password?token=' + token,
+              name: user.profile.firstName
+            }
+          }
+
+          mailer.sendMail(emailOptions, function (err) {
+            if (err) return res.status(500).json({})
+
+            return res.json({ success: true, message: successMsg })
+          })
+        })
+      })
+    } else {
+      return res.json({ success: true, message: successMsg })
+    }
   })
 })
 

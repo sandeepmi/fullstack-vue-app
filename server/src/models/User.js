@@ -33,6 +33,12 @@ const UserSchema = new Schema({
   },
   lastPasswordChangeDate: {
     type: Date
+  },
+  resetPasswordToken: {
+    type: String
+  },
+  resetPasswordDate: {
+    type: Date
   }
 })
 
