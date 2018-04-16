@@ -122,7 +122,7 @@ authRoutes.post('/forgotPassword', function (req, res) {
             template: 'forgot-password',
             subject: 'Forgot Password Help',
             context: {
-              url: 'http://localhost:8080/reset-password?token=' + token,
+              url: `${config.website}/account/reset-password?token=${token}`,
               name: user.profile.firstName
             }
           }

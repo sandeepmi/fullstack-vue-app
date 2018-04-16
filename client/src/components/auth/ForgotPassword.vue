@@ -19,7 +19,7 @@ import { getErrorMsg, messages } from '@/helpers'
 import { Form, InputGroup, Button, Alert } from '../core'
 
 export default {
-  name: 'Login',
+  name: 'ForgotPassword',
   components: {
     Form,
     InputGroup,

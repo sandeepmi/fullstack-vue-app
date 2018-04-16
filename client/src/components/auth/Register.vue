@@ -46,9 +46,9 @@ export default {
       register(this.email, this.password, this.firstName, this.lastName)
         .then(response => {
           if (response.success) {
-            // redirect to target
-            const redirectPath = this.$route.query.redirect || '/my-account'
-            this.$router.push(redirectPath)
+            // redirect to login with target param
+            const redirect = this.$route.query.redirect
+            this.$router.push({ name: 'Login', query: { redirect } })
           } else {
             this.message = response.message || 'Failed to register'
           }

@@ -10,7 +10,8 @@ module.exports = {
     user: envVar('EMAIL_USER', 'xxxxx@gmail.com'),
     password: envVar('EMAIL_PASSWORD', 'xxxxx'),
     service: envVar('EMAIL_SERVICE', 'Gmail')
-  }
+  },
+  website: envVar('WEBSITE', 'http://localhost:8080')
 }
 
 function envVar(key, defaultValue) {

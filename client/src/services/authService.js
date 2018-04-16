@@ -15,3 +15,11 @@ export function changePassword (password, newPassword) {
 export function forgotPassword (email) {
   return fetchPost('/auth/forgotPassword', { email })
 }
+
+export function resetPassword (token, password) {
+  return fetchPost('/auth/resetPassword', { token, password })
+}
+
+export function resetPasswordValidity (token) {
+  return fetchPost('/auth/resetPassword/valid', { token })
+}
