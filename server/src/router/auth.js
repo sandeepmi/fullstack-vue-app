@@ -140,6 +140,82 @@ authRoutes.post('/forgotPassword', function (req, res) {
   })
 })
 
+// Reset password
+authRoutes.post('/resetPassword', function (req, res) {
+  const { token, password } = req.body
+
+  // validations
+  if (!token || !password) {
+    return res.status(400).json({ success: false, message: 'Please provide all required data' })
+  }
+
+  // find user
+  User.findOne({
+    resetPasswordToken: req.body.token,
+    resetPasswordDate: {
+      $gt: new Date(Date.now() - 86400000).toISOString()
+    }
+  }, function (err, user) {
+    if (err) return res.status(500).json({})
+
+    if (user) {
+      // update password, reset reset password info
+      user.password = password
+      user.resetPasswordToken = null
+      user.save(function (err) {
+        if (err) return res.status(500).json({})
+
+        // send reset password email
+        var emailOptions = {
+          to: user.email,
+          from: `Node App <site@nodeapp.com>`,
+          template: 'reset-password',
+          subject: 'Reset Password',
+          context: {
+            name: user.profile.firstName
+          }
+        }
+
+        mailer.sendMail(emailOptions, function (err) {
+          if (err) {
+            console.log('Failed to send reset password error', err)
+          }
+        })
+
+        return res.json({ success: true, message: 'Successfully reset password' })
+      })
+    } else {
+      return res.json({ success: false, code: 101, message: 'Password reset token is invalid or has expired.' })
+    }
+  })
+})
+
+// Check reset password token validity
+authRoutes.post('/resetPassword/valid', function (req, res) {
+  const { token } = req.body
+
+  // validations
+  if (!token) {
+    return res.status(400).json({ success: false, message: 'Token missing' })
+  }
+
+  // find user
+  User.findOne({
+    resetPasswordToken: req.body.token,
+    resetPasswordDate: {
+      $gt: new Date(Date.now() - 86400000).toISOString()
+    }
+  }, function (err, user) {
+    if (err) return res.status(500).json({})
+
+    if (user) {
+      return res.json({ success: true, message: 'Valid token' })
+    } else {
+      return res.json({ success: false, code: 101, message: 'Invalid token' })
+    }
+  })
+})
+
 function generateJwtToken (req, user) {
   const payload = {
     userId: user._id,

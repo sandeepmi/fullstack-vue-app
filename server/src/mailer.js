@@ -13,7 +13,7 @@ const transport = createTransport({
 
 const handlebarsOptions = {
   viewEngine: 'handlebars',
-  viewPath: path.resolve('./src/templates/'),
+  viewPath: path.resolve(__dirname, './templates/'),
   extName: '.html'
 }
 
