@@ -20,6 +20,7 @@
 import { login } from '@/services/authService'
 import { setAuthToken, getErrorMsg, messages } from '@/helpers'
 import { Form, InputGroup, Button, Alert } from '../core'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Login',
@@ -35,6 +36,19 @@ export default {
       password: '',
       message: '',
       isLoading: false
+    }
+  },
+  computed: {
+    ...mapState('user', [
+      'isLoggedIn'
+    ])
+  },
+  watch: {
+    isLoggedIn: function (newValue, oldValue) {
+      // redirect to my account page if already logged in
+      if (newValue) {
+        this.$router.push({ name: 'MyAccount' })
+      }
     }
   },
   methods: {
