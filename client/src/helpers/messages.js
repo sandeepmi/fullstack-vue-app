@@ -13,9 +13,17 @@ const messages = {
     editSuccess: 'Item has been saved succesfully.',
     deleteSuccess: 'Item has been deleted succesfully.'
   },
+  login: {
+    loginFail: 'Incorrect email or password'
+  },
+  register: {
+    emailExists: 'This email was already registered',
+    registerFail: 'Failed to register'
+  },
   profile: {
     updateSuccess: 'Profile has been updated successfully',
-    updateFail: 'Failed to update profile'
+    updateFail: 'Failed to update profile',
+    emailExists: 'This email was already registered'
   },
   password: {
     changeSuccess: 'Password has been updated successfully',

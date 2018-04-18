@@ -75,13 +75,17 @@ export default {
 
       updateUserProfile(this.editUserProfile)
         .then(response => {
+          const { updateSuccess, updateFail, emailExists } = messages.profile
+
           if (response.success) {
-            this.$store.dispatch('toasts/addToast', { text: messages.profile.updateSuccess, type: 'success' })
+            this.$store.dispatch('toasts/addToast', { text: updateSuccess, type: 'success' })
             this.isEditMode = false
             this.userProfile = cloneObj(this.editUserProfile)
             this.$store.dispatch('user/updateDisplayName', this.editUserProfile)
+          } else if (response.code === 101) {
+            this.message = emailExists
           } else {
-            this.message = messages.profile.updateFail
+            this.message = updateFail
           }
         })
         .catch(err => {

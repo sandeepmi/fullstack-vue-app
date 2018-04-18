@@ -29,7 +29,7 @@ authRoutes.post('/register', function (req, res) {
     if (err) return res.status(500).json({})
 
     if (existingUser) {
-      return res.send({ success: false, message: 'That email address is already registered' })
+      return res.send({ success: false, code: 101, message: 'That email address is already registered' })
     }
 
     // create account

@@ -18,7 +18,7 @@
 
 <script>
 import { login } from '@/services/authService'
-import { setAuthToken, getErrorMsg } from '@/helpers'
+import { setAuthToken, getErrorMsg, messages } from '@/helpers'
 import { Form, InputGroup, Button, Alert } from '../core'
 
 export default {
@@ -52,7 +52,7 @@ export default {
             const redirectPath = this.$route.query.redirect || '/account'
             this.$router.push(redirectPath)
           } else {
-            this.message = 'Incorrect email or password'
+            this.message = messages.login.loginFail
           }
         })
         .catch(err => {

@@ -17,7 +17,7 @@
 
 <script>
 import { register } from '@/services/authService'
-import { getErrorMsg } from '@/helpers'
+import { getErrorMsg, messages } from '@/helpers'
 import { InputGroup, Button, Form, Alert } from '../core'
 
 export default {
@@ -45,12 +45,16 @@ export default {
 
       register(this.email, this.password, this.firstName, this.lastName)
         .then(response => {
+          const { emailExists, registerFail } = messages.register
+
           if (response.success) {
             // redirect to login with target param
             const redirect = this.$route.query.redirect
             this.$router.push({ name: 'Login', query: { redirect } })
+          } else if (response.code === 101) {
+            this.message = emailExists
           } else {
-            this.message = response.message || 'Failed to register'
+            this.message = registerFail
           }
         })
         .catch(err => {
