@@ -21,7 +21,11 @@ const messages = {
     changeSuccess: 'Password has been updated successfully',
     changeFail: 'Failed to change password',
     incorrectPassword: 'Incorrect password',
-    forgotSuccess: 'An email with instructions on how to reset your password has been sent to '
+    forgotSuccess: 'An email with instructions on how to reset your password has been sent to ',
+    forgotFail: 'Failed to process forgot password request',
+    resetSuccess: 'Your password has been successfully reset, you can now <a href="/login">login</a> with your new password',
+    resetFail: 'Failed to reset password',
+    resetInvalid: 'Your password reset link is either expired or invalid'
   }
 }
 

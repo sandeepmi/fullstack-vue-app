@@ -8,14 +8,14 @@
         <InputGroup type="password" label="Confirm New Password" name="confirmNewpassword" v-model="confirmNewPassword" required :matchValue="newPassword" />
         <Button :loading="isSaving">Submit</Button>
       </Form>
-      <Alert :text="message" :cssClass="alertCssClass" />
+      <Alert :text="message" :cssClass="alertCssClass" :isHtml="true" />
     </div>
   </div>
 </template>
 
 <script>
 import { resetPassword, resetPasswordValidity } from '@/services/authService'
-import { getErrorMsg } from '@/helpers'
+import { getErrorMsg, messages } from '@/helpers'
 import { InputGroup, Button, Form, Alert } from '../core'
 
 export default {
@@ -38,28 +38,29 @@ export default {
     }
   },
   mounted () {
-    this.verifyResetPasswordToken()
+    this.verifyResetPasswordToken((err, isValid) => {
+      if (err) {
+        this.message = getErrorMsg(err)
+      } else if (isValid) {
+        this.showForm = true
+      } else {
+        this.message = messages.password.resetInvalid
+      }
+    })
   },
   methods: {
-    verifyResetPasswordToken () {
+    verifyResetPasswordToken (callback) {
       const { token } = this.$route.query
-      if (!token) {
-        this.message = 'Invalid token'
-        return
-      }
+      if (!token) return callback(null, false)
 
       this.isLoading = true
 
       resetPasswordValidity(token)
         .then(response => {
-          if (response.success) {
-            this.showForm = true
-          } else {
-            this.message = 'Invalid token'
-          }
+          callback(null, !!response.success)
         })
         .catch(err => {
-          this.message = getErrorMsg(err)
+          callback(err, null)
         })
         .finally(() => {
           this.isLoading = false
@@ -72,16 +73,14 @@ export default {
 
       resetPassword(token, this.newPassword)
         .then(response => {
+          const { resetSuccess, resetFail, resetInvalid } = messages.password
+
           if (response.success) {
-            this.message = 'Your password has been successfully reset, you can now <a href="/login">login</a> with your new password.'
             this.showForm = false
+            this.message = resetSuccess
             this.alertCssClass = 'alert-success'
           } else {
-            if (response.code === 101) {
-              this.message = 'Invalid token'
-            } else {
-              this.message = 'Reset password failed'
-            }
+            this.message = (response.code === 101) ? resetInvalid : resetFail
           }
         })
         .catch(err => {

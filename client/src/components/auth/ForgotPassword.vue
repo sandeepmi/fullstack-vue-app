@@ -41,11 +41,13 @@ export default {
 
       forgotPassword(this.email)
         .then(response => {
+          const { forgotSuccess, forgotFail } = messages.password
+
           if (response.success) {
             this.isSubmitSuccess = true
-            this.message = messages.password.forgotSuccess + this.email
+            this.message = forgotSuccess + this.email
           } else {
-            this.message = 'Failed to process request'
+            this.message = forgotFail
           }
         })
         .catch(err => {
