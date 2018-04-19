@@ -37,7 +37,7 @@ export default {
       alertCssClass: 'alert-danger'
     }
   },
-  mounted () {
+  created () {
     this.verifyResetPasswordToken((err, isValid) => {
       if (err) {
         this.message = getErrorMsg(err)

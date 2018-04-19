@@ -53,7 +53,7 @@ export default {
       'itemCount'
     ])
   },
-  mounted () {
+  created () {
     this.getItems()
   },
   methods: {

@@ -2,7 +2,7 @@
   <Modal :options="options" @close="close">
     <h2>{{title}}</h2>
     <Form :onSubmit="onSubmit">
-      <InputGroup label="Title" name="itemTitle" v-model="item.title" required :setFocus="true" />
+      <InputGroup label="Title" name="itemTitle" v-model="item.title" required setFocus />
       <InputGroup label="Type" name="itemType" v-model="item.type" required />
       <Button type="submit" :loading="isSaving">Submit</Button>
       <a class="btn btn-secondary" @click="close">Cancel</a>
@@ -37,7 +37,7 @@ export default {
   computed: mapState([
     'isSaving'
   ]),
-  mounted () {
+  created () {
     // set modal title
     this.title = this.item._id ? 'Edit Item' : 'Add Item'
   },

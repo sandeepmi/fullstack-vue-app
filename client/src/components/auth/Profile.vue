@@ -42,7 +42,7 @@ export default {
       isEditMode: false
     }
   },
-  mounted () {
+  created () {
     this.showProfile()
   },
   methods: {
