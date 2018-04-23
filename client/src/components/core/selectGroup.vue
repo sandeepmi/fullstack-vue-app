@@ -1,23 +1,22 @@
 <template>
   <FormGroup :label="label" :name="name" :srOnly="srOnlyComputed" :error="error">
-    <input
+    <select
       v-bind="$attrs"
-      :value="value"
-      :type="type"
+      v-model="selectedOption"
       :name="name"
-      :placeholder="label"
       :class="cssClass"
       :readonly="plainText"
       :disabled="plainText"
-      v-on="inputListeners"
-      @blur="validateAsync"
-      ref="input" />
+      v-on="listeners"
+      @blur="validateAsync">
+      <option v-for="opt in options" :value="opt.value" :selected="opt.selected" :key="opt.value">{{opt.text}}</option>
+    </select>
   </FormGroup>
 </template>
 
 <script>
 import FormGroup from './FormGroup'
-import { isEmail, delay } from '@/helpers'
+import { delay } from '@/helpers'
 
 export default {
   props: {
@@ -27,22 +26,17 @@ export default {
       type: Boolean,
       default: true
     },
-    type: {
-      type: String,
-      default: 'text'
-    },
-    value: String,
-    setFocus: Boolean,
     plainText: Boolean,
     required: Boolean,
-    email: Boolean,
-    matchValue: String
+    value: String,
+    options: Array
   },
   components: {
     FormGroup
   },
   data () {
     return {
+      selectedOption: '',
       error: ''
     }
   },
@@ -62,7 +56,7 @@ export default {
         return this.srOnly
       }
     },
-    inputListeners () {
+    listeners () {
       var vm = this
 
       return Object.assign({},
@@ -70,6 +64,7 @@ export default {
         {
           // This ensures that the component works with v-model
           input: function (event) {
+            console.log('event', event.target.value)
             vm.$emit('input', event.target.value)
           }
         }
@@ -77,28 +72,18 @@ export default {
     }
   },
   mounted () {
-    // set focus
-    if (this.setFocus) {
-      this.$refs.input.focus()
+    this.selectedOption = this.value
+  },
+  watch: {
+    value: function (newValue) {
+      this.selectedOption = newValue
     }
   },
   methods: {
     validate () {
       // validate required
-      if (this.required && !this.value) {
+      if (this.required && !this.selectedOption) {
         this.error = 'Required'
-        return false
-      }
-
-      // validate email
-      if (this.email && !isEmail(this.value)) {
-        this.error = 'Invalid email'
-        return false
-      }
-
-      // validate match
-      if (this.matchValue && this.value !== this.matchValue) {
-        this.error = 'Not a match'
         return false
       }
 
