@@ -3,7 +3,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt
 const User = require('./models/User')
 const config = require('./config')
 
-module.exports = function(passport) {
+module.exports = function (passport) {
   const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.secret,
@@ -15,9 +15,9 @@ module.exports = function(passport) {
       if (err) return done(err, false)
 
       // verify user, ip address and user agent
-      if (user
-        && jwtPayload.ip === req.ip
-        && jwtPayload.agent === req.headers['user-agent']
+      if (user &&
+        jwtPayload.ip === req.ip &&
+        jwtPayload.agent === req.headers['user-agent']
       ) {
         done(null, user)
       } else {

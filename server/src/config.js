@@ -14,6 +14,6 @@ module.exports = {
   website: envVar('WEBSITE', 'http://localhost:8080')
 }
 
-function envVar(key, defaultValue) {
+function envVar (key, defaultValue) {
   return process.env[key] || defaultValue
 }
