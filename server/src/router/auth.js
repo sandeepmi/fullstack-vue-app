@@ -219,7 +219,7 @@ authRoutes.post('/resetPassword/valid', function (req, res) {
 function generateJwtToken (req, user) {
   const payload = {
     userId: user._id,
-    ip: req.ip,
+    // ip: req.ip,
     agent: req.headers['user-agent']
   }
 

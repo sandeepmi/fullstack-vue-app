@@ -16,7 +16,7 @@ module.exports = function (passport) {
 
       // verify user, ip address and user agent
       if (user &&
-        jwtPayload.ip === req.ip &&
+        // jwtPayload.ip === req.ip &&
         jwtPayload.agent === req.headers['user-agent']
       ) {
         done(null, user)
